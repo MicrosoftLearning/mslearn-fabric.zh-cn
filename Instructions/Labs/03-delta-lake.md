@@ -10,15 +10,15 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
 完成此练习大约需要 40 分钟
 
-> 注意：需要 Microsoft Fabric 许可证才能完成本练习。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 需要 Microsoft 学校或工作帐户才能执行此操作 。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft Fabric 许可证才能完成本练习。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
+在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择“Power BI”。
+1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 使用所选名称创建一个新工作区，并选择包含 Fabric 容量的授权模式（试用、高级或 Fabric）  。
+3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 4. 打开新工作区时，它应为空，如下所示：
 
     ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
@@ -33,7 +33,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如果适用），然后将其上传到湖屋。
 
-3. 从 [https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv](https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv) 下载用于本练习的数据文件，在本地计算机上（或者实验室 VM 上，如果适用）将其另存为 products.csv。
+3. 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv` 下载用于本练习的数据文件，在本地计算机上（或者实验室 VM 上，如果适用）将其另存为 products.csv。
 
 4. 返回到包含湖屋的 Web 浏览器选项卡，在“资源管理器”窗格中“Files”文件夹的“...”菜单中，选择“新建子文件夹”并创建名为“products”的文件夹    。
 
@@ -69,7 +69,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
 6. 单元格命令完成后，查看单元格下方的输出，该输出应如下所示：
 
-    | Index | ProductID | ProductName | 类别 | ListPrice |
+    | 索引 | ProductID | ProductName | 类别 | ListPrice |
     | -- | -- | -- | -- | -- |
     | 1 | 771 | Mountain-100 Silver, 38 | 山地自行车 | 3399.9900 |
     | 2 | 772 | Mountain-100 Silver, 42 | 山地自行车 | 3399.9900 |
@@ -183,7 +183,7 @@ Delta 表的事务历史记录存储在 delta_log 文件夹的 JSON 文件中。
 
 1. 在笔记本中新增一个代码单元格，并运行以下代码：
 
-    ```Python
+    ```sql
    %%sql
 
    UPDATE products
