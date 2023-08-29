@@ -22,11 +22,12 @@ lab:
 4. 打开新工作区时，它应为空，如下所示：
 
     ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace-medallion.png)
-5. 导航到工作区设置并启用“数据模型编辑”预览功能。 这样，就可以在湖屋中的表之间创建关系。
+5. 导航到工作区设置并启用“数据模型编辑”预览功能。 这样一来，你就可以使用 Power BI 数据集在你的湖屋中的表之间创建关系。
 
     ![Power BI 中工作区设置页的屏幕截图。](./Images/workspace-settings.png)
 
     > 注意：启用预览功能后，可能需要刷新浏览器选项卡。
+
 ## 创建湖屋并将数据上传到铜层
 
 现在已经有了一个工作区，接下来可以切换到 Fabric 门户中的“数据工程”体验，并为要分析的数据创建一个数据湖屋。
@@ -49,7 +50,7 @@ lab:
 
 ## 转换数据并加载到银 Delta 表
 
-现在，湖屋的铜层中已有一些数据，可以使用笔记本转换数据并将其加载到银层中的 Delta 表。 
+现在，湖屋的铜层中已有一些数据，可以使用笔记本转换数据并将其加载到银层中的 Delta 表。
 
 1. 在主页上查看数据湖中 bronze 文件夹的内容时，在“打开笔记本”菜单中选择“新建笔记本”   。
 
@@ -57,13 +58,13 @@ lab:
 
 2. 当笔记本打开时，选择笔记本左上角的“Notebook xxxx”文本并输入新名称，将其重命名为“Transform data for Silver” 。
 
-    ![命名为“Sales”的新笔记本的屏幕截图。](./Images/sales-notebook-rename.png)
+    ![名为“Transform data for Silver”的新笔记本的屏幕截图。](./Images/sales-notebook-rename.png)
 
 2. 选择笔记本中的现有单元格，其中包含一些简单的注释代码。 突出显示并删除这两行 - 不需要此代码。
    
    > 注意：使用笔记本可以运行多种语言的代码，包括 Python、Scala 和 SQL。 在本练习中，你将使用 PySpark 和 SQL。 你还可以添加 markdown 单元格，以提供格式化文本和图像来记录代码。
 
-3. 将以下代码粘贴到单元格中：
+3. 将以下代码**粘贴**到单元格中：
 
     ```python
     from pyspark.sql.types import *
@@ -80,7 +81,7 @@ lab:
         StructField("UnitPrice", FloatType()),
         StructField("Tax", FloatType())
         ])
-
+    
     # Import all files from bronze folder of lakehouse
     df = spark.read.format("csv").option("header", "true").schema(orderSchema).load("Files/bronze/*.csv")
     
@@ -88,11 +89,11 @@ lab:
     display(df.head(10))
     ```
 
-4. 使用单元格左侧的“&#9655; (运行单元格)”按钮运行单元格。
+4. 使用单元格左侧的 ****&#9655;** (*运行单元格*)** 按钮运行代码。
 
     > 注意：由于这是你第一次在此笔记本中运行 Spark 代码，因此必须启动 Spark 会话。 这意味着第一次运行可能需要一分钟左右才能完成。 后续运行速度会更快。
 
-5. 单元格命令完成后，查看单元格下方的输出，该输出应如下所示：
+5. 单元格命令完成后，**查看单元格下方的输出**，输出应如下所示：
 
     | Index | SalesOrderNumber | SalesOrderLineNumber | OrderDate | CustomerName | 电子邮件 | 项 | 数量 | 单价 | 税款 |
     | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -100,77 +101,73 @@ lab:
     | 2 |  SO49173 | 1 | 2021-01-01 | Linda Alvarez | Mountain-200 Silver, 38 | 1 | 2071.4197 | 165.7136 |
     | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
-    运行的代码已将 bronze 文件夹中的 CSV 文件的数据加载到 Spark 数据帧中，然后显示数据帧的前几行。
+    你运行的代码已将 **bronze** 文件夹中的 CSV 文件的数据加载到 Spark 数据帧中，然后显示了数据帧的前几行。
 
     > 注意：可以通过选择输出窗格左上角的“...”菜单来清除、隐藏单元格输出的内容并自动调整其大小。 
 
-6. 添加用于数据验证和清理的列，使用 PySpark 数据帧添加列并更新某些现有列的值。 使用 + 按钮添加新的代码块，并将以下代码添加到单元格：
+6. 现在你将**添加用于数据验证和清理的列**，使用 PySpark 数据帧添加列并更新某些现有列的值。 使用 + 按钮**添加新的代码块**，并将以下代码添加到单元格：
 
     ```python
     from pyspark.sql.functions import when, lit, col, current_timestamp, input_file_name
     
-    # Add columns FileName, IsFlagged, CreatedTS and ModifiedTS for data validation and tracking
-    df = df.withColumn("FileName", input_file_name())
-    df = df.withColumn("IsFlagged", when(col("OrderDate") < '2019-08-01',True).otherwise(False))
-    df = df.withColumn("CreatedTS", current_timestamp()).withColumn("ModifiedTS", current_timestamp())
-    df = df.withColumn("CustomerID", lit(None).cast("BigInt"))
-    df = df.withColumn("ItemID", lit(None).cast("BigInt"))
+    # Add columns IsFlagged, CreatedTS and ModifiedTS
+    df = df.withColumn("FileName", input_file_name()) \
+        .withColumn("IsFlagged", when(col("OrderDate") < '2019-08-01',True).otherwise(False)) \
+        .withColumn("CreatedTS", current_timestamp()).withColumn("ModifiedTS", current_timestamp())
     
     # Update CustomerName to "Unknown" if CustomerName null or empty
     df = df.withColumn("CustomerName", when((col("CustomerName").isNull() | (col("CustomerName")=="")),lit("Unknown")).otherwise(col("CustomerName")))
     ```
 
-    运行的代码的第一行从 PySpark 导入必要的函数。 然后，向数据帧添加新列，以便可以跟踪源文件名称、订单是否被标记为在感兴趣的会计年度之前，以及创建和修改行的时间。 
+    代码的第一行从 PySpark 导入必要的函数。 然后，向数据帧添加新列，以便可以跟踪源文件名称、订单是否被标记为在感兴趣的会计年度之前，以及创建和修改行的时间。
     
     另外，还需要添加 CustomerID 和 ItemID 列，稍后将填充这些列。
     
     最后，如果 CustomerName 列为 null 或为空，则将此列更新为“未知”。
 
-7. 使用“&#9655; (运行单元格)”按钮运行单元格以执行代码。
+7. 使用 ****&#9655;** (*运行单元格*)** 按钮运行单元格以执行代码。
 
-8. 接着，使用 SQL magic 在 sales 数据库中采用 Delta Lake 格式将已清理的数据帧创建为名为 sales_silver 的新表。 创建新的代码块，并将以下代码添加到单元格：
+8. 接下来，你将使用 Delta Lake 格式定义销售数据库中 **sales_silver** 表的架构。 创建新的代码块，并将以下代码添加到单元格：
 
     ```python
-     %%sql
+    # Define the schema for the sales_silver table
     
-    -- Create sales_silver table 
-    CREATE TABLE sales.sales_silver (
-        SalesOrderNumber string
-        , SalesOrderLineNumber int
-        , OrderDate date
-        , CustomerName string
-        , Email string
-        , Item string
-        , Quantity int
-        , UnitPrice float
-        , Tax float
-        , FileName string
-        , IsFlagged boolean
-        , CustomerID bigint
-        , ItemID bigint
-        , CreatedTS date
-        , ModifiedTS date
-    ) USING delta;
-    ```
+    from pyspark.sql.types import *
+    from delta.tables import *
+    
+    DeltaTable.createIfNotExists(spark) \
+        .tableName("sales.sales_silver") \
+        .addColumn("SalesOrderNumber", StringType()) \
+        .addColumn("SalesOrderLineNumber", IntegerType()) \
+        .addColumn("OrderDate", DateType()) \
+        .addColumn("CustomerName", StringType()) \
+        .addColumn("Email", StringType()) \
+        .addColumn("Item", StringType()) \
+        .addColumn("Quantity", IntegerType()) \
+        .addColumn("UnitPrice", FloatType()) \
+        .addColumn("Tax", FloatType()) \
+        .addColumn("FileName", StringType()) \
+        .addColumn("IsFlagged", BooleanType()) \
+        .addColumn("CreatedTS", DateType()) \
+        .addColumn("ModifiedTS", DateType()) \
+        .execute()
+        ```
+9. Run the cell to execute the code using the ****&#9655;** (*Run cell*)** button.
 
-    此代码使用 `%sql` magic 命令运行 SQL 语句。 第一个语句将创建一个名为“sales”的新数据库。 第二个语句使用 Delta Lake 格式和在上一代码块中创建的数据帧，在“sales”数据库中创建一个名为 sales_silver 的新表 。
+10. Select the **...** in the Tables section of the lakehouse explorer pane and select **Refresh**. You should now see the new **sales_silver** table listed. The **&#9650;** (triangle icon) indicates that it's a Delta table.
 
-9. 使用“&#9655; (运行单元格)”按钮运行单元格以执行代码。
+    ![Screenshot of the sales_silver table in a lakehouse.](./Images/sales-silver-table.png)
 
-10. 在湖屋资源管理器窗格的“Tables”部分选择“...”，然后选择“刷新” 。 此时会看到列出的新 sales_silver 表。 三角形图标指示它是一个 Delta 表。
+    > **Note**: If you don't see the new table, wait a few seconds and then select **Refresh** again, or refresh the entire browser tab.
 
-    ![湖屋中 sales_silver 表的屏幕截图。](./Images/sales-silver-table.png)
-
-    > 注意：如果看不到新表，请等待几秒钟，然后再次选择“刷新”，或刷新整个浏览器选项卡 
-
-11. 对 Delta 表执行更新插入操作，根据特定条件更新现有记录，并在找不到匹配项时插入新记录。 添加新代码块并粘贴以下代码：
+11. Now you're going to perform an **upsert operation** on a Delta table, updating existing records based on specific conditions and inserting new records when no match is found. Add a new code block and paste the following code:
 
     ```python
     # Update existing records and insert new ones based on a condition defined by the columns SalesOrderNumber, OrderDate, CustomerName, and Item.
 
     from delta.tables import *
     
-    deltaTable = DeltaTable.forPath(spark, 'abfss://1daff8bf-a15d-4063-97c2-fd6381bd00b4@onelake.dfs.fabric.microsoft.com/065c411a-27de-4dec-b4fb-e1df9737f0a0/Tables/sales_silver')
+    deltaTable = DeltaTable.forPath(spark, 'Tables/sales_silver')
     
     dfUpdates = df
     
@@ -197,18 +194,53 @@ lab:
           "Tax": "updates.Tax",
           "FileName": "updates.FileName",
           "IsFlagged": "updates.IsFlagged",
-          "CustomerID": "updates.CustomerID",
-          "ItemID": "updates.ItemID",
           "CreatedTS": "updates.CreatedTS",
           "ModifiedTS": "updates.ModifiedTS"
         }
       ) \
       .execute()
     ```
-    此操作非常重要，因为借助它，你可以根据特定列的值更新表中的现有记录，并在找不到匹配项时插入新记录。 从可能包含对现有记录和新记录的更新的源系统加载数据时，插入新记录是一个常见要求。
+    此操作非常重要，因为借助它，你可以根据特定列的值更新表中的现有记录，并在找不到匹配项时插入新记录。 从可能包含对现有和新记录的更新的源系统加载数据时，插入新记录是一个常见要求。
 
 现在，银 Delta 表中已准备好用于进一步转换和建模的数据。
-    
+
+## 使用 SQL 终结点浏览银层中的数据
+
+现在，银层中已有数据，可以使用 SQL 终结点来浏览数据并执行一些基本分析。 如果你熟悉 SQL 并想要对数据进行一些基本探索，这是一个很好的选择。 在本练习中，我们使用 Fabric 中的 SQL 终结点视图，但请注意，也可以使用其他工具，例如 SQL Server Management Studio (SSMS) 和 Azure 数据资源管理器。
+
+1. 导航回工作区，注意，现在列出了一些资产。 选择“**SQL 终结点**”，在 SQL 终结点视图中打开你的湖屋。
+
+    ![湖屋中 SQL 终结点的屏幕截图。](./Images/sql-endpoint-item.png)
+
+1. 从功能区中选择“**新建 SQL 查询**”，这将打开 SQL 查询编辑器。 请注意，可以使用湖屋资源管理器窗格中现有查询名称旁边的 **...** 菜单项重命名查询。
+
+   我们将运行两个 sql 查询来浏览数据。
+
+1. 将以下查询粘贴到查询编辑器中，然后选择“**运行**”：
+
+    ```sql
+    SELECT YEAR(OrderDate) AS Year
+        , CAST (SUM(Quantity * (UnitPrice + Tax)) AS DECIMAL(12, 2)) AS TotalSales
+    FROM sales_silver
+    GROUP BY YEAR(OrderDate) 
+    ORDER BY YEAR(OrderDate)
+    ```
+
+    此查询会计算 sales_silver 表中每年的总销售额。 结果应如下所示：
+
+    ![湖屋中 SQL 查询结果的屏幕截图。](./Images/total-sales-sql.png)
+
+  1. 现在，我们将了解一下哪些客户（在数量方面）购买的最多。 将以下查询粘贴到查询编辑器中，然后选择“**运行**”：
+
+        ```sql
+        SELECT TOP 10 CustomerName, SUM(Quantity) AS TotalQuantity
+        FROM sales_silver
+        GROUP BY CustomerName
+        ORDER BY TotalQuantity DESC
+        ```
+        此查询会计算 sales_silver 表中每个客户购买的商品总数，然后返回按数量排名的前 10 位客户。
+
+银层的数据探索对于基本分析很有用，但你需要进一步转换数据并将其建模为星型架构，以实现更高级的分析和报告。 将在下一部分执行该操作。
 
 ## 转换金层数据
 
@@ -220,36 +252,54 @@ lab:
 
 2. 在湖屋资源管理器窗格中，选择“添加”，然后选择前面创建的“Sales”湖屋来添加“Sales”湖屋。   你将在资源管理器窗格的“Tables”部分看到列出的 sales_silver 表 。
 
-3. 在现有代码块中，删除样本文本并添加以下代码，以便将数据加载到数据帧并开始构建星型架构：
+3. 在现有代码块中，删除样本文本并**添加以下代码**，以便将数据加载到数据帧并开始构建星型架构：
 
     ```python
     # Load data to the dataframe as a starting point to create the gold layer
     df = spark.read.table("Sales.sales_silver")
     ```
 
-4. 添加新代码块并粘贴以下代码以创建日期维度表：
+4. **添加新代码块**并粘贴以下代码以创建日期维度表：
 
     ```python
-        %%sql
-    -- Create Date_gold dimension table
-    CREATE TABLE IF NOT EXISTS sales.dimdate_gold (
-        OrderDate date
-        , Day int
-        , Month int
-        , Year int
-        , `mmmyyyy` string
-        , yyyymm string
-    ) USING DELTA;
+    from pyspark.sql.types import *
+    from delta.tables import*
     
+    # Define the schema for the dimdate_gold table
+    DeltaTable.createIfNotExists(spark) \
+        .tableName("sales.dimdate_gold") \
+        .addColumn("OrderDate", DateType()) \
+        .addColumn("Day", IntegerType()) \
+        .addColumn("Month", IntegerType()) \
+        .addColumn("Year", IntegerType()) \
+        .addColumn("mmmyyyy", StringType()) \
+        .addColumn("yyyymm", StringType()) \
+        .execute()
     ```
     > 注意：你可以随时运行 `display(df)` 命令来查看工作进度。 在这种情况下，可以运行“display(dfdimDate_gold)”来查看 dimDate_gold 数据帧的内容。
 
-5. 在新代码块中，添加以下代码以在新数据传入时更新日期维度：
+1. 在新代码块中，**添加以下代码**，为日期维度创建数据帧 **dimdate_gold**：
+
+    ```python
+    from pyspark.sql.functions import col, dayofmonth, month, year, date_format
+    
+    # Create dataframe for dimDate_gold
+    
+    dfdimDate_gold = df.dropDuplicates(["OrderDate"]).select(col("OrderDate"), \
+            dayofmonth("OrderDate").alias("Day"), \
+            month("OrderDate").alias("Month"), \
+            year("OrderDate").alias("Year"), \
+            date_format(col("OrderDate"), "MMM-yyyy").alias("mmmyyyy"), \
+            date_format(col("OrderDate"), "yyyyMM").alias("yyyymm"), \
+        ).orderBy("OrderDate")
+
+
+2. You're separating the code out into new code blocks so that you can understand and watch what's happening in the notebook as you transform the data. In another new code block, **add the following code** to update the date dimension as new data comes in:
 
     ```python
     from delta.tables import *
-
-    deltaTable = DeltaTable.forPath(spark, 'abfss://1daff8bf-a15d-4063-97c2-fd6381bd00b4@onelake.dfs.fabric.microsoft.com/065c411a-27de-4dec-b4fb-e1df9737f0a0/Tables/dimdate_gold')
+    
+    deltaTable = DeltaTable.forPath(spark, 'Tables/dimdate_gold')
     
     dfUpdates = dfdimDate_gold
     
@@ -275,27 +325,30 @@ lab:
       ) \
       .execute()
     ```
-5. 现在，我们将构建客户维度表。 添加新代码块并粘贴以下代码：
+    恭喜！ 你的日期维度全部设置好了。 现在，你将创建客户维度。
+3. 要生成客户维度表，**请添加新代码块**并粘贴以下代码：
 
     ```python
-   %%sql
-    -- Create Customer dimension table
-    CREATE TABLE sales.dimCustomer_gold (
-        CustomerName string
-        , Email string
-        , First string
-        , Last string
-        , CustomerID BIGINT
-    ) USING DELTA;
-    ```
+    from pyspark.sql.types import *
+    from delta.tables import *
     
-6. 在新代码块中，添加以下代码以在新数据传入时更新客户维度：
+    # Create customer_gold dimension delta table
+    DeltaTable.createIfNotExists(spark) \
+        .tableName("sales.dimcustomer_gold") \
+        .addColumn("CustomerName", StringType()) \
+        .addColumn("Email",  StringType()) \
+        .addColumn("First", StringType()) \
+        .addColumn("Last", StringType()) \
+        .addColumn("CustomerID", LongType()) \
+        .execute()
+    ```
+1. 在新代码块中，**添加以下代码**以删除重复的客户，选择特定列，然后拆分“CustomerName”列以创建“First”和“Last”姓名列：
 
     ```python
     from pyspark.sql.functions import col, split
-
-    # Create Customer_gold dataframe
-
+    
+    # Create customer_gold dataframe
+    
     dfdimCustomer_silver = df.dropDuplicates(["CustomerName","Email"]).select(col("CustomerName"),col("Email")) \
         .withColumn("First",split(col("CustomerName"), " ").getItem(0)) \
         .withColumn("Last",split(col("CustomerName"), " ").getItem(1)) \
@@ -303,28 +356,27 @@ lab:
 
      此处，你通过执行各种转换（例如删除重复项、选择特定列以及拆分“CustomerName”列以创建“First”和“Last”名称列）创建了一个新的数据帧 dfdimCustomer_silver。 结果是一个数据帧，其中包含已清理和结构化的客户数据，包括从“CustomerName”列中提取的单独“First”和“Last”名称列。
 
-7. 接下来，我们将为客户创建 ID 列。 在新代码块中，粘贴以下内容：
+2. 接下来，我们将**为客户创建 ID 列**。 在新代码块中，粘贴以下内容：
 
     ```python
-    from pyspark.sql.functions import monotonically_increasing_id, col, when
-
-    dfdimCustomer_temp = spark.sql("SELECT * FROM dimCustomer_gold")
-    CustomerIDCounters = spark.sql("SELECT COUNT(*) AS ROWCOUNT, MAX(CustomerID) AS MAXCustomerID FROM dimCustomer_gold")
-    MAXCustomerID = CustomerIDCounters.select((when(col("ROWCOUNT")>0,col("MAXCustomerID"))).otherwise(0)).first()[0]
+    from pyspark.sql.functions import monotonically_increasing_id, col, when, coalesce, max, lit
+    
+    dfdimCustomer_temp = spark.read.table("Sales.dimCustomer_gold")
+    
+    MAXCustomerID = dfdimCustomer_temp.select(coalesce(max(col("CustomerID")),lit(0)).alias("MAXCustomerID")).first()[0]
     
     dfdimCustomer_gold = dfdimCustomer_silver.join(dfdimCustomer_temp,(dfdimCustomer_silver.CustomerName == dfdimCustomer_temp.CustomerName) & (dfdimCustomer_silver.Email == dfdimCustomer_temp.Email), "left_anti")
     
-    dfdimCustomer_gold = dfdimCustomer_gold.withColumn("CustomerID",monotonically_increasing_id() + MAXCustomerID)
-    
+    dfdimCustomer_gold = dfdimCustomer_gold.withColumn("CustomerID",monotonically_increasing_id() + MAXCustomerID + 1)
     ```
     此处，将清理和转换客户数据 (dfdimCustomer_silver)，方法是执行左反联接以排除 dimCustomer_gold 表中已存在的重复项，然后使用 monotonically_increasing_id() 函数生成唯一的 CustomerID 值。
 
-8. 现在，可以确保客户表在新数据传入时保持最新状态。 在新代码块中，粘贴以下内容：
+1. 现在，可以确保客户表在新数据传入时保持最新状态。 **在新代码块中**，粘贴以下内容：
 
     ```python
     from delta.tables import *
 
-    deltaTable = DeltaTable.forPath(spark, 'abfss://1daff8bf-a15d-4063-97c2-fd6381bd00b4@onelake.dfs.fabric.microsoft.com/065c411a-27de-4dec-b4fb-e1df9737f0a0/Tables/dimcustomer_gold')
+    deltaTable = DeltaTable.forPath(spark, 'Tables/dimcustomer_gold')
     
     dfUpdates = dfdimCustomer_gold
     
@@ -349,101 +401,104 @@ lab:
       ) \
       .execute()
     ```
-9. 重复上述步骤来创建产品维度。 在新代码块中，粘贴以下内容：
+2. 现在，你将**重复上述步骤来创建产品维度**。 在新代码块中，粘贴以下内容：
 
     ```python
-    %%sql
-    -- Create Product dimension table
-    CREATE TABLE sales.dimProduct_gold (
-        Item string
-        , ItemID BIGINT
-    ) USING DELTA;
+    from pyspark.sql.types import *
+    from delta.tables import *
+    
+    DeltaTable.createIfNotExists(spark) \
+        .tableName("sales.dimproduct_gold") \
+        .addColumn("ItemName", StringType()) \
+        .addColumn("ItemID", LongType()) \
+        .addColumn("ItemInfo", StringType()) \
+        .execute()
     ```    
-10. 添加另一个代码块以创建 customer_gold 数据帧。 稍后将在 Sales 联接中使用它。
+3.  **添加另一个代码块**以创建 **customer_gold** 数据帧。 稍后将在 Sales 联接中使用它。
     
     ```python
     from pyspark.sql.functions import col, split, lit
-
+    
     # Create Customer_gold dataframe, this dataframe will be used later on on the Sales join
     
     dfdimProduct_silver = df.dropDuplicates(["Item"]).select(col("Item")) \
         .withColumn("ItemName",split(col("Item"), ", ").getItem(0)) \
         .withColumn("ItemInfo",when((split(col("Item"), ", ").getItem(1).isNull() | (split(col("Item"), ", ").getItem(1)=="")),lit("")).otherwise(split(col("Item"), ", ").getItem(1))) \
-    
-    # display(dfdimProduct_gold)
-            ```
+       ```
 
-11. Now you'll prepare to add new products to the dimProduct_gold table. Add the following syntax to a new code block:
+4.  现在，你将为 **dimProduct_gold 表**创建 ID。 将以下语法添加到新代码块：
 
     ```python
-    from pyspark.sql.functions import monotonically_increasing_id, col
+    from pyspark.sql.functions import monotonically_increasing_id, col, lit, max, coalesce
+    
+    #dfdimProduct_temp = dfdimProduct_silver
+    dfdimProduct_temp = spark.read.table("Sales.dimProduct_gold")
+    
+    MAXProductID = dfdimProduct_temp.select(coalesce(max(col("ItemID")),lit(0)).alias("MAXItemID")).first()[0]
+    
+    dfdimProduct_gold = dfdimProduct_silver.join(dfdimProduct_temp,(dfdimProduct_silver.ItemName == dfdimProduct_temp.ItemName) & (dfdimProduct_silver.ItemInfo == dfdimProduct_temp.ItemInfo), "left_anti")
+    
+    dfdimProduct_gold = dfdimProduct_gold.withColumn("ItemID",monotonically_increasing_id() + MAXProductID + 1)
+    ```
+5.   与对其他维度执行的操作类似，你需要确保产品表在新数据传入时保持最新。 **在新代码块中**，粘贴以下内容：
+        ```python
+        from delta.tables import *
 
-    dfdimProduct_temp = spark.sql("SELECT * FROM dimProduct_gold")
-    Product_IDCounters = spark.sql("SELECT COUNT(*) AS ROWCOUNT, MAX(ItemID) AS MAXProductID FROM dimProduct_gold")
-    MAXProduct_ID = Product_IDCounters.select((when(col("ROWCOUNT")>0,col("MAXProductID"))).otherwise(0)).first()[0]
-    
-    
-    dfdimProduct_gold = dfdimProduct_gold.withColumn("ItemID",monotonically_increasing_id() + MAXProduct_ID)
-    
-    #display(dfdimProduct_gold)
+        deltaTable = DeltaTable.forPath(spark, 'Tables/dimproduct_gold')
+        
+        dfUpdates = dfdimProduct_gold
+        
+        deltaTable.alias('silver') \
+          .merge(
+            dfUpdates.alias('updates'),
+            'silver.ItemName = updates.ItemName AND silver.ItemInfo = updates.ItemInfo'
+          ) \
+           .whenMatchedUpdate(set =
+            {
+              
+            }
+          ) \
+         .whenNotMatchedInsert(values =
+            {
+              "ItemName": "updates.ItemName",
+              "ItemInfo": "updates.ItemInfo",
+              "ItemID": "updates.ItemID"
+            }
+          ) \
+          .execute()
+        ```
 
-12.  Similar to what you've done with your other dimensions, you need to ensure that your product table remains up-to-date as new data comes in. In a new code block, paste the following:
-    
+        它根据表中的当前数据计算下一个可用的产品 ID，将这些新 ID 分配给产品，然后显示更新的产品信息（如果 display 命令取消注释）。
+
+        **构建好维度后，最后一步是创建事实数据表。**
+
+1.  **在新代码块中**，粘贴以下代码以创建**事实数据表**：
+
     ```python
+    from pyspark.sql.types import *
     from delta.tables import *
     
-    deltaTable = DeltaTable.forPath(spark, 'abfss://Learn@onelake.dfs.fabric.microsoft.com/Sales.Lakehouse/Tables/dimproduct_gold')
-    
-    dfUpdates = dfdimProduct_gold
-    
-    deltaTable.alias('silver') \
-      .merge(
-        dfUpdates.alias('updates'),
-        'silver.ItemName = updates.ItemName AND silver.ItemInfo = updates.ItemInfo'
-      ) \
-       .whenMatchedUpdate(set =
-        {
-          
-        }
-      ) \
-     .whenNotMatchedInsert(values =
-        {
-          "ItemName": "updates.ItemName",
-          "ItemInfo": "updates.ItemInfo",
-          "ItemID": "updates.ItemID"
-        }
-      ) \
-      .execute()
+    DeltaTable.createIfNotExists(spark) \
+        .tableName("sales.factsales_gold") \
+        .addColumn("CustomerID", LongType()) \
+        .addColumn("ItemID", LongType()) \
+        .addColumn("OrderDate", DateType()) \
+        .addColumn("Quantity", IntegerType()) \
+        .addColumn("UnitPrice", FloatType()) \
+        .addColumn("Tax", FloatType()) \
+        .execute()
     ```
-
-    它根据表中的当前数据计算下一个可用的产品 ID，将这些新 ID 分配给产品，然后显示更新的产品信息（如果 display 命令取消注释）。
-
-构建维度后，最后一步是创建事实数据表。
-
-13. 在新代码块中，粘贴以下代码以创建事实数据表：
-
-    ```python
-       %%sql
-    -- Create Date_gold dimension table if not exist
-    CREATE TABLE IF NOT EXISTS sales.factsales_gold (
-        CustomerID BIGINT
-        , ItemID BIGINT
-        , OrderDate date
-        , Quantity INT
-        , UnitPrice float
-        , Tax float
-    ) USING DELTA;
-    ```
-14. 在新代码块中，粘贴以下代码以创建新的数据帧，将销售数据与客户和产品信息（包括客户 ID、商品 ID、订单日期、数量、单价和税费）合并：
+2.  **在新代码块中**，粘贴以下代码以创建**新的数据帧**，将销售数据与客户和产品信息（包括客户 ID、商品 ID、订单日期、数量、单价和税费）合并：
 
     ```python
     from pyspark.sql.functions import col
-
-    dfdimCustomer_temp = spark.sql("SELECT * FROM dimCustomer_gold")
-    dfdimProduct_temp = spark.sql("SELECT * FROM dimProduct_gold")
+    
+    dfdimCustomer_temp = spark.read.table("Sales.dimCustomer_gold")
+    dfdimProduct_temp = spark.read.table("Sales.dimProduct_gold")
     
     df = df.withColumn("ItemName",split(col("Item"), ", ").getItem(0)) \
         .withColumn("ItemInfo",when((split(col("Item"), ", ").getItem(1).isNull() | (split(col("Item"), ", ").getItem(1)=="")),lit("")).otherwise(split(col("Item"), ", ").getItem(1))) \
+    
     
     # Create Sales_gold dataframe
     
@@ -456,16 +511,13 @@ lab:
             , col("df1.UnitPrice") \
             , col("df1.Tax") \
         ).orderBy(col("df1.OrderDate"), col("df2.CustomerID"), col("df3.ItemID"))
-    
-    
-    display(dffactSales_gold)
     ```
 
-15. 通过在新的代码块中运行以下代码来确保销售数据保持最新状态：
+3.  通过在**新的代码块**中运行以下代码来确保销售数据保持最新状态：
     ```python
     from delta.tables import *
-
-    deltaTable = DeltaTable.forPath(spark, 'abfss://Learn@onelake.dfs.fabric.microsoft.com/Sales.Lakehouse/Tables/factsales_gold')
+    
+    deltaTable = DeltaTable.forPath(spark, 'Tables/factsales_gold')
     
     dfUpdates = dffactSales_gold
     
@@ -493,13 +545,13 @@ lab:
     ```
      此处，将使用 Delta Lake 的合并操作将新的销售额数据 (dffactSales_gold) 同步和更新到 factsales_gold 表。 此操作将比较现有数据（银表）和新数据（更新数据帧）之间的订单日期、客户 ID 和商品 ID，更新匹配记录并根据需要插入新记录。
 
-现在，你已有一个策展的建模金层，可用于报告和分析。
+**现在，你已有一个策展的建模金层，可用于报告和分析。**
 
 ## 创建数据集
 
 你可以在工作区中使用金层来创建报表并分析数据。 你可以直接在工作区中访问数据集，以创建用于报告的关系和度量值。
 
-请注意，不能使用创建湖屋时自动创建的默认数据集。 必须从湖屋资源管理器创建一个新的数据集，其中包含你在本练习中创建的金表。
+请注意，不能使用创建湖屋时自动创建的**默认数据集**。 必须从湖屋资源管理器创建一个新的数据集，其中包含你在本练习中创建的金表。
 
 1. 在工作区中，导航到“Sales”湖屋。
 2. 从湖屋资源管理器视图的功能区中选择“新建 Power BI 数据集”。
@@ -510,6 +562,8 @@ lab:
    - factsales_gold
 
     此时将在 Fabric 中打开数据集，你可以在其中创建关系和度量值。
+
+    ![Fabric 中数据集的屏幕截图。](./Images/dataset-relationships.png)
 
 4. 重命名数据集，以便更轻松地识别。 选择窗口左上角的数据集名称。 将数据集重命名为 Sales_Gold。
 
