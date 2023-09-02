@@ -29,7 +29,7 @@ lab:
 
 有了工作区后，可在门户中切换到数据工程体验，并为数据文件创建一个数据湖屋。
 
-1. 在 Power BI 门户的左下角，切换到“数据工程”体验。
+1. 在 Power BI 门户的左下角，切换到“数据工程”体验。 如果未看到数据工程体验，请与 Fabric 管理员联系，并请求[启用 Fabric](https://learn.microsoft.com/fabric/admin/fabric-switch)。
 
     数据工程主页包含用于创建常用数据工程资产的磁贴。
 
