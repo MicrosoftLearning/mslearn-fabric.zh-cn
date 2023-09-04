@@ -10,9 +10,9 @@ lab:
 
 完成本实验室大约需要 30 分钟。
 
-对于这种体验，我们将跨多个笔记本代码单元格生成代码，这可能无法反映你会如何在环境中执行此操作；但是它对于调试很有用。
+对于此体验，你将跨多个笔记本代码单元格生成代码，这可能无法反映出你在你的环境中执行此操作的方式，但是，它对于调试是有用的。
 
-由于我们还在使用示例数据集，因此优化并不能反映在大规模生产中可能看到的情况；但是，仍然可以看到改进，而当每一毫秒都很重要时，优化就是关键。
+由于你也在使用示例数据集，因此优化并不能反映出在大规模生产中你可能看到的情况。但是，你仍然可以看到改进，而当每一毫秒都很重要时，优化就是关键。
 
 > 注意：完成本练习需要 Microsoft Fabric 许可证 。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。
 >
@@ -22,7 +22,7 @@ lab:
 
 首先创建一个启用了 Fabric 试用版的工作区、一个新的湖屋以及湖屋中的目标文件夹。
 
-1. 登录 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择“Synapse 数据工程”体验。
+1. 登录 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择“**数据工程**”体验。
 
     ![Synapse 数据工程体验的屏幕截图](Images/data-engineering-home.png)
 
@@ -36,7 +36,7 @@ lab:
 
 1. 在工作区中，选择“+ 新建”>“湖屋”，提供一个名称，然后选择“创建” 。
 
-    > :memo: 注意：创建一个没有表或文件的新湖屋可能需要几分钟时间  。
+    > **注意：** 创建一个没有**表**或**文件**的新湖屋可能需要几分钟时间。
 
     ![新湖屋的屏幕截图](Images/new-lakehouse.png)
 
@@ -54,14 +54,14 @@ lab:
 
 1. 从湖屋的顶部菜单中，选择“打开笔记本”>“新建笔记本”，新建的笔记本会立即打开。
 
-    > :bulb: 提示：可以从此笔记本中访问湖屋资源管理器，并且可以在完成本练习时刷新以查看进度。
+    >  **提示：** 可以从此笔记本中访问湖屋资源管理器，并且可以在完成本练习时刷新以查看进度。
 
 1. 请注意，在默认单元格中，代码设置为“PySpark (Python)”。
 
 1. 将以下代码插入代码单元格，该代码将：
-    1. 声明连接字符串的参数
-    1. 生成连接字符串
-    1. 将数据读取到 DataFrame
+    - 声明连接字符串的参数
+    - 生成连接字符串
+    - 将数据读取到 DataFrame
 
     ```Python
     # Azure Blob Storage access info
@@ -81,7 +81,7 @@ lab:
 
     预期结果：命令应会成功并输出 `wasbs://nyctlc@azureopendatastorage.blob.core.windows.net/yellow`
 
-    > :memo: 注意：Spark 会话从第一次代码运行时开始，因此可能需要更长时间才能完成。
+    > **注意：** Spark 会话从第一次代码运行时开始，因此可能需要更长时间才能完成。
 
 1. 若要将数据写入文件，现在需要 RawData 文件夹的 ABFS 路径 。
 
@@ -99,9 +99,9 @@ lab:
         blob_df.limit(1000).write.mode("overwrite").parquet(output_parquet_path)
     ```
 
-1. output_parquet_path应如下所示：`abfss://Spark@onelake.dfs.fabric.microsoft.com/DPDemo.Lakehouse/Files/RawData/yellow_taxi`
+1. 添加你的 **RawData** ABFS 路径并选择“ **&#9655; 运行单元格**”以将 1000 行写入 yellow_taxi.parquet 文件。
 
-1. 选择代码单元格旁边的“&#9655; 运行单元格”，将 1000 行写入 yellow_taxi.parquet 文件。
+1. output_parquet_path应如下所示：`abfss://Spark@onelake.dfs.fabric.microsoft.com/DPDemo.Lakehouse/Files/RawData/yellow_taxi`
 
 1. 若要确认从湖屋资源管理器加载数据，请选择“文件”>“...”>“刷新”。
 
@@ -115,6 +115,9 @@ lab:
 
     ```python
     from pyspark.sql.functions import col, to_timestamp, current_timestamp, year, month
+    
+    # Read the parquet data from the specified path
+    raw_df = spark.read.parquet(output_parquet_path)   
     
     # Add dataload_datetime column with current timestamp
     filtered_df = raw_df.withColumn("dataload_datetime", current_timestamp())
@@ -132,10 +135,10 @@ lab:
 
 1. 选择代码单元格旁边的“&#9655; 运行单元格”。
 
-    * 这会添加一个时间戳列 dataload_datetime，记录数据加载到 Delta 表的时间
-    * 筛选 storeAndFwdFlag 中的 NULL 值
-    * 将筛选的数据加载到 Delta 表中
-    * 显示单行进行验证
+    - 这会添加一个时间戳列 dataload_datetime，记录数据加载到 Delta 表的时间
+    - 筛选 storeAndFwdFlag 中的 NULL 值
+    - 将筛选的数据加载到 Delta 表中
+    - 显示单行进行验证
 
 1. 查看并确认显示的结果，如下图所示：
 
@@ -151,10 +154,10 @@ lab:
 
     ```python
     from pyspark.sql.functions import col, to_timestamp, current_timestamp, year, month
-    
+ 
     # Read the parquet data from the specified path
-    raw_df = spark.read.parquet("**InsertYourABFSPathHere**")
-    
+    raw_df = spark.read.parquet(output_parquet_path)    
+
     # Add dataload_datetime column with current timestamp
     opt_df = raw_df.withColumn("dataload_datetime", current_timestamp())
     
@@ -174,8 +177,6 @@ lab:
     # Display results
     display(opt_df.limit(1))
     ```
-
-1. 再次获取 ABFS 路径，并在运行单元格之前更新块中的代码 。
 
 1. 确认结果与优化代码之前的结果相同。
 
@@ -216,29 +217,16 @@ lab:
     opttable_df = spark.sql('SELECT * FROM yellow_taxi_opt')
     
     # Display results
-    display(opttable_df.limit(3))
+    display(opttable_df.limit(10))
     ```
 
-1. 现在，选择顶部菜单栏中的“全部运行”。
+1. 现在，为这两个查询中的第一个查询选择“**运行单元格**”按钮旁边的 &#9660; 箭头，然后从下拉列表中选择“**运行此单元格及其之下**”。
 
-这将运行所有代码单元格，并让你看到从开始到结束的完整过程。 你将能够看到优化代码块和非优化代码块之间的执行时间。
+    这将运行最后两个代码单元格。 请注意查询具有非优化数据的表和具有优化数据的表之间的执行时间差异。
 
 ## 清理资源
 
-在本练习中，你了解了如何创建：
-
-* 工作区
-* 湖屋
-* Fabric 笔记本
-* PySpark 代码，用于：
-  * 与外部数据源连接
-  * 将数据读取到 DataFrame
-  * 将 DataFrame 数据写入 Parquet 文件
-  * 读取 Parquet 文件中的数据
-  * 转换 DataFrame 中的数据
-  * 将 DataFrame 数据加载到 Delta 表
-  * 优化 Delta 表写入
-  * 使用 SQL 查询 Delta 表数据
+在本练习中，你在 Fabric 中将笔记本与 PySpark 配合使用来加载数据，并将其保存到 Parquet。 然后，你使用该 Parquet 文件进一步转换数据，并优化了 Delta 表写入。 最后，你使用 SQL 查询 Delta 表。
 
 如果已完成探索，可删除为本练习创建的工作区。
 
