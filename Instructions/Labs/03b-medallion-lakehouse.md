@@ -365,7 +365,7 @@ lab:
     
     # Display the first 10 rows of the dataframe to preview your data
 
-    display(dfdimDate_gold.head(10))
+    display(dfdimCustomer_silver .head(10))
     ```
 
      此处，你通过执行各种转换（例如删除重复项、选择特定列以及拆分“CustomerName”列以创建“First”和“Last”名称列）创建了一个新的数据帧 dfdimCustomer_silver。 结果是一个数据帧，其中包含已清理和结构化的客户数据，包括从“CustomerName”列中提取的单独“First”和“Last”名称列。
@@ -385,7 +385,7 @@ lab:
 
     # Display the first 10 rows of the dataframe to preview your data
 
-    display(dfdimDate_gold.head(10))
+    display(dfdimCustomer_gold.head(10))
     ```
 
     此处，将清理和转换客户数据 (dfdimCustomer_silver)，方法是执行左反联接以排除 dimCustomer_gold 表中已存在的重复项，然后使用 monotonically_increasing_id() 函数生成唯一的 CustomerID 值。
@@ -473,13 +473,13 @@ lab:
 14. 与对其他维度执行的操作类似，你需要确保产品表在新数据传入时保持最新。 在新代码块中，粘贴并运行以下代码：
 
     ```python
-       from delta.tables import *
+    from delta.tables import *
     
-       deltaTable = DeltaTable.forPath(spark, 'Tables/dimproduct_gold')
+    deltaTable = DeltaTable.forPath(spark, 'Tables/dimproduct_gold')
             
-      dfUpdates = dfdimProduct_gold
+    dfUpdates = dfdimProduct_gold
             
-      deltaTable.alias('silver') \
+    deltaTable.alias('silver') \
       .merge(
             dfUpdates.alias('updates'),
             'silver.ItemName = updates.ItemName AND silver.ItemInfo = updates.ItemInfo'
