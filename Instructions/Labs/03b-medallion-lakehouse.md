@@ -34,7 +34,7 @@ lab:
 
 1. 在 Power BI 门户左下角，选择 Power BI 图标并切换到“数据工程”体验 。 如果你未看到数据工程体验，请与 Fabric 管理员联系，并请求[启用 Fabric](https://learn.microsoft.com/fabric/admin/fabric-switch)。
 
-2. 在“**Synapse 数据工程**”主页中，新建名为“**销售**”的**湖屋**。
+2. 在“Synapse 数据工程”主页中，新建名为“销售”的湖屋。
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如果适用），然后将其上传到湖屋。
 
@@ -155,11 +155,11 @@ lab:
 
 10. 使用 ****&#9655;** (*运行单元格*)** 按钮运行单元格以执行代码。
 
-11. 在湖屋资源管理器窗格的“Tables”部分选择“...”，然后选择“刷新” 。 此时会看到列出的新 sales_silver 表。 **&#9650;** （三角形图标）表示它是一个 Delta 表。
+11. 在湖屋资源管理器窗格的“Tables”部分选择“...”，然后选择“刷新” 。 此时会看到列出的新 sales_silver 表。 &#9650;（三角形图标）表示它是一个 Delta 表。
 
     ![湖屋中 sales_silver 表的屏幕截图。](./Images/sales-silver-table.png)
 
-    > **注意**：如果看不到新表，请等待几秒钟，然后再次选择“**刷新**”，或刷新整个浏览器选项卡。
+    > 注意：如果看不到新表，请等待几秒钟，然后再次选择“刷新”，或刷新整个浏览器选项卡。
 
 12. 现在，你将对 Delta 表执行**更新插入操作**，根据特定条件更新现有记录，并在找不到匹配项时插入新记录。 添加新代码块并粘贴以下代码：
 
@@ -255,7 +255,7 @@ lab:
 
 2. 在湖屋资源管理器窗格中，选择“添加”，然后选择前面创建的“Sales”湖屋来添加“Sales”湖屋。   你将在资源管理器窗格的“Tables”部分看到列出的 sales_silver 表 。
 
-3. 在现有代码块中，删除样本文本并**添加以下代码**，以便将数据加载到数据帧并开始构建星型架构，然后运行它：
+3. 在现有代码块中，删除样本文本并添加以下代码，以便将数据加载到数据帧并开始构建星型架构，然后运行它：
 
    ```python
     # Load data to the dataframe as a starting point to create the gold layer
@@ -282,7 +282,7 @@ lab:
 
     > 注意：你可以随时运行 `display(df)` 命令来查看工作进度。 在这种情况下，可以运行“display(dfdimDate_gold)”来查看 dimDate_gold 数据帧的内容。
 
-5. 在新代码块中，**添加并运行以下代码**，为你的日期维度 **dimdate_gold** 创建数据帧：
+5. 在新代码块中，添加并运行以下代码，为你的日期维度 dimdate_gold 创建数据帧：
 
     ```python
     from pyspark.sql.functions import col, dayofmonth, month, year, date_format
@@ -302,7 +302,7 @@ lab:
     display(dfdimDate_gold.head(10))
     ```
 
-6. 你将代码分离到新的代码块中，以便了解和观察在转换数据时笔记本中发生的情况。 在另一个新代码块中，**添加并运行以下代码**以在新数据传入时更新日期维度：
+6. 你将代码分离到新的代码块中，以便了解和观察在转换数据时笔记本中发生的情况。 在另一个新代码块中，添加并运行以下代码以在新数据传入时更新日期维度：
 
     ```python
     from delta.tables import *
@@ -335,7 +335,7 @@ lab:
     ```
 
     恭喜！ 你的日期维度全部设置好了。 现在，你将创建客户维度。
-7. 要生成客户维度表，**添加新代码块**，然后粘贴并运行以下代码：
+7. 要生成客户维度表，添加新代码块，然后粘贴并运行以下代码：
 
     ```python
     from pyspark.sql.types import *
@@ -352,7 +352,7 @@ lab:
         .execute()
     ```
 
-8. 在新代码块中，**添加并运行以下代码**以删除重复的客户，选择特定列，然后拆分“CustomerName”列以创建“First”和“Last”姓名列：
+8. 在新代码块中，添加并运行以下代码以删除重复的客户，选择特定列，然后拆分“CustomerName”列以创建“First”和“Last”姓名列：
 
     ```python
     from pyspark.sql.functions import col, split
@@ -365,7 +365,7 @@ lab:
     
     # Display the first 10 rows of the dataframe to preview your data
 
-    display(dfdimDate_gold.head(10))
+    display(dfdimCustomer_silver .head(10))
     ```
 
      此处，你通过执行各种转换（例如删除重复项、选择特定列以及拆分“CustomerName”列以创建“First”和“Last”名称列）创建了一个新的数据帧 dfdimCustomer_silver。 结果是一个数据帧，其中包含已清理和结构化的客户数据，包括从“CustomerName”列中提取的单独“First”和“Last”名称列。
@@ -385,12 +385,12 @@ lab:
 
     # Display the first 10 rows of the dataframe to preview your data
 
-    display(dfdimDate_gold.head(10))
+    display(dfdimCustomer_gold.head(10))
     ```
 
     此处，将清理和转换客户数据 (dfdimCustomer_silver)，方法是执行左反联接以排除 dimCustomer_gold 表中已存在的重复项，然后使用 monotonically_increasing_id() 函数生成唯一的 CustomerID 值。
 
-10. 现在，可以确保客户表在新数据传入时保持最新状态。 **在新代码块中**，粘贴并运行以下代码：
+10. 现在，可以确保客户表在新数据传入时保持最新状态。 在新代码块中，粘贴并运行以下代码：
 
     ```python
     from delta.tables import *
@@ -470,16 +470,16 @@ lab:
     display(dfdimProduct_gold.head(10))
     ```
 
-14. 与对其他维度执行的操作类似，你需要确保产品表在新数据传入时保持最新。 **在新代码块中**，粘贴并运行以下代码：
+14. 与对其他维度执行的操作类似，你需要确保产品表在新数据传入时保持最新。 在新代码块中，粘贴并运行以下代码：
 
     ```python
-       from delta.tables import *
+    from delta.tables import *
     
-       deltaTable = DeltaTable.forPath(spark, 'Tables/dimproduct_gold')
+    deltaTable = DeltaTable.forPath(spark, 'Tables/dimproduct_gold')
             
-      dfUpdates = dfdimProduct_gold
+    dfUpdates = dfdimProduct_gold
             
-      deltaTable.alias('silver') \
+    deltaTable.alias('silver') \
       .merge(
             dfUpdates.alias('updates'),
             'silver.ItemName = updates.ItemName AND silver.ItemInfo = updates.ItemInfo'
@@ -503,7 +503,7 @@ lab:
 
       **构建好维度后，最后一步是创建事实数据表。**
 
-15. **在新代码块中**，粘贴并运行以下代码以创建**事实数据表**：
+15. 在新代码块中，粘贴并运行以下代码以创建事实数据表：
 
     ```python
     from pyspark.sql.types import *
@@ -520,7 +520,7 @@ lab:
         .execute()
     ```
 
-16. **在新代码块中**，粘贴并运行以下代码以创建**新的数据帧**，将销售数据与客户和产品信息（包括客户 ID、商品 ID、订单日期、数量、单价和税费）合并：
+16. 在新代码块中，粘贴并运行以下代码以创建新的数据帧，将销售数据与客户和产品信息（包括客户 ID、商品 ID、订单日期、数量、单价和税费）合并：
 
     ```python
     from pyspark.sql.functions import col
@@ -583,7 +583,7 @@ lab:
 
      此处，将使用 Delta Lake 的合并操作将新的销售额数据 (dffactSales_gold) 同步和更新到 factsales_gold 表。 此操作将比较现有数据（银表）和新数据（更新数据帧）之间的订单日期、客户 ID 和商品 ID，更新匹配记录并根据需要插入新记录。
 
-现在，你有了一个经过策划和建模的**金**层，可用于报告和分析。
+现在，你有了一个经过策划和建模的金层，可用于报告和分析。
 
 ## 创建数据集
 
