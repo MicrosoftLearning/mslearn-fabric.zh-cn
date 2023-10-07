@@ -23,9 +23,9 @@ Microsoft Fabric 中的 Data Activator 根据数据发生的情况采取操作�
 
     ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
-在本实验中，你将使用 Fabric 中的 Data Activator 创建一个 Reflex。 Data Activator 可以方便地提供一个示例数据集，供你用来探索 Data Activator 的功能。 可以使用此示例数据创建一个 Reflex，用于分析某些实时数据并创建一个触发器，以便在满足条件时发送电子邮件。
+在本实验中，你将使用 Fabric 中的 Data Activator 创建一个 Reflex。 Data Activator 可以方便地提供一个示例数据集，供你用来探索 Data Activator 的功能。 你将使用此示例数据创建一个 Reflex，用于分析某些实时数据并创建一个触发器，以便在满足条件时发送电子邮件。
 
-> 注意：Data Activator 示例进程会在后台生成一些随机数据。  创建的条件和筛选器越复杂，没有任何事件满足触发条件和筛选器的可能性就越大。 如果图形中未出现任何数据，请等待几分钟再刷新页面。 也就是说，你无需等待数据显示在图形中即可继续实验。
+> 注意：Data Activator 示例进程会在后台生成一些随机数据。 条件和筛选器越复杂，触发它们所需的时间就越长。 如果图形中未出现任何数据，请等待几分钟再刷新页面。 也就是说，你无需等待数据显示在图形中即可继续实验。
 
 ## 方案
 
@@ -65,11 +65,11 @@ Reflex 的主页屏幕分为两个部分：“设计”模式和“数据”模�
 
 ### 数据模式
 
-1. 如果你当前未进入“数据”模式，请选择屏幕左下角的“数据”选项卡。 在现实示例中，你可以在此处通过 EventStreams 和 Power BI 视觉对象添加自己的数据源。 对于本实验，你将使用 Data Activator 提供的示例数据。 对于 Data Activator 提供的示例数据，已经为其设置了三个用于监视包裹交付状态的 EventStreams。
+如果你当前未进入“数据”模式，请选择屏幕左下角的“数据”选项卡。 在现实示例中，你可以在此处通过 EventStreams 和 Power BI 视觉对象添加自己的数据源。 对于本实验，你将使用 Data Activator 提供的示例数据。 对于此示例，已经为其设置了三个用于监视包裹交付状态的 EventStreams。
 
 ![Data Activator Reflex 数据模式的屏幕截图。](./Images/data-activator-data-tab.png)
 
-1. 选择每个不同的事件以查看该事件处理的数据。
+选择每个不同的事件，并观察流中使用的数据。
 
 ![Data Activator Reflex 数据模式事件的屏幕截图。](./Images/data-activator-get-data-tab-event-2.png)
 
@@ -81,7 +81,7 @@ Reflex 的主页屏幕分为两个部分：“设计”模式和“数据”模�
 
 1. 如果你当前未进入“数据”模式，请选择屏幕左下角的“数据”选项卡。
 
-1. 选择“包裹运输中”事件。 请密切关注 PackageId、Temperature、ColdChainType、City 和 SpecialCare 列中的值    。 可以使用这些列来创建触发器。
+1. 选择“包裹运输中”事件。 请密切关注 PackageId、Temperature、ColdChainType、City 和 SpecialCare 列中的值    。 你将使用这些列来创建触发器。
 
 1. 如果“分配数据”对话框尚未在右侧打开，请选择屏幕右侧的“分配数据”按钮。
 
@@ -105,15 +105,17 @@ Reflex 的主页屏幕分为两个部分：“设计”模式和“数据”模�
 
 ## 创建触发器
 
-让我们回顾一下你希望触发器执行的操作：你希望创建一个 Reflex，以便在处方药包裹的温度高于或低于特定阈值时向发货部门发送电子邮件。理想温度应该介于 33 度到 41 度之间。由于 Reflex 事件已包含类似的触发器，因此你专门为发往 Redmond 市的包裹创建一个触发器。
+让我们回顾一下你希望触发器执行的操作：你希望创建一个 Reflex，以便在处方药包裹的温度高于或低于特定阈值时向发货部门发送电子邮件。理想温度应该介于 33 度到 41 度之间。由于 Reflex 事件已包含类似的触发器，因此你将专门为发往 Redmond 市的包裹创建一个触发器。
 
-1. 在顶部菜单中选择“新建触发器”按钮。 已创建一个默认名称为“无标题”的新触发器，现在请将名称更改为“药物温度超出范围”以更好地定义触发器。
+1. 在“Redmond Packages”对象的“包裹运输中”事件中，选择顶部菜单上的“新建触发器”按钮。 已创建一个默认名称为“无标题”的新触发器，现在请将名称更改为“药物温度超出范围”以更好地定义触发器。
 
     ![Data Activator Reflex 设计 - 创建新触发器的屏幕截图。](./Images/data-activator-trigger-new.png)
 
-1. 现在让我们选择用于触发 Reflex 的属性或事件列。 由于在创建对象时创建了多个属性，因此请选择“现有属性”按钮并选择“温度”属性。 选择此属性后，应会返回一个包含示例历史温度值的图形。
+1. 现在让我们选择用于触发 Reflex 的属性或事件列。 由于在创建对象时创建了多个属性，因此请选择“现有属性”按钮并选择“温度”属性。 
 
     ![Data Activator Reflex 设计 - 选择属性的屏幕截图。](./Images/data-activator-trigger-select-property.png)
+
+    选择此属性后，应会返回一个包含示例历史温度值的图形。
 
     ![Data Activator 历史值属性图形的屏幕截图。](./Images/data-activator-trigger-property-sample-graph.png)
 
@@ -125,11 +127,11 @@ Reflex 的主页屏幕分为两个部分：“设计”模式和“数据”模�
 
     ![Data Activator Reflex 设计 - 输入条件值的屏幕截图。](./Images/data-activator-trigger-select-condition-define.png)
 
-1. 到目前为止，你定义了触发触发器所依据的属性和条件，但这种定义尚不包括全部所需的参数。 你仍然需要确保触发器仅针对城市“Redmond”和特殊护理类型“医疗”触发。 让我们继续为这些条件添加几个筛选器。  选择“添加筛选器”按钮，然后选择“City”属性。 输入 Redmond 作为值。 然后，再次选择“添加筛选器”按钮并选择“SpecialCare”属性。 输入 Medicine 作为值。
+1. 到目前为止，你定义了触发触发器所依据的属性和条件，但尚未包括你需要的所有参数。 你仍然需要确保触发器仅针对城市“Redmond”和特殊护理类型“医疗”触发。 让我们继续为这些条件添加几个筛选器。  选择“添加筛选器”按钮，将属性设置为“City”，将关系设置为“等于”，然后输入“Redmond”作为值。 然后，添加包含“SpecialCare”属性的一个新筛选器，将关系设置为“等于”，然后输入“Medicine”作为值。
 
     ![Data Activator Reflex 设计 - 添加筛选器的屏幕截图。](./Images/data-activator-trigger-select-condition-add-filter.png)
 
-1. 让我们再添加一个筛选器，以确保药物得到冷藏。 选择“添加筛选器”按钮，然后选择“ColdChainType”属性。 输入 Refrigerated 作为值。
+1. 让我们再添加一个筛选器，以确保药物得到冷藏。 选择“添加筛选器”按钮，设置“ColdChainType”属性，将关系设置为“等于”，然后输入“Refrigerated”作为值。
 
     ![Data Activator Reflex 设计 - 添加筛选器的屏幕截图。](./Images/data-activator-trigger-select-condition-add-filter-additional.png)
 
@@ -144,13 +146,13 @@ Reflex 的主页屏幕分为两个部分：“设计”模式和“数据”模�
     - 标题：温度太高或太低
     - 附加信息：从复选框列表中选择“Temperature”属性。
 
-    ![Data Activator Reflex 设计 - 启动触发器的屏幕截图。](./Images/data-activator-trigger-start.png)
+    ![Data Activator 定义操作的屏幕截图。](./Images/data-activator-trigger-define-action.png)
 
 1. 选择“保存”，然后从顶部菜单中选择“启动” 。
 
 现已在 Data Activator 中创建并启动了一个触发器。
 
-## 更新触发器
+## 更新和停止触发器
 
 此触发器的唯一问题是，虽然触发器发送了包含温度信息的电子邮件，但触发器并未发送包裹的 PackageId。 让我们继续更新触发器以包含 PackageId。
 
@@ -172,11 +174,7 @@ Reflex 的主页屏幕分为两个部分：“设计”模式和“数据”模�
 
     ![Data Activator - 更新触发器的屏幕截图。](./Images/data-activator-trigger-updated.png)
 
-触发器现已更新。
-
-## 停止触发器
-
-若要停止触发器，请从顶部菜单中选择“停止”按钮。
+1. 从顶部菜单中选择“停止”按钮以停止触发器。
 
 ## 清理资源
 
