@@ -1,11 +1,11 @@
 ---
 lab:
-  title: Microsoft Fabric 中的 Real-Time Analytics 入门
-  module: Get started with Real-Time Analytics in Microsoft Fabric
+  title: Real-Time Analytics 和 Microsoft Fabric 中的 Eventstream 入门
+  module: Get started with Eventstream in Real-Time Analytics and Microsoft Fabric
 ---
-# 实时分析 (RTA) 中的 EventStream 入门
+# Real-Time Analytics (RTA) 中的 EventStream 入门
 
-事件流是 Microsoft Fabric 中的一项功能，可捕获、转换实时事件并将其路由到各种目标，并且无需编写代码。 可向事件流添加事件数据源、路由目标以及事件处理程序（如果需要转换）。 Microsoft Fabric 的 EventStore 是一个监视选项，用于维护群集中的事件，并提供一种方法来了解群集或工作负载在给定时间点的状态。 可以向 EventStore 服务查询可用于群集中的每个实体和实体类型的事件。 这意味着可在群集、节点、应用程序、服务、分区和分区副本等不同级别查询事件。 EventStore 服务还能够将群集中的事件相关联。 通过查看在同一时间从可能已相互影响的不同实体写入的事件，EventStore 服务能够将这些事件进行关联来帮助查明群集中发生各项活动的原因。 另一种监视和诊断 Microsoft Fabric 群集的方法是使用 EventFlow 聚合和收集事件。
+事件流是 Microsoft Fabric 中的一项功能，可捕获、转换实时事件并将其路由到各种目标，并且无需编写代码。 可向事件流添加事件数据源、路由目标以及事件处理程序（如果需要转换）。 Microsoft Fabric 的 EventStore 是一个监视选项，用于维护群集中的事件，并提供一种方法来了解群集或工作负载在给定时间点的状态。 可以向 EventStore 服务查询可用于群集中的每个实体和实体类型的事件。 这意味着可在群集、节点、应用程序、服务、分区和分区副本等不同级别查询事件。 EventStore 服务还能够将群集中的事件相关联。 通过查看在同一时间从可能已相互影响的不同实体写入的事件，EventStore 服务可以将这些事件进行关联来帮助查明群集中发生各项活动的原因。 另一种监视和诊断 Microsoft Fabric 群集的方法是使用 EventFlow 聚合和收集事件。
 
 <!--
 
@@ -49,7 +49,7 @@ I removed the piece on Power BI reports because we don't have them do that in th
 
 - 创建 KQL 数据库
 - 将数据复制到 OneLake
-- 创建 Eventstream
+- 创建事件流
 - 将数据从 Eventstream 流式传输到 KQL 数据库
 - 使用 KQL 和 SQL 探索数据
 
