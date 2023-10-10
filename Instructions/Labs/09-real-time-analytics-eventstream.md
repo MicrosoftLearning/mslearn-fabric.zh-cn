@@ -1,7 +1,7 @@
 ---
 lab:
-  title: Real-Time Analytics 和 Microsoft Fabric 中的 Eventstream 入门
-  module: Get started with Eventstream in Real-Time Analytics and Microsoft Fabric
+  title: Microsoft Fabric 中的 Real-Time Analytics 入门
+  module: Get started with Real-Time Analytics in Microsoft Fabric
 ---
 # Real-Time Analytics (RTA) 中的 EventStream 入门
 
@@ -63,38 +63,38 @@ For "enable data copy to OneLake" - are you adding a lakehouse as a destination?
 
 1. 在“实时分析”中，选择“KQL 数据库”框 。
 
-   ![选择 kqldatabase](./Images/select-kqldatabase.png)
+   ![选择 kqldatabase 的图像](./Images/select-kqldatabase.png)
 
 2. 系统会提示为 KQL 数据库命名
 
-   ![为 kqldatabase 命名](./Images/name-kqldatabase.png)
+   ![名称 kqldatabase 的图像](./Images/name-kqldatabase.png)
 
 3. 为 KQL 数据库指定一个你能记住的名称（如 MyStockData），然后按“创建” 。
 
 1. 在“数据库详细信息”面板中，选择铅笔图标以在 OneLake 中打开可用性。
 
-   ![启用 onlake](./Images/enable-onelake-availability.png)
+   ![启用 onlake 的图像](./Images/enable-onelake-availability.png)
 
 2. 确保将按钮切换到“活动”，然后选择“完成” 。
 
-   ![启用 onelake 切换](./Images/enable-onelake-toggle.png)
+   ![启用 onelake 切换的图像](./Images/enable-onelake-toggle.png)
 
 ## 创建 Eventstream
 
 1. 在菜单栏中，选择“实时分析”（该图标类似于 ![rta 徽标](./Images/rta_logo.png)）
 2. 在“新建”下，选择“EventStream (预览)” 
 
-   ![选择事件流](./Images/select-eventstream.png)
+   ![选择事件流的图像](./Images/select-eventstream.png)
 
 3. 系统会提示为 Eventstream 命名。 为 EventStream 指定一个你能记住的名称（如 *MyStockES），然后按“创建”按钮 。
 
-   ![为事件流命名](./Images/name-eventstream.png)
+   ![名称事件流的图像](./Images/name-eventstream.png)
 
 ## 建立 eventstream 源和目标
 
 1. 在 Eventstream 画布中，从下拉列表中选择“新建源”，然后选择“示例数据” 。
 
-   ![EventStream 画布](./Images/real-time-analytics-canvas.png)
+   ![EventStream 画布的图像](./Images/real-time-analytics-canvas.png)
 
 2. 输入下表所示的示例数据的值，然后选择“添加并配置”。
 
@@ -105,7 +105,7 @@ For "enable data copy to OneLake" - are you adding a lakehouse as a destination?
 
 3. 现在，通过选择“新建目标”，然后选择“KQL 数据库”来添加目标 
 
-   ![EventStream 目标](./Images/new-kql-destination.png)
+   ![EventStream 目标的图像](./Images/new-kql-destination.png)
 
 4. 在 KQL 数据库配置中，使用下表完成配置。
 
@@ -121,22 +121,22 @@ For "enable data copy to OneLake" - are you adding a lakehouse as a destination?
 
 1. 在“引入数据”对话框页中，选择“新建表”，然后输入 MyStockData 。
 
-   ![插入股票数据](./Images/ingest-stream-data-to-kql.png)
+   ![插入股票数据的图像](./Images/ingest-stream-data-to-kql.png)
 
 2. 选择“下一步: 源”。
 3. 在“源”页中，确认“数据连接名称”，然后选择“下一步: 架构”  。
 
-   ![数据源名称 (data source name)](./Images/ingest-data.png)
+   ![数据源名称的图像](./Images/ingest-data.png)
 
 4. 传入的数据是未压缩的示例数据，因此将压缩类型保留为未压缩。
 5. 从“数据格式”下拉列表中，选择“JSON” 。
 
-   ![更改为 JSON](./Images/injest-as-json.png)
+   ![更改为 JSON 的图像](./Images/injest-as-json.png)
 
 6. 之后可能需要将某些或所有数据类型从传入流更改为目标表。
 7. 可选择“向下箭头”>“更改数据类型”来完成此任务。 然后验证这些列是否反映了正确的数据类型：
 
-   ![更改数据类型](./Images/change-data-type-in-es.png)
+   ![更改数据类型的图像](./Images/change-data-type-in-es.png)
 
 8. 完成后，选择“下一步: 总结”
 
@@ -153,15 +153,15 @@ Kusto 查询语言 (KQL) 是处理数据并返回结果的只读请求。 该请
 1. 浏览到新创建并经过水化处理的名为 MyStockData 的 KQL 数据库。
 2. 在数据树中，选择 MyStockData 表上的“更多”菜单 [...]。 然后选择“查询表”>“显示任意 100 条记录”。
 
-   ![KQL 查询集](./Images/kql-query-sample.png)
+   ![KQL 查询集的图像](./Images/kql-query-sample.png)
 
 3. 示例查询将在“探索数据”窗格中打开，其中已填充表上下文。 第一个查询使用 take 运算符返回示例数量的记录，并且有助于初步了解数据结构和可能的值。 自动填充的示例查询将自动运行。 可在结果窗格中查看查询结果。
 
-   ![KQL 查询结果](./Images/kql-query-results.png)
+   ![KQL 查询结果的图像](./Images/kql-query-results.png)
 
 4. 返回到数据树以选择下一个查询，该查询使用 where 运算符和 between 运算符返回过去 24 小时内引入的记录。
 
-   ![过去 24 小时内的 KQL 查询结果](./Images/kql-query-results-last24.png)
+   ![KQL 查询结果 (最近 24 个) 的图像](./Images/kql-query-results-last24.png)
 
 > 注意：请注意，流式处理数据量超出了查询限制。 此行为可能会有所不同，具体取决于流式传输到数据库的数据量。
 
@@ -173,11 +173,11 @@ Kusto 查询语言 (KQL) 是处理数据并返回结果的只读请求。 该请
 
 1. 返回数据树，选择 MyStockData 表上的“更多”菜单 [...]。 选择“查询表”>“SQL”>“显示任意 100 条记录”。
 
-   ![sql 查询示例](./Images/sql-query-sample.png)
+   ![SQL 查询示例的图像](./Images/sql-query-sample.png)
 
 2. 将光标置于查询中的某个位置，然后选择“运行”或按 Shift + Enter 。
 
-   ![SQL 查询结果](./Images/sql-query-results.png)
+   ![SQL 查询结果的图像](./Images/sql-query-results.png)
 
 可继续使用内置函数进行导航，并使用 SQL 或 KQL 熟悉数据。 此课程到此结束。
 
