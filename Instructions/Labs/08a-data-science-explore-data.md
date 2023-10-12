@@ -6,9 +6,9 @@ lab:
 
 # 使用笔记本电脑浏览 Microsoft Fabric 中的数据
 
-在此实验室里，将使用笔记本进行数据探索。 笔记本是强大的工具，用于交互式地探索和分析数据。 在本练习中，将了解如何创建和使用笔记本来探索数据集、生成摘要统计信息以及创建可视化效果以更好地理解数据。 在此实验室结束时，你将对如何使用笔记本进行数据探索和分析有深入的理解。
+在此实验中，将使用笔记本进行数据探索。 笔记本是强大的工具，用于交互式地探索和分析数据。 在本练习中，将了解如何创建和使用笔记本来探索数据集、生成摘要统计信息以及创建可视化效果以更好地理解数据。 此实验结束时，你将对如何使用笔记本进行数据探索和分析有深入的理解。
 
-完成本实验室大约需要 45 分钟。
+完成本实验室大约需要 30 分钟。
 
 > 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
@@ -27,7 +27,7 @@ lab:
 
 若要训练模型，可以创建笔记本。 笔记本提供了一个交互式环境，你可在其中编写和运行作为试验的（多种语言的）代码。
 
-1. 在 Power BI 门户左下角，选择“数据工程”图标并切换到“数据科学”体验 。
+1. 在 Power BI 门户的左下角，选择“**PowerBI**”图标并切换到“**数据科学**”体验。
 
 1. 在“数据科学”主页中，创建新的笔记本 。
 
@@ -49,7 +49,7 @@ lab:
 
 现在可以运行代码来获取数据了。 将使用 Azure 开放数据集中的[**糖尿病数据集**](https://learn.microsoft.com/azure/open-datasets/dataset-diabetes?tabs=azureml-opendatasets?azure-portal=true)。 加载数据后，将数据转换为 Pandas 数据帧，这是处理行和列中数据的常见结构。
 
-1. 在笔记本中，使用最新单元格下方的“ **+ 代码**”图标将新代码单元格添加到笔记本中。 在其中输入以下代码：
+1. 在笔记本中，使用最新单元格下方的“ **+ 代码**”图标将新代码单元格添加到笔记本中。 输入以下代码以将数据集加载到数据帧中。
 
     ```python
     # Azure storage access info for open dataset diabetes
@@ -138,7 +138,7 @@ lab:
     print(desc_stats)
     ```
 
-    平均 `age` 约为 48.5 年，标准偏差为 13.1 年。 年龄最小的是 19 岁，年龄最大的是 79 岁。 平均 `BMI` 约为 26.4，根据 [WHO 标准](https://www.who.int/health-topics/obesity#tab=tab_1)，属于**超重**类别。 最小值 `BMI` 为 18，最大值为 42.2。
+    平均年龄约为 48.5 年，标准偏差为 13.1 年。 年龄最小的是 19 岁，年龄最大的是 79 岁。 平均 `BMI` 约为 26.4，根据 [WHO 标准](https://www.who.int/health-topics/obesity#tab=tab_1)，属于**超重**类别。 最小值 `BMI` 为 18，最大值为 42.2。
 
 ## 绘制数据分布
 
@@ -152,12 +152,12 @@ lab:
     import numpy as np
     
     # Calculate the mean, median of the BMI variable
-    mean = df_pnd['BMI'].mean()
-    median = df_pnd['BMI'].median()
+    mean = df['BMI'].mean()
+    median = df['BMI'].median()
     
     # Histogram of the BMI variable
     plt.figure(figsize=(8, 6))
-    plt.hist(df_pnd['BMI'], bins=20, color='skyblue', edgecolor='black')
+    plt.hist(df['BMI'], bins=20, color='skyblue', edgecolor='black')
     plt.title('BMI Distribution')
     plt.xlabel('BMI')
     plt.ylabel('Frequency')
@@ -203,7 +203,7 @@ lab:
     fig, ax = plt.subplots(figsize=(7, 5))
     
     # Replace numeric values with labels
-    df_pnd['SEX'] = df_pnd['SEX'].replace({1: 'Male', 2: 'Female'})
+    df['SEX'] = df['SEX'].replace({1: 'Male', 2: 'Female'})
     
     sns.boxplot(x='SEX', y='BP', data=df, ax=ax)
     ax.set_title('Blood pressure across Gender')
