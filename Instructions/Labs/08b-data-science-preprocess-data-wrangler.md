@@ -4,7 +4,7 @@ lab:
   module: Preprocess data with Data Wrangler in Microsoft Fabric
 ---
 
-# 使用笔记本在 Microsoft Fabric 中训练模型
+# 使用 Microsoft Fabric 中的数据整理器对数据进行预处理
 
 在本实验室中，你将了解如何使用 Microsoft Fabric 中的数据整理器对数据进行预处理，以及如何使用常见数据科学操作库生成代码。
 
@@ -23,26 +23,11 @@ lab:
 
     ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
-## 创建湖屋并上传文件
-
-有了工作区后，可在门户中切换到数据科学体验，并为要分析的数据文件创建一个数据湖屋。
-
-1. 在 Power BI 门户左下角，选择 Power BI 图标并切换到“数据工程”体验 。
-1. 在“数据工程”主页中，使用所选名称创建一个新的湖屋 。
-
-    大约一分钟后，将完成创建一个不包含表或文件的新湖屋 。 需要将一些数据引入数据湖屋进行分析。 可通过多种方法执行此操作，但在本练习中，只需将文本文件的文件夹下载并解压缩到本地计算机或实验室 VM（如果适用），然后将其上传到湖屋。
-
-1. 待办事项：从 [https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/XXXXX.csv](https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/XXXXX.csv) 下载此练习的 `dominicks_OJ.csv` CSV 文件并将其保存。
-
-
-1. 返回到包含湖屋的 Web 浏览器标签页，在“湖屋”窗格的“文件”节点的“...”菜单中，依次选择“上传”和“上传文件”，然后将 dominicks_OJ.csv 文件从本地计算机（或实验室 VM，如适用）上传到湖屋     。
-6. 上传文件后，展开“文件”并验证 CSV 文件是否已上传。
-
 ## 创建笔记本
 
 若要训练模型，可以创建笔记本。 笔记本提供了一个交互式环境，你可在其中编写和运行作为试验的（多种语言的）代码。
 
-1. 在 Power BI 门户左下角，选择“数据工程”图标并切换到“数据科学”体验 。
+1. 在 Power BI 门户的左下角，选择“PowerBI”图标并切换到“数据科学”体验 。
 
 1. 在“数据科学”主页中，创建新的笔记本 。
 
@@ -55,58 +40,88 @@ lab:
 1. 使用 &#128393;（“编辑”）按钮将单元格切换到编辑模式，然后删除内容并输入以下文本：
 
     ```text
-   # Train a machine learning model and track with MLflow
+   # Perform data exploration for data science
 
-   Use the code in this notebook to train and track models.
+   Use the code in this notebook to perform data exploration for data science.
     ``` 
 
 ## 将数据加载到数据帧中
 
-现在，你已准备好运行代码来准备数据和训练模型。 若要处理数据，需要使用数据帧。 Spark 中的数据帧类似于 Python 中的 Pandas 数据帧，提供一种用于处理行和列中的数据的通用结构。
+现在可以运行代码来获取数据了。 将使用 Azure 开放数据集中的 [OJ Sales 数据集](https://learn.microsoft.com/en-us/azure/open-datasets/dataset-oj-sales-simulated?tabs=azureml-opendatasets?azure-portal=true)。 加载数据后，将数据转换为 Pandas 数据帧，这是数据整理器支持的结构。
 
-1. 在“添加湖屋”窗格中，选择“添加”以添加湖屋。 
-1. 选择“现有湖屋”，然后选择“添加” 。
-1. 选择在上一部分创建的湖屋。
-1. 展开“文件”文件夹，以便在笔记本编辑器旁边列出 CSV 文件。
-1. 在“churn.csv”的“...”菜单中，选择“加载数据” > “Pandas”   。 应在笔记本中添加包含以下代码的新代码单元格：
+1. 在笔记本中，使用最新单元格下方的“ **+ 代码**”图标将新代码单元格添加到笔记本中。 输入以下代码以将数据集加载到数据帧中。
 
     ```python
-    import pandas as pd
-    df = pd.read_csv("/lakehouse/default/" + "Files/dominicks_OJ.csv") 
-    display(df.head(5))
+    # Azure storage access info for open dataset diabetes
+    blob_account_name = "azureopendatastorage"
+    blob_container_name = "ojsales-simulatedcontainer"
+    blob_relative_path = "oj_sales_data"
+    blob_sas_token = r"" # Blank since container is Anonymous access
+    
+    # Set Spark config to access  blob storage
+    wasbs_path = f"wasbs://%s@%s.blob.core.windows.net/%s" % (blob_container_name, blob_account_name, blob_relative_path)
+    spark.conf.set("fs.azure.sas.%s.%s.blob.core.windows.net" % (blob_container_name, blob_account_name), blob_sas_token)
+    print("Remote blob path: " + wasbs_path)
+    
+    # Spark reads csv
+    df = spark.read.csv(wasbs_path, header=True)
     ```
 
-    > 提示：可以隐藏左侧包含文件的窗格，方法是使用其 << 图标 。 这样做有助于专注于笔记本。
-
-1. 使用单元格左侧的“&#9655; 运行单元格”按钮运行单元格。
+1. 使用单元格左侧的“&#9655; 运行单元格”按钮运行单元格。 或者，可以按键盘上的 `SHIFT` + `ENTER` 来运行单元格。
 
     > 注意：由于这是你第一次在此会话中运行 Spark 代码，因此必须启动 Spark 池。 这意味着会话中的第一次运行可能需要一分钟左右才能完成。 后续运行速度会更快。
 
+1. 使用单元格输出下方的“+ 代码”图标将新的代码单元格添加到笔记本，并在其中输入以下代码：
+
+    ```python
+    import pandas as pd
+
+    df = df.toPandas()
+    df = df.sample(n=500, random_state=1)
+    
+    df['WeekStarting'] = pd.to_datetime(df['WeekStarting'])
+    df['Quantity'] = df['Quantity'].astype('int')
+    df['Advert'] = df['Advert'].astype('int')
+    df['Price'] = df['Price'].astype('float')
+    df['Revenue'] = df['Revenue'].astype('float')
+    
+    df = df.reset_index(drop=True)
+    df.head(4)
+    ```
+
+1. 单元格命令完成后，查看单元格下方的输出，该输出应如下所示：
+
+    ```
+        WeekStarting    Store   Brand       Quantity    Advert  Price   Revenue
+    0   1991-10-17      947     minute.maid 13306       1       2.42    32200.52
+    1   1992-03-26      1293    dominicks   18596       1       1.94    36076.24
+    2   1991-08-15      2278    dominicks   17457       1       2.14    37357.98
+    3   1992-09-03      2175    tropicana   9652        1       2.07    19979.64
+    ```
+
+    输出显示 OJ Sales 数据集的前四行。
+
 ## 查看摘要统计信息
 
-当数据整理器启动时，它会在“摘要”面板中生成所显示的数据帧的描述性概述。 
+由于已加载数据，下一步是使用数据整理器对其进行预处理。 预处理是所有机器学习工作流中的关键步骤。 它涉及清理数据，并将数据转换为可馈送到机器学习模型中的格式。
 
-1. 选择顶部菜单中的“数据”，然后选择“数据整理器”下拉列表以浏览 `df` 数据集。
+1. 在笔记本功能区中选择“数据”，然后选择“启动数据整理器”下拉列表 。
 
-    ![“启动数据整理器”选项的屏幕截图。](./Images/launch-data-wrangler.png)
+1. 选择 `df` 数据集。 当数据整理器启动时，它会在“摘要”面板中生成所显示的数据帧的描述性概述。 
 
-1. 选择“大型 HH”列，观察你能够多么轻松地确定此特征的数据分布。
+1. 选择“收入”特征，并观察此特征的数据分布。
 
-    ![“数据整理器”页的屏幕截图，其中显示了特定列的数据分布。](./Images/data-wrangler-distribution.png)
-
-    请注意，此特征遵循正态分布。
-
-1. 检查“摘要”侧面板，并观察百分位范围。 
+1. 查看“摘要”侧面板详细信息，并观察统计信息值。
 
     ![“数据整理器”页的屏幕截图，其中显示了摘要面板详细信息。](./Images/data-wrangler-summary.png)
 
-    可以看到，大多数数据位于 **0.098** 和 **0.132** 之间，并且 50% 的数据值在该范围内。
+    可以从中得出哪些见解？ 平均收入约为 33,459.54 美元，标准偏差为 8,032.23 美元 。 这表明收入值分散在平均值附近约 8,032.23 美元的范围内。
 
 ## 设置文本数据格式
 
 现在，让我们对 **Brand** 特征应用一些转换。
 
-1. 在“数据整理器”页上，选择 `Brand` 特征。
+1. 在“数据整理器”仪表板上，选择网格上的 `Brand` 特征。
 
 1. 导航到“操作”面板，展开“查找和替换”，然后选择“查找和替换”。
 
@@ -115,49 +130,62 @@ lab:
     - 旧值："."
     - 新值：" "（空格字符）
 
-    ![“数据整理器”页面的屏幕截图，其中显示了“查找和替换”面板。](./Images/data-wrangler-find.png)
-
     你可以在显示网格中看到自动预览的操作结果。
 
-1. 选择“应用”。
+1. 选择**应用**。
 
 1. 返回到“操作”面板，展开“格式” 。
 
-1. 选择“将文本转换为大写”。
-
-1. 在“将文本转换为大写”面板上，选择“应用”。 
+1. 选择“将文本转换为大写”。 切换“将所有单词设为大写”切换开关，然后选择“应用” 。
 
 1. 选择“将代码添加到笔记本”。 此外，还可以将转换后的数据集另存为 .csv 文件。
 
-    请注意，代码会自动复制到笔记本单元格，并可供使用。
+    >注意：代码会自动复制到笔记本单元格，并可供使用。 
 
-1. 运行代码。
+1. 将第 10 行和第 11 行替换为代码 `df = clean_data(df)`，因为数据整理器中生成的代码不会覆盖原始数据帧。 最终块应如下所示：
+ 
+    ```python
+    def clean_data(df):
+        # Replace all instances of "." with " " in column: 'Brand'
+        df['Brand'] = df['Brand'].str.replace(".", " ", case=False, regex=False)
+        # Convert text to capital case in column: 'Brand'
+        df['Brand'] = df['Brand'].str.title()
+        return df
+    
+    df = clean_data(df)
+    ```
 
-> 重要说明：生成的代码不会覆盖原始数据帧。 
+1. 运行代码单元格，并检查 `Brand` 变量。
 
-你已了解如何使用“数据整理器”操作轻松生成代码并操作文本数据。 
+    ```python
+    df['Brand'].unique()
+    ```
 
-## 应用独热编码器转换
+    结果显示 Minute Maid、Dominicks 和 Tropicana  。
 
-现在，让我们生成代码，以应用独热编码器转换作为预处理步骤。
+你已了解如何使用数据整理器以图形方式操作文本数据并轻松生成代码。
 
-1. 选择顶部菜单中的“数据”，然后选择“数据整理器”下拉列表以浏览 `df` 数据集。
+## 应用独热编码转换
 
-1. 返回到“操作”面板，展开“公式” 。
+现在，让我们生成代码，在预处理步骤的过程中将独热编码转换应用于我们的数据。 为了使方案更加实用，我们首先生成一些示例数据。 这样，我们就能够模拟现实世界的情况，并为自身提供一个可行的特征。
 
-1. 选择“独热编码”。
+1. 在 `df` 数据帧的顶部菜单中启动数据整理程序。
+
+1. 选择网格上的 `Brand` 特征。 
+
+1. 在“操作”面板上，展开“公式”，然后选择“独热编码”  。
 
 1. 在“独热编码”面板中，选择“应用”。
 
-    导航到数据整理器显示网格的末尾。 请注意，它添加了三个新特征，并移除了 `Brand` 特征。
+    导航到数据整理器显示网格的末尾。 请注意，它添加了三个新特征（`Brand_Dominicks`、`Brand_Minute Maid` 和 `Brand_Tropicana`），并移除了 `Brand` 特征。
 
-1. 选择“将代码添加到笔记本”。
-
-1. 运行代码。
+1. 关闭数据整理器而不生成代码。
 
 ## 排序和筛选操作
 
-1. 选择顶部菜单中的“数据”，然后选择“数据整理器”下拉列表以浏览 `df` 数据集。
+假设我们需要查看特定商店的收入数据，然后对产品价格进行排序。 在以下步骤中，我们使用数据整理器筛选和分析 `df` 数据帧。 
+
+1. 针对 `df` 数据帧启动据整理器。
 
 1. 在“操作”面板上，展开“排序和筛选”。
 
@@ -167,48 +195,34 @@ lab:
     
     - 目标列：Store
     - 运算：等于
-    - 值：2
+    - 值：1227
 
-1. 选择“应用”。
+1. 选择“应用”，并注意数据整理器显示网格中的更改。
 
-    请注意数据整理器显示网格中的更改。
+1. 选择“收入”特征，然后查看“摘要”侧面板详细信息 。
+
+    可以从中得出哪些见解？ 偏度为 -0.751，表示稍微向左倾斜（负倾斜）。 这意味着，分布的左尾部略长于右尾部。 换句话说，有许多时段的收入明显低于平均值。
 
 1. 返回到“操作”面板，展开“排序和筛选”。
 
-1. 选择“对值进行排序”
+1. 选择“对值进行排序”。
 
-1. 在“价格”面板上，添加以下条件：
+1. 在“对值进行排序”面板上，选择以下属性：
     
     - 列名：Price
     - 排序顺序：降序
 
-1. 选择“应用”。
+1. 选择**应用**。
 
-    请注意数据整理器显示网格中的更改。
-
-## 聚合数据
-
-1. 返回到“操作”面板，选择“分组依据和聚合”。
-
-1. 在“分组依据列:”属性上，选择 `Store` 特征。
-
-1. 选择“添加聚合”。
-
-1. 在“要聚合的列”属性上，选择 `Quantity` 特征。
-
-1. 为“聚合类型”属性选择“计数”。
-
-1. 选择“应用”。 
-
-    请注意数据整理器显示网格中的更改。
+    商店 1227 的最高产品价格为 2.68 美元 。 只有几条记录时，可以更轻松地确定最高的产品价格，但请考虑处理数千个结果时的复杂性。
 
 ## 浏览和移除步骤
 
-假设你犯了一个错误，需要移除你在上一步中创建的聚合。 请按以下步骤来移除它：
+假设你犯了一个错误，需要移除你在上一步中创建的排序。 请按以下步骤来移除它：
 
-1. 展开“清理步骤”面板。
+1. 导航到“清理步骤”面板。
 
-1. 选择“分组依据和聚合”步骤。
+1. 选择“对值进行排序”步骤。
 
 1. 选择删除图标以将其移除。
 
@@ -216,11 +230,62 @@ lab:
 
     > 重要说明：网格视图和摘要仅限于当前步骤。
 
-    请注意，更改将还原到上一步，即“对值进行排序”步骤。
+    请注意，更改将还原到上一步，即“筛选”步骤。
 
-1. 选择“将代码添加到笔记本”。
+1. 关闭数据整理器而不生成代码。
 
-1. 运行代码。
+## 聚合数据
+
+假设我们需要了解每个品牌产生的平均收入。 在以下步骤中，我们使用数据整理器对 `df` 数据帧执行分组依据操作。
+
+1. 针对 `df` 数据帧启动据整理器。
+
+1. 返回到“操作”面板，选择“分组依据和聚合”。
+
+1. 在“分组依据列:”属性上，选择 `Brand` 特征。
+
+1. 选择“添加聚合”。
+
+1. 在“要聚合的列”属性上，选择 `Revenue` 特征。
+
+1. 为“聚合类型”属性选择“平均值” 。
+
+1. 选择**应用**。 
+
+1. 选择“将代码添加到笔记本”。 
+
+1. 将 `Brand` 变量转换中的代码与 `clean_data(df)` 函数中的聚合步骤生成的代码组合在一起。 最终块应如下所示：
+ 
+    ```python
+    def clean_data(df):
+        # Replace all instances of "." with " " in column: 'Brand'
+        df['Brand'] = df['Brand'].str.replace(".", " ", case=False, regex=False)
+        # Convert text to capital case in column: 'Brand'
+        df['Brand'] = df['Brand'].str.title()
+
+        # Performed 1 aggregation grouped on column: 'Brand'
+        df = df.groupby(['Brand']).agg(Revenue_mean=('Revenue', 'mean')).reset_index()
+
+        return df
+    
+    df = clean_data(df)
+    ```
+
+1. 运行单元格代码。
+
+1. 检查数据帧中的数据。
+
+    ```python
+    print(df)
+    ``` 
+
+    结果：
+    ```
+             Brand  Revenue_mean
+    0    Dominicks  33206.330958
+    1  Minute Maid  33532.999632
+    2    Tropicana  33637.863412
+    ```
 
 你为某些预处理操作生成了代码，并将其作为函数保存回笔记本，然后可以根据需要重复使用或修改该函数。
 
