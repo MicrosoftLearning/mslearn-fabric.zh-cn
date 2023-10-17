@@ -134,8 +134,7 @@ lab:
 1. 使用单元格输出下方的“ **+ 代码**”图标将新代码单元格添加到笔记本中，然后输入以下代码。
 
     ```python
-    desc_stats = df.describe()
-    print(desc_stats)
+    df.describe()
     ```
 
     平均年龄约为 48.5 年，标准偏差为 13.1 年。 年龄最小的是 19 岁，年龄最大的是 79 岁。 平均 `BMI` 约为 26.4，根据 [WHO 标准](https://www.who.int/health-topics/obesity#tab=tab_1)，属于**超重**类别。 最小值 `BMI` 为 18，最大值为 42.2。
