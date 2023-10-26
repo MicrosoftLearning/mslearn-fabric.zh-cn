@@ -1,20 +1,22 @@
 ---
 lab:
-  title: 训练分类模型以预测客户流失
+  title: 探索 Microsoft Fabric 中的数据科学
   module: Get started with data science in Microsoft Fabric
 ---
 
-# 使用笔记本在 Microsoft Fabric 中训练模型
+# 探索 Microsoft Fabric 中的数据科学
 
-在本实验室中，我们将使用 Microsoft Fabric 创建笔记本并训练机器学习模型来预测客户流失。 我们将使用 Scikit-Learn 来训练模型，并使用 MLflow 来跟踪其性能。 客户流失是许多公司面临的一个关键业务问题，预测哪些客户可能会流失，可以帮助公司留住客户并增加收入。 完成本实验室后，你将获得机器学习和模型跟踪的实践经验，并了解如何使用 Microsoft Fabric 为项目创建笔记本。
+在本实验室中，你将引入数据、浏览笔记本中的数据、使用 Data Wrangler 处理数据、训练两种类型的模型。 通过执行所有这些步骤，你将能够探索 Microsoft Fabric 中的数据科学功能。
 
-完成本实验室大约需要 45 分钟。
+完成此实验后，你将获得机器学习和模型跟踪的实践经验，并了解如何在 Microsoft Fabric 中使用笔记本、Data Wrangler、试验和模型   。
+
+完成本实验室大约需要 20 分钟。
 
 > 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中使用模型之前，在已启用的 Fabric 试用版中创建工作区。
 
 1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
@@ -23,26 +25,11 @@ lab:
 
     ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
-## 创建湖屋并上传文件
-
-有了工作区后，可在门户中切换到数据科学体验，并为要分析的数据文件创建一个数据湖屋。
-
-1. 在 Power BI 门户左下角，选择 Power BI 图标并切换到“数据工程”体验 。
-1. 在“数据工程”主页中，使用所选名称创建一个新的湖屋 。
-
-    大约一分钟后，将完成创建一个不包含表或文件的新湖屋 。 需要将一些数据引入数据湖屋进行分析。 可通过多种方法执行此操作，但在本练习中，只需将文本文件的文件夹下载并解压缩到本地计算机或实验室 VM（如果适用），然后将其上传到湖屋。
-
-1. 从 [https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/churn.csv](https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/churn.csv) 下载此练习的 `churn.csv` CSV 文件并将其保存。
-
-
-1. 返回到包含湖屋的 Web 浏览器标签页，在“湖屋”窗格的“文件”节点的“...”菜单中，依次选择“上传”和“上传文件”，然后将 churn.csv 文件从本地计算机（或实验室 VM，如适用）上传到湖屋     。
-6. 上传文件后，展开“文件”并验证 CSV 文件是否已上传。
-
 ## 创建笔记本
 
-若要训练模型，可以创建笔记本。 笔记本提供了一个交互式环境，你可在其中编写和运行作为试验的（多种语言的）代码。
+要运行代码，可以创建一个笔记本。 笔记本提供了一个交互式环境，可在其中编写和运行（多种语言的）代码。
 
-1. 在 Power BI 门户左下角，选择“数据工程”图标并切换到“数据科学”体验 。
+1. 在 Fabric 门户的左下角，选择 Power BI 图标并切换到“数据科学”体验 。
 
 1. 在“数据科学”主页中，创建新的笔记本 。
 
@@ -55,189 +42,192 @@ lab:
 1. 使用 &#128393;（“编辑”）按钮将单元格切换到编辑模式，然后删除内容并输入以下文本：
 
     ```text
-   # Train a machine learning model and track with MLflow
-
-   Use the code in this notebook to train and track models.
-    ``` 
-
-## 将数据加载到数据帧中
-
-现在，你已准备好运行代码来准备数据和训练模型。 若要处理数据，需要使用数据帧。 Spark 中的数据帧类似于 Python 中的 Pandas 数据帧，提供一种用于处理行和列中的数据的通用结构。
-
-1. 在“添加湖屋”窗格中，选择“添加”以添加湖屋。 
-1. 选择“现有湖屋”，然后选择“添加” 。
-1. 选择在上一部分创建的湖屋。
-1. 展开“文件”文件夹，以便在笔记本编辑器旁边列出 CSV 文件。
-1. 在“churn.csv”的“...”菜单中，选择“加载数据” > “Pandas”   。 应在笔记本中添加包含以下代码的新代码单元格：
-
-    ```python
-   import pandas as pd
-   # Load data into pandas DataFrame from "/lakehouse/default/" + "Files/churn.csv"
-   df = pd.read_csv("/lakehouse/default/" + "Files/churn.csv")
-   display(df)
+   # Data science in Microsoft Fabric
     ```
 
-    > 提示：可以隐藏左侧包含文件的窗格，方法是使用其 << 图标 。 这样做有助于专注于笔记本。
+## 获取数据
 
-1. 使用单元格左侧的“&#9655; 运行单元格”按钮运行单元格。
+现在，你已准备好运行代码来获取数据和训练模型。 将使用 Azure 开放数据集中的[糖尿病数据集](https://learn.microsoft.com/azure/open-datasets/dataset-diabetes?tabs=azureml-opendatasets?azure-portal=true)。 加载数据后，将数据转换为 Pandas 数据帧：处理行和列中数据的常见结构。
+
+1. 在笔记本中，使用最新单元格输出下方的“+ 代码”图标将新的代码单元格添加到笔记本，并在其中输入以下代码：
+
+    ```python
+    # Azure storage access info for open dataset diabetes
+    blob_account_name = "azureopendatastorage"
+    blob_container_name = "mlsamples"
+    blob_relative_path = "diabetes"
+    blob_sas_token = r"" # Blank since container is Anonymous access
+    
+    # Set Spark config to access  blob storage
+    wasbs_path = f"wasbs://%s@%s.blob.core.windows.net/%s" % (blob_container_name, blob_account_name, blob_relative_path)
+    spark.conf.set("fs.azure.sas.%s.%s.blob.core.windows.net" % (blob_container_name, blob_account_name), blob_sas_token)
+    print("Remote blob path: " + wasbs_path)
+    
+    # Spark read parquet, note that it won't load any data yet by now
+    df = spark.read.parquet(wasbs_path)
+    ```
+
+1. 使用单元格左侧的“&#9655; 运行单元格”按钮运行单元格。 或者，可以按键盘上的 `SHIFT` + `ENTER` 来运行单元格。
 
     > 注意：由于这是你第一次在此会话中运行 Spark 代码，因此必须启动 Spark 池。 这意味着会话中的第一次运行可能需要一分钟左右才能完成。 后续运行速度会更快。
-
-1. 单元格命令完成后，查看单元格下方的输出，该输出应如下所示：
-
-    |Index|CustomerID|years_with_company|total_day_calls|total_eve_calls|total_night_calls|total_intl_calls|average_call_minutes|total_customer_service_calls|age|流失|
-    | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
-    |1|1000038|0|117|88|32|607|43.90625678|0.810828179|34|0|
-    |2|1000183|1|164|102|22|40|49.82223317|0.294453889|35|0|
-    |3|1000326|3|116|43|45|207|29.83377967|1.344657937|57|1|
-    |4|1000340|0|92|24|11|37|31.61998183|0.124931779|34|0|
-    | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
-
-    输出显示 churn.csv 文件中客户数据的行和列。
-
-## 训练机器学习模型
-
-现在，你已加载数据，可以使用它来训练机器学习模型并预测客户流失。 你将使用 Scikit-Learn 库训练模型，并使用 MLflow 跟踪模型。 
 
 1. 使用单元格输出下方的“+ 代码”图标将新的代码单元格添加到笔记本，并在其中输入以下代码：
 
     ```python
-   from sklearn.model_selection import train_test_split
-
-   print("Splitting data...")
-   X, y = df[['years_with_company','total_day_calls','total_eve_calls','total_night_calls','total_intl_calls','average_call_minutes','total_customer_service_calls','age']].values, df['churn'].values
-   
-   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+    display(df)
     ```
 
-1. 运行添加的代码单元格，请注意，需要在数据集中省略“CustomerID”，并将数据拆分为训练和测试数据集。
-1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
-    
+1. 单元格命令完成后，查看单元格下方的输出，该输出应如下所示：
+
+    |年龄|SEX|BMI|BP|S1|S2|S3|S4|S5|S6|Y|
+    |---|---|---|--|--|--|--|--|--|--|--|
+    |59|2|32.1|101.0|157|93.2|38.0|4.0|4.8598|87|151|
+    |48|1|21.6|87.0|183|103.2|70.0|3.0|3.8918|69|75|
+    |72|2|30.5|93.0|156|93.6|41.0|4.0|4.6728|85|141|
+    |24|1|25.3|84.0|198|131.4|40.0|5.0|4.8903|89|206|
+    |50|1|23.0|101.0|192|125.4|52.0|4.0|4.2905|80|135|
+    | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
+
+    输出显示糖尿病数据集的行和列。
+
+1. 呈现的表顶部有两个选项卡：“表格”和“图表”。  选择“图表”。
+1. 选择图表右上角的“视图选项”以更改可视化效果。
+1. 将图表更改为以下设置：
+    * 图表类型：`Box plot`
+    * 键：留空
+    * 值：`Y`
+1. 选择“应用”以呈现新的可视化效果并浏览输出。
+
+## 准备数据
+
+引入并浏览数据后，可以转换数据。 可以在笔记本中运行代码，也可以使用 Data Wrangler 为你生成代码。
+
+1. 数据作为 Spark 数据帧加载。 要启动 Data Wrangler，需要将数据转换为 Pandas 数据帧。 在笔记本中运行以下代码：
+
     ```python
-   import mlflow
-   experiment_name = "experiment-churn"
-   mlflow.set_experiment(experiment_name)
+    df = df.toPandas()
+    df.head()
     ```
+
+1. 在笔记本功能区中选择“数据”，然后选择“启动数据整理器”下拉列表 。
+1. 选择 `df` 数据集。 当数据整理器启动时，它会在“摘要”面板中生成所显示的数据帧的描述性概述。
+
+    目前，标签列为 `Y`，这是一个连续变量。 要训练会预测 Y 的机器学习模型，需要训练回归模型。 Y 的（预测）值可能难以解释。 相反，我们可以尝试训练分类模型，它能够预测某人患糖尿病的风险是低还是高。 为了能够训练分类模型，需要基于 `Y` 中的值创建二进制标签列。
+
+1. 选择 Data Wrangler 中的 `Y` 列。 请注意，`220-240` 箱的频率会降低。 第 75 百分位数 `211.5` 与直方图中两个区域的转换大致一致。 让我们将此值用作低风险和高风险的阈值。
+1. 导航到“操作”面板，展开“公式”，然后选择“从公式创建列”。  
+1. 创建新的列，设置如下：
+    * 列名：`Risk`
+    * 列公式：`(df['Y'] > 211.5).astype(int)`
+1. 查看添加到预览的新列 `Risk`。 进行验证，具有值 `1` 的行计数应大约为所有行的 25%（因为它是 `Y` 的第 75 百分位数）。
+1. 选择**应用**。
+1. 选择“将代码添加到笔记本”。
+1. 使用 Data Wrangler 生成的代码运行单元格。
+1. 在新单元格中运行以下代码，验证 `Risk` 列的形状是否符合预期：
+
+    ```python
+    df_clean.describe()
+    ```
+
+## 训练机器学习模型
+
+现在你已准备好数据，可以使用它来训练机器学习模型以预测糖尿病了。 可以使用我们的数据集训练两种不同类型的模型：回归模型（预测 `Y`）或分类模型（预测 `Risk`）。 你将使用 scikit-learn 库训练模型，并使用 MLflow 跟踪模型。
+
+### 训练回归模型
+
+1. 运行以下代码，将数据拆分为训练数据集和测试数据集，并将特征与要预测的标签 `Y` 分开：
+
+    ```python
+    from sklearn.model_selection import train_test_split
     
-    该代码创建名为 `experiment-churn` 的 MLflow 试验。 在此试验中跟踪模型。
+    X, y = df_clean[['AGE','SEX','BMI','BP','S1','S2','S3','S4','S5','S6']].values, df_clean['Y'].values
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+    ```
 
 1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
     ```python
-   from sklearn.linear_model import LogisticRegression
-   
-   with mlflow.start_run():
+    import mlflow
+    experiment_name = "diabetes-regression"
+    mlflow.set_experiment(experiment_name)
+    ```
+
+    该代码创建名为 `diabetes-regression` 的 MLflow 试验。 在此试验中跟踪模型。
+
+1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
+
+    ```python
+    from sklearn.linear_model import LinearRegression
+    
+    with mlflow.start_run():
        mlflow.autolog()
-
-       model = LogisticRegression(C=1/0.1, solver="liblinear").fit(X_train, y_train)
-
-       mlflow.log_param("estimator", "LogisticRegression")
-    ```
     
-    代码使用逻辑回归训练分类模型。 使用 MLflow 自动记录参数、指标和项目。 此外，还需要记录一个名为 `estimator` 的参数，其值为 `LogisticRegression`。
+       model = LinearRegression()
+       model.fit(X_train, y_train)
+    ```
+
+    代码使用线性回归训练回归模型。 使用 MLflow 自动记录参数、指标和项目。
+
+### 训练分类模型
+
+1. 运行以下代码，将数据拆分为训练数据集和测试数据集，并将特征与要预测的标签 `Risk` 分开：
+
+    ```python
+    from sklearn.model_selection import train_test_split
+    
+    X, y = df_clean[['AGE','SEX','BMI','BP','S1','S2','S3','S4','S5','S6']].values, df_clean['Risk'].values
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+    ```
 
 1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
     ```python
-   from sklearn.tree import DecisionTreeClassifier
-   
-   with mlflow.start_run():
-       mlflow.autolog()
-
-       model = DecisionTreeClassifier().fit(X_train, y_train)
-   
-       mlflow.log_param("estimator", "DecisionTreeClassifier")
+    import mlflow
+    experiment_name = "diabetes-classification"
+    mlflow.set_experiment(experiment_name)
     ```
 
-    代码使用决策树分类器训练分类模型。 使用 MLflow 自动记录参数、指标和项目。 此外，还需要记录一个名为 `estimator` 的参数，其值为 `DecisionTreeClassifier`。
+    该代码创建名为 `diabetes-classification` 的 MLflow 试验。 在此试验中跟踪模型。
 
-## 使用 MLflow 搜索和查看试验
-
-使用 MLflow 训练和跟踪模型后，可以使用 MLflow 库检索试验及其详细信息。
-
-1. 若要列出所有试验，请使用以下代码：
+1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
     ```python
-   import mlflow
-   experiments = mlflow.search_experiments()
-   for exp in experiments:
-       print(exp.name)
+    from sklearn.linear_model import LogisticRegression
+    
+    with mlflow.start_run():
+        mlflow.sklearn.autolog()
+
+        model = LogisticRegression(C=1/0.1, solver="liblinear").fit(X_train, y_train)
     ```
 
-1. 若要检索特定试验，可按名称获取试验：
-
-    ```python
-   experiment_name = "experiment-churn"
-   exp = mlflow.get_experiment_by_name(experiment_name)
-   print(exp)
-    ```
-
-1. 使用试验名称，可以检索该试验的所有作业：
-
-    ```python
-   mlflow.search_runs(exp.experiment_id)
-    ```
-
-1. 若要更轻松地比较作业运行和输出，可以配置搜索以对结果进行排序。 例如，以下单元格按 `start_time` 对结果进行排序，且仅显示最多 `2` 个结果： 
-
-    ```python
-   mlflow.search_runs(exp.experiment_id, order_by=["start_time DESC"], max_results=2)
-    ```
-
-1. 最后，可以绘制多个模型的评估指标，以便轻松比较模型：
-
-    ```python
-   import matplotlib.pyplot as plt
-   
-   df_results = mlflow.search_runs(exp.experiment_id, order_by=["start_time DESC"], max_results=2)[["metrics.training_accuracy_score", "params.estimator"]]
-   
-   fig, ax = plt.subplots()
-   ax.bar(df_results["params.estimator"], df_results["metrics.training_accuracy_score"])
-   ax.set_xlabel("Estimator")
-   ax.set_ylabel("Accuracy")
-   ax.set_title("Accuracy by Estimator")
-   for i, v in enumerate(df_results["metrics.training_accuracy_score"]):
-       ax.text(i, v, str(round(v, 2)), ha='center', va='bottom', fontweight='bold')
-   plt.show()
-    ```
-
-    输出应如下图所示：
-
-    ![绘制的评估指标的屏幕截图。](./Images/plotted-metrics.png)
+    代码使用逻辑回归训练分类模型。 使用 MLflow 自动记录参数、指标和项目。
 
 ## 探索试验
 
 Microsoft Fabric 将跟踪所有试验，并支持直观地探索它们。
 
-1. 在左侧窗格上，导航到你的工作区。
-1. 从列表中选择 `experiment-churn` 试验。
+1. 从左侧的中心菜单栏导航到工作区。
+1. 选择 `diabetes-regression` 试验将其打开。
 
     > 提示：如果看不到任何记录的试验运行，请刷新页面。
 
-1. 选择“视图”选项卡。
-1. 选择“运行列表”。 
-1. 通过选中每个框来选择两个最新运行。
-    因此，最后两个运行将在“指标比较”窗格中相互比较。 默认情况下，指标按运行名称绘制。 
-1. 选择图形的 &#128393;（“编辑”）按钮，以可视化每个运行的准确性。 
-1. 将可视化效果类型更改为 `bar`。 
-1. 将 X 轴更改为 `estimator`。 
-1. 选择“替换”并浏览新图形。
-
-通过绘制每个记录的估算器的准确性，可以查看哪种算法可生成更好的模型。
+1. 查看运行指标，了解回归模型的准确性。
+1. 回到主页并选择 `diabetes-classification` 试验以将其打开。
+1. 查看运行指标以了解分类模型的准确性。 请注意，指标的类型是不同的，因为你训练了不同类型的模型。
 
 ## 保存模型
 
-比较了在试验运行中训练的机器学习模型后，可以选择性能最佳的模型。 若要使用性能最佳的模型，请保存模型并使用它生成预测。
+比较了在试验中训练的机器学习模型后，可以选择性能最佳的模型。 若要使用性能最佳的模型，请保存模型并使用它生成预测。
 
-1. 在试验概述中，确保已选择“视图”选项卡。
-1. 选择“运行详细信息”。
-1. 选择准确度最高的运行。 
 1. 在“另存为模型”框中选择“保存” 。
 1. 在新打开的弹出窗口中选择“创建新模型”。
-1. 将模型命名为 `model-churn`，然后选择“创建”。 
-1. 在创建模型时屏幕右上角显示的通知中选择“查看模型”。 还可刷新窗口。 已保存的模型在“已注册版本”下链接。 
+1. 选择 `model` 文件夹。
+1. 将模型命名为 `model-diabetes`，然后选择“保存”。
+1. 在创建模型时屏幕右上角显示的通知中选择“查看模型”。 还可刷新窗口。 已保存的模型在“模型版本”下链接。
 
-请注意，模型、试验和试验运行是链接的，以便你查看模型的训练方式。 
+请注意，模型、试验和试验运行是链接的，以便你查看模型的训练方式。
 
 ## 保存笔记本并结束 Spark 会话
 
@@ -249,9 +239,9 @@ Microsoft Fabric 将跟踪所有试验，并支持直观地探索它们。
 
 ## 清理资源
 
-在本练习中，你已创建笔记本并训练了机器学习模型。 你已使用 Scikit-Learn 来训练模型，并使用 MLflow 来跟踪其性能。
+在本练习中，你已创建笔记本并训练了机器学习模型。 你已使用 scikit-learn 来训练模型，并使用 MLflow 来跟踪其性能。
 
-如果已完成模型和试验探索，可以删除为本练习创建的工作区。
+如果已完成模型和试验，可以删除为本练习创建的工作区。
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
 2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
