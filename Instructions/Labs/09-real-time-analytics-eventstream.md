@@ -7,14 +7,6 @@ lab:
 
 事件流是 Microsoft Fabric 中的一项功能，可捕获、转换实时事件并将其路由到各种目标，并且无需编写代码。 可向事件流添加事件数据源、路由目标以及事件处理程序（如果需要转换）。 Microsoft Fabric 的 EventStore 是一个监视选项，用于维护群集中的事件，并提供一种方法来了解群集或工作负载在给定时间点的状态。 可以向 EventStore 服务查询可用于群集中的每个实体和实体类型的事件。 这意味着可在群集、节点、应用程序、服务、分区和分区副本等不同级别查询事件。 EventStore 服务还能够将群集中的事件相关联。 通过查看在同一时间从可能已相互影响的不同实体写入的事件，EventStore 服务可以将这些事件进行关联来帮助查明群集中发生各项活动的原因。 另一种监视和诊断 Microsoft Fabric 群集的方法是使用 EventFlow 聚合和收集事件。
 
-<!--
-
-SL comments - I can't find anything in the documentation about **EventStore** or **EventFlow**. Is this a feature that isn't released yet? Here's the doc I referred to for monitoring event streams: https://learn.microsoft.com/fabric/real-time-analytics/event-streams/monitor
-
-Does that fit here?
-
--->
-
 完成本实验室大约需要 30 分钟。
 
 > 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
@@ -39,12 +31,6 @@ Does that fit here?
 
 使用实时分析流式处理和查询功能，回答有关股票统计信息的关键问题。 在此场景中，我们将充分利用向导，而不是单独手动创建某些组件，如 KQL 数据库。
 
-<!--
-
-I removed the piece on Power BI reports because we don't have them do that in this lab.
-
--->
-
 在本教程中，将了解如何：
 
 - 创建 KQL 数据库
@@ -52,12 +38,6 @@ I removed the piece on Power BI reports because we don't have them do that in th
 - 创建事件流
 - 将数据从 Eventstream 流式传输到 KQL 数据库
 - 使用 KQL 和 SQL 探索数据
-
-<!--
-
-For "enable data copy to OneLake" - are you adding a lakehouse as a destination? The word copy confuses me.
-
--->
 
 ## 创建 KQL 数据库
 
@@ -187,11 +167,3 @@ Kusto 查询语言 (KQL) 是处理数据并返回结果的只读请求。 该请
 1. 在左侧栏中，选择你的工作区的图标。
 2. 在工具栏上的“...”菜单中，选择“工作区设置”。
 3. 在“其他”部分中，选择“删除此工作区”。
-
-<!--
-
-Overall notes: 
-- screenshot alt text needs to be more descriptive and start with the words "screenshot of"
-- 
-
--->
