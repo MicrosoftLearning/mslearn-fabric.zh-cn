@@ -107,7 +107,6 @@ lab:
     ```python
     from sklearn.model_selection import train_test_split
     
-    print("Splitting data...")
     X, y = df[['AGE','SEX','BMI','BP','S1','S2','S3','S4','S5','S6']].values, df['Y'].values
     
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
@@ -207,13 +206,13 @@ lab:
 
     输出应如下图所示：
 
-    ![绘制的评估指标的屏幕截图。](./Images/plotted-metrics.png)
+    ![绘制的评估指标的屏幕截图。](./Images/data-science-metrics.png)
 
 ## 探索试验
 
 Microsoft Fabric 将跟踪所有试验，并支持直观地探索它们。
 
-1. 从左侧的中心菜单栏导航到工作区。
+1. 从左侧的菜单栏导航到工作区。
 1. 选择 `experiment-diabetes` 试验将其打开。
 
     > 提示：如果看不到任何记录的试验运行，请刷新页面。
@@ -221,7 +220,9 @@ Microsoft Fabric 将跟踪所有试验，并支持直观地探索它们。
 1. 选择“视图”选项卡。
 1. 选择“运行列表”。
 1. 通过选中每个框来选择两个最新运行。
+
     因此，最后两个运行将在“指标比较”窗格中相互比较。 默认情况下，指标按运行名称绘制。
+
 1. 选择图形的 &#128393;（“编辑”）按钮，以可视化每个运行的平均绝对误差。
 1. 将可视化效果类型更改为 `bar`。
 1. 将 X 轴更改为 `estimator`。
