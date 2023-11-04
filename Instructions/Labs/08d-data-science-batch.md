@@ -29,7 +29,8 @@ lab:
 
 要引入数据、训练和注册模型，需要在笔记本中运行单元格。 可以将笔记本上传到工作区。
 
-1. 在新的浏览器选项卡中，导航到“[Generate-Predictions](https://github.com/MicrosoftLearning/mslearn-fabric/blob/main/Allfiles/Labs/08/Generate-Predictions.ipynb)”笔记本并将其下载到任选的文件夹。
+1. 在新浏览器选项卡中，导航到 `https://github.com/MicrosoftLearning/mslearn-fabric/blob/main/Allfiles/Labs/08/Generate-Predictions.ipynb`
+1. 选择“下载原始文件”图标，将 `Generate-Predictions` 笔记本下载到所选文件夹。
 1. 返回到 Fabric 浏览器选项卡，在 Fabric 门户的左下角，选择 Power BI 图标并切换到“数据科学”体验 。
 1. 在“**数据科学**”主页中，选择“**导入笔记本**”。
 
