@@ -10,18 +10,25 @@ Microsoft Fabric 中的 Data Activator 根据数据发生的情况采取操作�
 
 完成本实验室大约需要 30 分钟。
 
-> 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。  如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+
+## 激活 Microsoft Fabric 试用版
+
+1. 注册 Microsoft Fabric 帐户后，导航到 [https://app.fabric.microsoft.com](https://app.fabric.microsoft.com) 处的 Microsoft Fabric 门户。
+1. 选择“帐户管理员”图标（右上角的“用户”图像）
+1. 在“帐户管理员”菜单中，选择“开始试用”以启动 Microsoft Fabric 试用版。
+1. 成功升级到 Microsoft Fabric 后，通过选择“Fabric 主页”导航到主页。
 
 ## 创建工作区
 
 在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空，如下所示：
+1. 在 Microsoft Fabric 主页上，选择“Data Activator”。[](https://app.fabric.microsoft.com)
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 在本实验中，你将使用 Fabric 中的 Data Activator 创建一个 reflex。 Data Activator 可以方便地提供一个示例数据集，供你用来探索 Data Activator 的功能。 你将使用此示例数据创建一个 reflex，用于分析某些实时数据并创建一个触发器，以便在满足条件时发送电子邮件。
 
@@ -33,11 +40,7 @@ Microsoft Fabric 中的 Data Activator 根据数据发生的情况采取操作�
 
 ## 创建 reflex
 
-1. 在 Microsoft Fabric 体验门户中选择 Data Activator 体验，方法是首先选择屏幕左下角的当前 Fabric 体验图标，然后从菜单中选择“Data Activator”  。 例如，在以下屏幕截图中，当前 Fabric 体验是“Power BI”。
-
-    ![选择 Data Activator 体验的屏幕截图。](./Images/data-activator-select-experience.png)
-
-1. 你现在应该位于 Data Activator 主页屏幕中。 右下角的 Fabric Experience 图标也变成了 Data Activator 图标。 让我们通过选择“reflex (预览版)”按钮创建新的 reflex。
+1. 通过验证右下角的图标反映了 Data Activator，确保你位于 Data Activator 主屏幕中。 让我们通过选择“reflex (预览版)”按钮创建新的 reflex。
 
     ![Data Activator 主页屏幕的屏幕截图。](./Images/data-activator-home-screen.png)
 

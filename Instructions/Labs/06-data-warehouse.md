@@ -10,30 +10,31 @@ lab:
 
 完成本实验室大约需要 30 分钟。
 
-> 注意：需要 Microsoft Fabric 许可证才能完成本练习。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 需要 Microsoft 学校或工作帐户才能执行此操作 。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。  如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+
+## 激活 Microsoft Fabric 试用版
+
+1. 注册 Microsoft Fabric 帐户后，导航到 [https://app.fabric.microsoft.com](https://app.fabric.microsoft.com) 处的 Microsoft Fabric 门户。
+1. 选择“帐户管理员”图标（右上角的“用户”图像）
+1. 在“帐户管理员”菜单中，选择“开始试用”以启动 Microsoft Fabric 试用版。
+1. 成功升级到 Microsoft Fabric 后，通过选择“Fabric 主页”导航到主页。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
+在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择“Power BI”。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 使用所选名称创建一个新工作区，并选择包含 Fabric 容量的授权模式（试用、高级或 Fabric）  。
-4. 打开新工作区时，它应为空，如下所示：
+1. 在 Microsoft Fabric 主页上，选择“Synapse 数据仓库”。[](https://app.fabric.microsoft.com)
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 创建数据仓库
 
-现在已经有了工作区，接下来可以切换到门户中的“数据仓库”体验，并创建数据仓库。
+现已有了工作空间，可以创建数据仓库了。 “Synapse 数据仓库”主页包含创建新仓库的快捷方式：
 
-1. 在 Power BI 门户的左下角，切换到“数据仓库”体验。
-
-    “数据仓库”主页包含创建新仓库的快捷方式：
-
-    > 注意：如果未在左下角看到图标，则表示没有为租户启用 Fabric。 Fabric 在管理门户中为具有 Power BI Premium 订阅的租户启用。
-
-2. 在“数据仓库”主页中，使用所选的名称创建新的仓库 。
+1. 在“Synapse 数据仓库”主页中，使用所选的名称创建新的仓库 。
 
     大约一分钟后，一个新的仓库创建完成：
 
