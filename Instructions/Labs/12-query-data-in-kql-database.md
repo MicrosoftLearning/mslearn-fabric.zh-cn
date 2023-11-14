@@ -3,25 +3,40 @@ lab:
   title: 在 KQL 数据库中查询数据
   module: Query data from a Kusto Query database in Microsoft Fabric
 ---
+
 # 在 Microsoft Fabric 中查询 Kusto 数据库入门
+
 KQL 查询集是一种工具，可用于查询 KQL 数据库、修改和显示来自其中的查询结果。 可以将 KQL 查询集中的每个选项卡链接到不同的 KQL 数据库，并保存查询以供将来使用或与他人共享进行数据分析。 还可以更换任何选项卡的 KQL 数据库，以比较来自不同数据源的查询结果。
 
-KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建查询。 为深入了解 [kusto 查询 (KQL) 语言](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/?context=%2Ffabric%2Fcontext%2Fcontext)， 
+KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建查询。 详细了解 [kusto 查询 (KQL) 语言](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/?context=%2Ffabric%2Fcontext%2Fcontext)。
 
 完成本实验室大约需要 25 分钟。
+
+## 方案
+
+在此场景中，你是一名分析师，负责查询纽约市出租车行程原始指标的示例数据集，并从 Fabric 环境中拉取摘要统计（分析）数据。 你将使用 KQL 查询此数据并收集所需信息，以获取有关数据的信息化见解。
+
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。  如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+
+## 激活 Microsoft Fabric 试用版
+
+1. 注册 Microsoft Fabric 帐户后，导航到 [https://app.fabric.microsoft.com](https://app.fabric.microsoft.com) 处的 Microsoft Fabric 门户。
+1. 选择“帐户管理员”图标（右上角的“用户”图像）
+1. 在“帐户管理员”菜单中，选择“开始试用”以启动 Microsoft Fabric 试用版。
+1. 成功升级到 Microsoft Fabric 后，通过选择“Fabric 主页”导航到主页。
 
 ## 创建工作区
 
 在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空，如下所示：
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“实时分析”。
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
-在本实验室中，你将在 Fabric 中使用实时分析 (RTA)，通过示例事件流创建 KQL 数据库。 实时分析 (RTA) 可以方便地提供一个示例数据集，供你用来探索 RTA 的功能。 你将使用此示例数据创建 KQL | SQL 查询和查询集，用于分析实时数据，并在下游进程中用于其他用途。
+在本实验室中，你将在 Fabric 中使用实时分析 (RTA)，通过示例事件流创建 KQL 数据库。 实时分析提供了一个方便的示例数据集，可以用它来探索 RTA 的功能。 你将使用此示例数据创建 KQL/SQL 查询和查询集，以分析实时数据，并在下游进程中用于其他用途。
 
 ## 创建 KQL 数据库
 
@@ -29,39 +44,39 @@ KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建�
 
    ![选择 KQL 数据库的图像](./Images/select-kqldatabase.png)
 
-2. 系统会提示为 KQL 数据库命名
+1. 系统会提示为 KQL 数据库命名
 
    ![命名 KQL 数据库的图像](./Images/name-kqldatabase.png)
 
-3. 为 KQL 数据库指定一个你能记住的名称（如 MyStockData），然后按“创建” 。
+1. 为 KQL 数据库指定一个你能记住的名称（如 MyStockData），然后按“创建” 。
 
-4. 在“数据库详细信息”面板中，选择铅笔图标以在 OneLake 中打开可用性。
+1. 在“数据库详细信息”面板中，选择铅笔图标以在 OneLake 中打开可用性。
 
    ![“启用 onelake”的图像](./Images/enable-onelake-availability.png)
 
-5. 从“开始获取数据”的选项中选择“示例数据”框。
- 
+   然后使用滑块启用可用性。
+
+   ![在 Data Lake 中选择滑块的图像。](./images/data-availability-data-lake.png)
+
+1. 从“开始获取数据”的选项中选择“示例数据”框。
+
    ![图像显示了一系列选择选项，并突出显示了示例数据](./Images/load-sample-data.png)
 
-6. 从示例数据的选项中选择“**汽车指标分析**”框。
+   然后从示例数据的选项中选择“汽车运营分析”框。
 
    ![“选择实验室分析数据”的图像](./Images/create-sample-data.png)
 
-7. 完成数据加载后，我们可以验证 KQL 数据库是否已填充。
+1. 完成数据加载后，我们可以验证 KQL 数据库是否已填充。
 
    ![数据正在加载到 KQL 数据库中](./Images/choose-automotive-operations-analytics.png)
 
-7. 加载完数据后，验证数据是否已加载到 KQL 数据库中。 要完成此操作，可以选择表右侧的省略号，导航到“查询表”，然后选择“显示任意 100 条记录”。 
+1. 加载完数据后，验证数据是否已加载到 KQL 数据库中。 要完成此操作，可以选择表右侧的省略号，导航到“查询表”，然后选择“显示任意 100 条记录”。 
 
     ![图像显示从 RawServerMetrics 表中选择前 100 个文件](./Images/rawservermetrics-top-100.png)
 
    > 注：首次运行此功能时，可能需要几秒钟来分配计算资源。
 
     ![数据中 100 条记录的图像](./Images/explore-with-kql-take-100.png)
-
-
-## 方案
-在此场景中，你是一名分析师，负责查询纽约市出租车行程原始指标的示例数据集，并从 Fabric 环境中拉取摘要统计（分析）数据。 你将使用 KQL 查询此数据并收集所需信息，以获取有关数据的信息化见解。
 
 ## Kusto 查询语言 (KQL) 及其语法简介
 
@@ -75,7 +90,7 @@ KQL 的重要功能之一是能够快速高效地处理大量数据。 此功能
 
 总体而言，KQL 是一种强大且灵活的查询语言，无论你使用的是 Microsoft Fabric 还是其他数据源，它都可以帮助你快速轻松地深入了解数据。 凭借其直观的语法和强大的功能，KQL 绝对值得用户进一步探索。
 
-本模块重点介绍有关查询 KQL 数据库的基础知识。你很快就会发现，KQL 中没有 ```SELECT```，我们可以直接使用表名然后按下“运行”。 我们将首先介绍如何使用 KQL 进行简单分析，然后再使用 SQL 针对基于 Azure 数据资源管理器的同一个 KQL 数据库进行分析。
+在本模块中，我们将重点介绍对 KQL 数据库进行查询的基础知识，先使用 KQL 来查询，然后再使用 T-SQL。 我们将重点介绍用于查询的 T-SQL 语法的基本元素，包括：
 
 **SELECT** 查询，用于从一个或多个表检索数据。 例如，可以使用 SELECT 查询来获取公司所有员工的姓名和工资。
 
@@ -95,50 +110,58 @@ KQL 的重要功能之一是能够快速高效地处理大量数据。 此功能
 
 1. 在此查询中，我们将从 Trips 表拉取 100 条记录。 我们使用 ```take``` 关键字来请求引擎返回 100 条记录。
 
-```kql
-Trips
-| take 100
-```
-  > **注意：** 竖线 ```|``` 字符在 KQL 中有两个用途，其中一个用途是分隔表格表达式语句中的查询运算符。 它还用作方括号或圆括号中的逻辑 OR 运算符，表示可以指定一个由竖线字符分隔的项。 
+    ```kusto
     
-2. 我们可以做到更精确，使用 ```project``` 关键字添加我们想要查询的特定属性，然后使用 ```take``` 关键字告知引擎要返回多少条记录。
+    Trips
+    | take 100
+    ```
 
-> **注意：** 使用 ```//``` 表示在 Microsoft Fabric“***探索数据***”查询工具中使用的注释。
+    > **注意：** 竖线 ```|``` 字符在 KQL 中有两个用途，其中一个用途是分隔表格表达式语句中的查询运算符。 它还用作方括号或圆括号中的逻辑 OR 运算符，表示可以指定一个由竖线字符分隔的项。
 
-```kql
-// Use 'project' and 'take' to view a sample number of records in the table and check the data.
-Trips 
-| project vendor_id, trip_distance
-| take 10
-```
+1. 我们可以做到更精确，使用 ```project``` 关键字添加我们想要查询的特定属性，然后使用 ```take``` 关键字告知引擎要返回多少条记录。
 
-3. 分析中的另一个常见做法是重命名查询集中的列，使其更方便用户识别。 为此，可以使用新的列名称，后接等号和我们要重命名的列。
+    > **注意：** 使用 ```//``` 表示在 Microsoft Fabric“***探索数据***”查询工具中使用的注释。
 
-```kql
-Trips 
-| project vendor_id, ["Trip Distance"] = trip_distance
-| take 10
-```
+    ```kusto
+    
+    // Use 'project' and 'take' to view a sample number of records in the table and check the data.
+    Trips 
+    | project vendor_id, trip_distance
+    | take 10
+    ```
 
-4. 我们还可以汇总行程数以查看行驶了多少英里：
+1. 分析中的另一个常见做法是重命名查询集中的列，使其更方便用户识别。 为此，可以使用新的列名称，后接等号和我们要重命名的列。
 
-```kql
-Trips
-| summarize ["Total Trip Distance"] = sum(trip_distance)
-```
+    ```kusto
+    
+    Trips 
+    | project vendor_id, ["Trip Distance"] = trip_distance
+    | take 10
+    ```
+
+1. 我们还可以汇总行程数以查看行驶了多少英里：
+
+    ```kusto
+    
+    Trips
+    | summarize ["Total Trip Distance"] = sum(trip_distance)
+    ```
+
 ## 使用 KQL 对示例数据集中的数据运行 ```GROUP BY```
 
 1. 然后，我们可以使用 ```summarize``` 运算符对上车地点运行“group by”。 我们还可以使用 ```project``` 运算符，这样就可以选择并重命名要包含在输出中的列。 在本例中，我们在纽约市出租车系统中按行政区进行分组，以便为用户提供从每个行政区出发的总行驶距离。
 
-```kql
+```kusto
+
 Trips
 | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
 | project Borough = pickup_boroname, ["Total Trip Distance"]
 ```
 
-2. 在此例中有一个空白值，这对分析永远是不利的，我们可以使用 ```case``` 函数以及 ```isempty``` 和 ```isnull``` 函数将它们归为“Unidentified”类别以供后续分析。
+1. 在此例中有一个空白值，这对分析永远是不利的，我们可以使用 ```case``` 函数以及 ```isempty``` 和 ```isnull``` 函数将它们归为“Unidentified”类别以供后续分析。
 
-```kql
+```kusto
+
 Trips
 | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
 | project Borough = case(isempty(pickup_boroname) or isnull(pickup_boroname), "Unidentified", pickup_boroname), ["Total Trip Distance"]
@@ -146,9 +169,10 @@ Trips
 
 ## 使用 KQL 对示例数据集中的数据运行 ```ORDER BY```
 
-1. 为了更好地理解数据，我们通常会按列进行排序，此过程是在 KQL 中使用 ```sort by``` 或 ```order by``` 运算符实现的，它们的作用相同。
+为了更好地理解数据，我们通常会按列进行排序，此过程是在 KQL 中使用 ```sort by``` 或 ```order by``` 运算符实现的，它们的作用相同。
  
-```kql
+```kusto
+
 // using the sort by operators
 Trips
 | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
@@ -164,9 +188,10 @@ Trips
 
 ## ```WHERE``` 子句用于筛选示例 KQL 查询中的数据
 
-1. 与 SQL 不同，WHERE 子句会立即在 KQL 查询中调用。 我们仍可以在 where 子句中使用 ```and``` 和 ```or``` 逻辑运算符，它会根据表计算为 true 或 false，并且可以构成涉及多个列、运算符和函数的简单或复杂表达式。
+与 SQL 不同，WHERE 子句会立即在 KQL 查询中调用。 我们仍可以在 where 子句中使用 ```and``` 和 ```or``` 逻辑运算符，它会根据表计算为 true 或 false，并且可以构成涉及多个列、运算符和函数的简单或复杂表达式。
 
-```kql
+```kusto
+
 // let's filter our dataset immediately from the source by applying a filter directly after the table.
 Trips
 | where pickup_boroname == "Manhattan"
@@ -184,107 +209,108 @@ KQL 数据库并不原生支持 T-SQL，但它提供了一个可仿真 Microsoft
 
 1. 在此查询中，我们使用 ```TOP``` 子句从“Trips”表拉取前 100 条记录。 
 
-```sql
-// We can use the TOP clause to limit the number of records returned
+    ```sql
+    // We can use the TOP clause to limit the number of records returned
+    
+    SELECT TOP 100 * from Trips
+    ```
 
-SELECT TOP 100 * from Trips
-```
+1. 如果你使用了 ```//```（它是 KQL 数据库中*“浏览数据”工具内的一个注释），则在执行 T-SQL 查询时你将无法突出显示它；应该使用标准的 ```--``` SQL 注释表示法。 这个双连字符还会告知 KQL 引擎在 Azure 数据资源管理器中期待使用 T-SQL。
 
-2. 如果你使用了 ```//```（它是 KQL 数据库中*“浏览数据”工具内的一个注释），则在执行 T-SQL 查询时你将无法突出显示它；应该使用标准的 ```--``` SQL 注释表示法。 这个双连字符还会告知 KQL 引擎在 Azure 数据资源管理器中期待使用 T-SQL。
+    ```sql
+    -- instead of using the 'project' and 'take' keywords we simply use a standard SQL Query
+    SELECT TOP 10 vendor_id, trip_distance
+    FROM Trips
+    ```
 
-```sql
--- instead of using the 'project' and 'take' keywords we simply use a standard SQL Query
-SELECT TOP 10 vendor_id, trip_distance
-FROM Trips
-```
+1. 同样，你会发现，标准 T-SQL 功能可与查询良好配合（在查询中，我们已将 trip_distance 重命名为更方便用户识别的名称）。
 
-3. 同样，你会发现，标准 T-SQL 功能可与查询良好配合（在查询中，我们已将 trip_distance 重命名为更方便用户识别的名称）。
+    ```sql
+    
+    -- No need to use the 'project' or 'take' operators as standard T-SQL Works
+    SELECT TOP 10 vendor_id, trip_distance as [Trip Distance]
+    from Trips
+    ```
 
-```sql
+1. 我们还可以汇总行程数以查看行驶了多少英里：
 
--- No need to use the 'project' or 'take' operators as standard T-SQL Works
-SELECT TOP 10 vendor_id, trip_distance as [Trip Distance]
-from Trips
-```
-
-4. 我们还可以汇总行程数以查看行驶了多少英里：
-
-```sql
-Select sum(trip_distance) as [Total Trip Distance]
-from Trips
-```
- >注意：与 KQL 查询相比，T-SQL 中引号不是必需的，summarize 命令也不是必需的。
+    ```sql
+    Select sum(trip_distance) as [Total Trip Distance]
+    from Trips
+    ```
+     >注意：与 KQL 查询相比，T-SQL 中不需要使用引号，另请注意，`summarize` 和 `sort by` 命令在 T-SQL 中不可用。
 
 ## 使用 T-SQL 对示例数据集中的数据运行 ```GROUP BY```
 
 1. 然后，我们可以使用 ```GROUP BY``` 运算符对上车地点运行“group by”。 我们还可以使用 ```AS``` 运算符，这样就可以选择并重命名要包含在输出中的列。 在本例中，我们在纽约市出租车系统中按行政区进行分组，以便为用户提供从每个行政区出发的总行驶距离。
 
-```sql
-SELECT pickup_boroname AS Borough, Sum(trip_distance) AS [Total Trip Distance]
-FROM Trips
-GROUP BY pickup_boroname
-```
+    ```sql
+    SELECT pickup_boroname AS Borough, Sum(trip_distance) AS [Total Trip Distance]
+    FROM Trips
+    GROUP BY pickup_boroname
+    ```
 
-2. 在此例中有一个空白值，这对分析永远是不利的，我们可以使用 ```CASE``` 函数以及 ```IS NULL``` 函数和 ```''``` 空值将它们归为“Unidentified”类别以供后续分析。 
+1. 在此例中有一个空白值，这对分析永远是不利的，我们可以使用 ```CASE``` 函数以及 ```IS NULL``` 函数和 ```''``` 空值将它们归为“Unidentified”类别以供后续分析。 
 
-```sql
-SELECT CASE
-         WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'Unidentified'
-         ELSE pickup_boroname
-       END AS Borough,
-       SUM(trip_distance) AS [Total Trip Distance]
-FROM Trips
-GROUP BY CASE
-           WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'Unidentified'
-           ELSE pickup_boroname
-         END;
-```
+    ```sql
+    
+    SELECT CASE
+             WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'Unidentified'
+             ELSE pickup_boroname
+           END AS Borough,
+           SUM(trip_distance) AS [Total Trip Distance]
+    FROM Trips
+    GROUP BY CASE
+               WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'Unidentified'
+               ELSE pickup_boroname
+             END;
+    ```
 
 ## 使用 T-SQL 对示例数据集中的数据运行 ```ORDER BY```
 
 1. 为了更好地理解数据，我们通常会按列进行排序，此过程是在 T-SQL 中使用 ```ORDER BY``` 运算符实现的。 T-SQL 中没有“ORDER BY”运算符
  
-```sql
--- Group by pickup_boroname and calculate the summary statistics of trip_distance
-SELECT CASE
-         WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
-         ELSE pickup_boroname
-       END AS Borough,
-       SUM(trip_distance) AS [Total Trip Distance]
-FROM Trips
-GROUP BY CASE
-           WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
-           ELSE pickup_boroname
-         END
--- Add an ORDER BY clause to sort by Borough in ascending order
-ORDER BY Borough ASC;
-```
-## ```WHERE``` 子句用于筛选示例 T-SQL 查询中的数据
-
+    ```sql
+    -- Group by pickup_boroname and calculate the summary statistics of trip_distance
+    SELECT CASE
+             WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+             ELSE pickup_boroname
+           END AS Borough,
+           SUM(trip_distance) AS [Total Trip Distance]
+    FROM Trips
+    GROUP BY CASE
+               WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+               ELSE pickup_boroname
+             END
+    -- Add an ORDER BY clause to sort by Borough in ascending order
+    ORDER BY Borough ASC;
+    ```
+    ## ```WHERE``` 子句用于筛选示例 T-SQL 查询中的数据
+    
 1. 与 KQL 不同，我们的 ```WHERE``` 子句会位于 T-SQL 语句的末尾；但是，在本例中，我们有一个 ```GROUP BY``` 子句，它要求我们使用 ```HAVING``` 语句，并使用列的新名称（在本例中为“Borough”）作为要从中筛选的列名称。
 
-```sql
--- Group by pickup_boroname and calculate the summary statistics of trip_distance
-SELECT CASE
-         WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
-         ELSE pickup_boroname
-       END AS Borough,
-       SUM(trip_distance) AS [Total Trip Distance]
-FROM Trips
-GROUP BY CASE
-           WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
-           ELSE pickup_boroname
-         END
--- Add a having clause due to the GROUP BY statement
-HAVING Borough = 'Manhattan'
--- Add an ORDER BY clause to sort by Borough in ascending order
-ORDER BY Borough ASC;
-
-```
+    ```sql
+    -- Group by pickup_boroname and calculate the summary statistics of trip_distance
+    SELECT CASE
+             WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+             ELSE pickup_boroname
+           END AS Borough,
+           SUM(trip_distance) AS [Total Trip Distance]
+    FROM Trips
+    GROUP BY CASE
+               WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+               ELSE pickup_boroname
+             END
+    -- Add a having clause due to the GROUP BY statement
+    HAVING Borough = 'Manhattan'
+    -- Add an ORDER BY clause to sort by Borough in ascending order
+    ORDER BY Borough ASC;
+    
+    ```
 
 ## 清理资源
 
 在本练习中，你已创建一个 KQL 数据库并设置了一个可供查询的示例数据集。 然后使用 KQL 和 SQL 查询了数据。 如果已完成 KQL 数据库探索，可删除为本练习创建的工作区。
 1. 在左侧栏中，选择你的工作区的图标。
 2. 在工具栏上的“...”菜单中，选择“工作区设置”。
-3. 在“其他”部分中，选择“删除此工作区”。
+3. 在“其他”部分中，选择“删除此工作区” 。
