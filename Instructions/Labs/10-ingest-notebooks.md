@@ -14,25 +14,22 @@ lab:
 
 由于你也在使用示例数据集，因此优化并不能反映出在大规模生产中你可能看到的情况。但是，你仍然可以看到改进，而当每一毫秒都很重要时，优化就是关键。
 
-> 注意：完成本练习需要 Microsoft Fabric 许可证 。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。
->
-> 执行此操作还需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+
+## 创建工作区
+
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
+
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
+
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 创建工作区和湖屋目标
 
-首先创建一个启用了 Fabric 试用版的工作区、一个新的湖屋以及湖屋中的目标文件夹。
-
-1. 登录 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择“**数据工程**”体验。
-
-    ![Synapse 数据工程体验的屏幕截图](Images/data-engineering-home.png)
-
-1. 在左侧菜单栏中，选择“工作区”。
-
-1. 使用你选择的名称创建一个新工作区，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-
-1. 打开新工作区时，该工作区应为空，工作区名称旁边有一个钻石图标，如下所示：
-
-    ![新的空工作区的屏幕截图](Images/new-workspace.png)
+首先创建一个新的湖屋和湖屋中的目标文件夹。
 
 1. 在工作区中，选择“+ 新建”>“湖屋”，提供一个名称，然后选择“创建” 。
 
@@ -44,7 +41,7 @@ lab:
 
 1. 从湖屋内的湖屋资源管理器中，选择“文件”>“...”>“属性”。
 
-1. 将 RawData 文件夹的 ABFS 路径复制到空记事本中以供以后使用，该路径应如下所示：`abfss://{workspace_name}@onelake.dfs.fabric.microsoft.com/{lakehouse_name}.Lakehouse/Files/{folder_name}/{file_name}` 
+1. 将 RawData 文件夹的 ABFS 路径复制到空记事本中以供以后使用，该路径应如下所示：`abfss://{workspace_name}@onelake.dfs.fabric.microsoft.com/{lakehouse_name}.Lakehouse/Files/{folder_name}/{file_name}`
 
 现在应该有一个包含湖屋和 RawData 目标文件夹的工作区。
 

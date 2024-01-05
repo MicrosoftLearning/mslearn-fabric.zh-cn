@@ -12,34 +12,30 @@ lab:
 
 完成本实验室大约需要 30 分钟。
 
-> 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 创建湖屋
 
-有了工作区后，可在门户中切换到数据工程体验，并为数据文件创建一个数据湖屋。
+现在已经有了工作区，可以为数据文件创建数据湖屋了。
 
-1. 在 Power BI 门户的左下角，切换到“数据工程”体验。 如果未看到数据工程体验，请与 Fabric 管理员联系，并请求[启用 Fabric](https://learn.microsoft.com/fabric/admin/fabric-switch)。
-
-    数据工程主页包含用于创建常用数据工程资产的磁贴。
-
-2. 在“数据工程”主页中，使用所选名称创建一个新的湖屋 。
+1. 在“Synapse 数据工程”主页中，新建湖屋并为其指定名称 。
 
     大约一分钟后，一个新的湖屋创建完成：
 
     ![新湖屋的屏幕截图。](./Images/new-lakehouse.png)
 
-3. 查看新的湖屋，并注意使用左侧的湖屋资源管理器窗格可浏览湖屋中的表和文件：
+1. 查看新的湖屋，并注意使用左侧的湖屋资源管理器窗格可浏览湖屋中的表和文件：
     - Tables 文件夹包含可以使用 SQL 语义查询的表。 Microsoft Fabric 湖屋中的表基于 Apache Spark 中常用的开源 Delta Lake 文件格式。
     - Files 文件夹包含湖屋的 OneLake 存储中未与托管增量表关联的数据文件。 还可以在此文件夹中创建快捷方式，以引用存储在外部的数据。
 
@@ -82,7 +78,7 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对复制数据�
 
     ![表预览的屏幕截图。](./Images/table-preview.png)
 
-4. 在 sales 表的“...”菜单中，选择“查看文件”以查看此表的基础文件  
+4. 在 sales 表的“...”菜单中，选择“查看文件”以查看此表的基础文件
 
     ![表预览的屏幕截图。](./Images/delta-table-files.png)
 
@@ -92,7 +88,7 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对复制数据�
 
 创建湖屋并在其中定义表时，会自动创建一个 SQL 终结点，通过该终结点可以使用 SQL `SELECT` 语句查询表。
 
-1. 在湖屋页面的右上角，从湖屋切换到 SQL 终结点。  然后等待一小段时间，直到湖屋的 SQL 查询终结点在可视化界面中打开，可以从该界面查询其表，如下所示：
+1. 在湖屋页面的右上角，从湖屋切换到 SQL 终结点。 然后等待一小段时间，直到湖屋的 SQL 查询终结点在可视化界面中打开，可以从该界面查询其表，如下所示：
 
     ![“SQL 终结点”页面的屏幕截图。](./Images/lakehouse-sql-endpoint.png)
 
@@ -155,7 +151,7 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对复制数据�
 
     ![包含表的报表的屏幕截图。](./Images/table-visualization.png)
 
-4. 隐藏“数据”和“筛选器”窗格以创建更多空间 。 然后，确保已选择表可视化效果，并在“可视化效果”窗格中，将可视化效果更改为“簇状条形图”并重设其大小，如下所示。 
+4. 隐藏“数据”和“筛选器”窗格以创建更多空间 。 然后，确保已选择表可视化效果，并在“可视化效果”窗格中，将可视化效果更改为“簇状条形图”并重设其大小，如下所示。
 
     ![包含簇状条形图的报表的屏幕截图。](./Images/clustered-bar-chart.png)
 

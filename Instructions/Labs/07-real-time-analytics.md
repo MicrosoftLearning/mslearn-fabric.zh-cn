@@ -10,33 +10,31 @@ Microsoft Fabric 提供一个运行时，可用于使用 Kusto 查询语言 (KQL
 
 完成本实验室大约需要 30 分钟。
 
-> 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空，如下所示：
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)上，选择“Synapse 实时分析”。****
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
-
-5. 在 Power BI 门户左下角，选择 Power BI 图标并切换到 Microsoft Fabric 体验 。
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 下载 KQL 数据库的文件
 
-有了工作区后，可以在门户中切换到 Synapse Real-Time Analytics 体验并下载要分析的数据文件。
+现在已经有了工作区，可以下载要分析的数据文件了。
 
 1. 从 [https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/sales.csv](https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/sales.csv) 下载用于本练习的数据文件，在本地计算机上（或者实验室 VM 上，如果适用）将其另存为 sales.csv
-2. 返回到具有 Microsoft Fabric 体验的浏览器窗口。
+1. 返回到具有 Microsoft Fabric 体验的浏览器窗口。****
 
 ## 创建 KQL 数据库
 
 Kusto 查询语言 (KQL) 用于查询 KQL 数据库中定义的表中的静态或流数据。 若要分析销售数据，必须在 KQL 数据库中创建一个表，并从文件引入数据。
 
-1. 在 Microsoft Fabric 体验门户中，选择 Synapse Real-Time Analytics 体验图像，如下所示： 
+1. 在 Microsoft Fabric 体验门户中，选择 Synapse Real-Time Analytics 体验图像，如下所示：
 
     ![已选择 RTA 的选定 Fabric 体验主页的屏幕截图](./Images/fabric-experience-home.png)
 
@@ -46,11 +44,11 @@ Kusto 查询语言 (KQL) 用于查询 KQL 数据库中定义的表中的静态�
         - 数据库：已选择创建的数据库
         - 表：创建名为 sales 的新表。
     - **源**：
-        -               源类型：文件
+        - 源类型：文件
         - 上传文件：拖动或浏览之前下载的文件
     - **架构**：
-        -               压缩类型：未压缩
-        -               数据格式：CSV
+        - 压缩类型：未压缩
+        - 数据格式：CSV
         - 忽略第一条记录：已选择
         - 映射名称：sales_mapping
     - 汇总：
