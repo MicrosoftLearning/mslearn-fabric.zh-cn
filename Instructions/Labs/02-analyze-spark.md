@@ -10,34 +10,32 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
 完成本实验室大约需要 45 分钟。
 
-> 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空，如下所示：
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 创建湖屋并上传文件
 
-有了工作区后，可在门户中切换到数据工程体验，并为要分析的数据文件创建一个数据湖屋。
+现在已经有了工作区，可以为要分析的数据文件创建数据湖屋了。
 
-1. 在 Power BI 门户左下角，选择 Power BI 图标并切换到“数据工程”体验 。
-
-2. 在“Synapse 数据工程”主页中，新建湖屋并为其指定名称 。
+1. 在“Synapse 数据工程”主页中，新建湖屋并为其指定名称 。
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 可通过多种方法执行此操作，但在本练习中，只需将文本文件的文件夹下载并解压缩到本地计算机（或实验室 VM，如适用），然后将其上传到湖屋。
 
-3. 从 [https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip](https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip) 下载并解压缩本练习的数据文件。
+1. 从 [https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip](https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip) 下载并解压缩本练习的数据文件。
 
-4. 解压缩存档文件后，验证是否有名为 orders 的文件夹，其中是否包含名为 2019.csv、2020.csv 和 2021.csv 的 CSV 文件   。
-5. 返回到包含湖屋的 Web 浏览器标签页，在“资源管理器”窗格的 Files 文件夹的“...”菜单中，依次选择“上传”和“上传文件夹”，然后将从 orders 文件夹从本地计算机（或实验室 VM，如适用）上传到湖屋     。
-6. 上传文件后，展开 Files 并选择 orders 文件夹；然后验证 CSV 文件是否已上传，如下所示 ：
+1. 解压缩存档文件后，验证是否有名为 orders 的文件夹，其中是否包含名为 2019.csv、2020.csv 和 2021.csv 的 CSV 文件   。
+1. 返回到包含湖屋的 Web 浏览器标签页，在“资源管理器”窗格的 Files 文件夹的“...”菜单中，依次选择“上传”和“上传文件夹”，然后将从 orders 文件夹从本地计算机（或实验室 VM，如适用）上传到湖屋     。
+1. 上传文件后，展开 Files 并选择 orders 文件夹；然后验证 CSV 文件是否已上传，如下所示 ：
 
     ![湖屋中已上传文件的屏幕截图。](./Images/uploaded-files.png)
 
@@ -157,9 +155,9 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 10. 数据帧仅包含 2019.csv 文件中的数据。 修改代码，使文件路径使用 \* 通配符从 orders 文件夹的所有文件中读取销售订单数据：
 
     ```python
-   from pyspark.sql.types import *
+    from pyspark.sql.types import *
 
-   orderSchema = StructType([
+    orderSchema = StructType([
        StructField("SalesOrderNumber", StringType()),
        StructField("SalesOrderLineNumber", IntegerType()),
        StructField("OrderDate", DateType()),
@@ -171,8 +169,8 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
        StructField("Tax", FloatType())
        ])
 
-   df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
-   display(df)
+    df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
+    display(df)
     ```
 
 11. 运行修改后的代码单元并查看输出，该输出现应包括 2019 年、2020 年和 2021 年的销售情况。
@@ -195,7 +193,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
     ```
 
 2. 运行新的代码单元格，并查看结果。 观察以下详细信息：
-    - 对数据帧执行操作时，结果是一个新数据帧（在本例中，是一个新客户数据帧，它是通过从 df 数据帧中选择特定的列子集来创建的） 
+    - 对数据帧执行操作时，结果是一个新数据帧（在本例中，是一个新客户数据帧，它是通过从 df 数据帧中选择特定的列子集来创建的）
     - 数据帧提供 count 和 distinct 等函数，可用于汇总和筛选它们包含的数据 。
     - `dataframe['Field1', 'Field2', ...]` 语法是用于定义列子集的快速方法。 还可以使用 select 方法，所以上述代码的第一行可以编写为 `customers = df.select("CustomerName", "Email")`
 
@@ -570,7 +568,7 @@ Spark 元存储中的表是数据湖中文件的关系抽象。 表可以管理�
    # Clear the plot area
    plt.clf()
 
-   # Create a bar chart
+   # Create a line chart
    ax = sns.lineplot(x="OrderYear", y="GrossRevenue", data=df_sales)
    plt.show()
     ```
