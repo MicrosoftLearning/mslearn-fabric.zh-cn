@@ -12,26 +12,25 @@ lab:
 
 完成本实验室大约需要 20 分钟。
 
-> 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中使用模型之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空，如下所示：
+1. 在浏览器中 [https://app.fabric.microsoft.com](https://app.fabric.microsoft.com) 导航到 Microsoft Fabric 主页。
+1. 选择 **Synapse 数据科学**。
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 创建笔记本
 
 要运行代码，可以创建一个笔记本。 笔记本提供了一个交互式环境，可在其中编写和运行（多种语言的）代码。
 
-1. 在 Fabric 门户的左下角，选择 Power BI 图标并切换到“数据科学”体验 。
-
-1. 在“数据科学”主页中，创建新的笔记本 。
+1. 在“Synapse 数据科学”主页中，创建新的笔记本********。
 
     几秒钟后，一个包含单个单元格的新笔记本将会打开。 笔记本由一个或多个单元格组成，这些单元格可以包含代码或 markdown（格式化文本） 。
 
@@ -49,22 +48,22 @@ lab:
 
 现在，你已准备好运行代码来获取数据和训练模型。 将使用 Azure 开放数据集中的[糖尿病数据集](https://learn.microsoft.com/azure/open-datasets/dataset-diabetes?tabs=azureml-opendatasets?azure-portal=true)。 加载数据后，将数据转换为 Pandas 数据帧：处理行和列中数据的常见结构。
 
-1. 在笔记本中，使用最新单元格输出下方的“+ 代码”图标将新的代码单元格添加到笔记本，并在其中输入以下代码：
+1. 在笔记本中，使用最新单元格输出下方的“+ 代码”图标将新的代码单元格添加到笔记本，并在其中输入以下代码****：
 
     ```python
-    # Azure storage access info for open dataset diabetes
-    blob_account_name = "azureopendatastorage"
-    blob_container_name = "mlsamples"
-    blob_relative_path = "diabetes"
-    blob_sas_token = r"" # Blank since container is Anonymous access
+   # Azure storage access info for open dataset diabetes
+   blob_account_name = "azureopendatastorage"
+   blob_container_name = "mlsamples"
+   blob_relative_path = "diabetes"
+   blob_sas_token = r"" # Blank since container is Anonymous access
     
-    # Set Spark config to access  blob storage
-    wasbs_path = f"wasbs://%s@%s.blob.core.windows.net/%s" % (blob_container_name, blob_account_name, blob_relative_path)
-    spark.conf.set("fs.azure.sas.%s.%s.blob.core.windows.net" % (blob_container_name, blob_account_name), blob_sas_token)
-    print("Remote blob path: " + wasbs_path)
+   # Set Spark config to access  blob storage
+   wasbs_path = f"wasbs://%s@%s.blob.core.windows.net/%s" % (blob_container_name, blob_account_name, blob_relative_path)
+   spark.conf.set("fs.azure.sas.%s.%s.blob.core.windows.net" % (blob_container_name, blob_account_name), blob_sas_token)
+   print("Remote blob path: " + wasbs_path)
     
-    # Spark read parquet, note that it won't load any data yet by now
-    df = spark.read.parquet(wasbs_path)
+   # Spark read parquet, note that it won't load any data yet by now
+   df = spark.read.parquet(wasbs_path)
     ```
 
 1. 使用单元格左侧的“&#9655; 运行单元格”按钮运行单元格。 或者，可以按键盘上的 `SHIFT` + `ENTER` 来运行单元格。
@@ -74,12 +73,12 @@ lab:
 1. 使用单元格输出下方的“+ 代码”图标将新的代码单元格添加到笔记本，并在其中输入以下代码：
 
     ```python
-    display(df)
+   display(df)
     ```
 
-1. 单元格命令完成后，查看单元格下方的输出，该输出应如下所示：
+1. 单元格命令完成后，查看单元格下方的输出，输出应如下所示：
 
-    |年龄|SEX|BMI|BP|S1|S2|S3|S4|S5|S6|Y|
+    |年龄|性别|BMI|BP|S1|S2|S3|S4|S5|S6|Y|
     |---|---|---|--|--|--|--|--|--|--|--|
     |59|2|32.1|101.0|157|93.2|38.0|4.0|4.8598|87|151|
     |48|1|21.6|87.0|183|103.2|70.0|3.0|3.8918|69|75|
@@ -90,7 +89,7 @@ lab:
 
     输出显示糖尿病数据集的行和列。
 
-1. 呈现的表顶部有两个选项卡：“表格”和“图表”。  选择“图表”。
+1. 呈现的表顶部有两个选项卡：“表格”和“图表”。 选择“图表”。
 1. 选择图表右上角的“视图选项”以更改可视化效果。
 1. 将图表更改为以下设置：
     * 图表类型：`Box plot`
@@ -105,8 +104,8 @@ lab:
 1. 数据作为 Spark 数据帧加载。 要启动 Data Wrangler，需要将数据转换为 Pandas 数据帧。 在笔记本中运行以下代码：
 
     ```python
-    df = df.toPandas()
-    df.head()
+   df = df.toPandas()
+   df.head()
     ```
 
 1. 在笔记本功能区中选择“数据”，然后选择“启动数据整理器”下拉列表 。
@@ -115,18 +114,18 @@ lab:
     目前，标签列为 `Y`，这是一个连续变量。 要训练会预测 Y 的机器学习模型，需要训练回归模型。 Y 的（预测）值可能难以解释。 相反，我们可以尝试训练分类模型，它能够预测某人患糖尿病的风险是低还是高。 为了能够训练分类模型，需要基于 `Y` 中的值创建二进制标签列。
 
 1. 选择 Data Wrangler 中的 `Y` 列。 请注意，`220-240` 箱的频率会降低。 第 75 百分位数 `211.5` 与直方图中两个区域的转换大致一致。 让我们将此值用作低风险和高风险的阈值。
-1. 导航到“操作”面板，展开“公式”，然后选择“从公式创建列”。  
+1. 导航到“操作”面板，展开“公式”，然后选择“从公式创建列”。
 1. 创建新的列，设置如下：
     * 列名：`Risk`
     * 列公式：`(df['Y'] > 211.5).astype(int)`
 1. 查看添加到预览的新列 `Risk`。 进行验证，具有值 `1` 的行计数应大约为所有行的 25%（因为它是 `Y` 的第 75 百分位数）。
-1. 选择**应用**。
-1. 选择“将代码添加到笔记本”。
+1. 选择“应用”。
+1. 选择“将代码添加到笔记本”。****
 1. 使用 Data Wrangler 生成的代码运行单元格。
 1. 在新单元格中运行以下代码，验证 `Risk` 列的形状是否符合预期：
 
     ```python
-    df_clean.describe()
+   df_clean.describe()
     ```
 
 ## 训练机器学习模型
@@ -138,19 +137,19 @@ lab:
 1. 运行以下代码，将数据拆分为训练数据集和测试数据集，并将特征与要预测的标签 `Y` 分开：
 
     ```python
-    from sklearn.model_selection import train_test_split
+   from sklearn.model_selection import train_test_split
     
-    X, y = df_clean[['AGE','SEX','BMI','BP','S1','S2','S3','S4','S5','S6']].values, df_clean['Y'].values
+   X, y = df_clean[['AGE','SEX','BMI','BP','S1','S2','S3','S4','S5','S6']].values, df_clean['Y'].values
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
     ```
 
 1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
     ```python
-    import mlflow
-    experiment_name = "diabetes-regression"
-    mlflow.set_experiment(experiment_name)
+   import mlflow
+   experiment_name = "diabetes-regression"
+   mlflow.set_experiment(experiment_name)
     ```
 
     该代码创建名为 `diabetes-regression` 的 MLflow 试验。 在此试验中跟踪模型。
@@ -158,35 +157,35 @@ lab:
 1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
     ```python
-    from sklearn.linear_model import LinearRegression
+   from sklearn.linear_model import LinearRegression
     
-    with mlflow.start_run():
-       mlflow.autolog()
+   with mlflow.start_run():
+      mlflow.autolog()
     
-       model = LinearRegression()
-       model.fit(X_train, y_train)
+      model = LinearRegression()
+      model.fit(X_train, y_train)
     ```
 
-    代码使用线性回归训练回归模型。 使用 MLflow 自动记录参数、指标和项目。
+    该代码使用线性回归训练回归模型。 使用 MLflow 自动记录参数、指标和项目。
 
 ### 训练分类模型
 
 1. 运行以下代码，将数据拆分为训练数据集和测试数据集，并将特征与要预测的标签 `Risk` 分开：
 
     ```python
-    from sklearn.model_selection import train_test_split
+   from sklearn.model_selection import train_test_split
     
-    X, y = df_clean[['AGE','SEX','BMI','BP','S1','S2','S3','S4','S5','S6']].values, df_clean['Risk'].values
+   X, y = df_clean[['AGE','SEX','BMI','BP','S1','S2','S3','S4','S5','S6']].values, df_clean['Risk'].values
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
+   X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
     ```
 
 1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
     ```python
-    import mlflow
-    experiment_name = "diabetes-classification"
-    mlflow.set_experiment(experiment_name)
+   import mlflow
+   experiment_name = "diabetes-classification"
+   mlflow.set_experiment(experiment_name)
     ```
 
     该代码创建名为 `diabetes-classification` 的 MLflow 试验。 在此试验中跟踪模型。
@@ -194,12 +193,12 @@ lab:
 1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
     ```python
-    from sklearn.linear_model import LogisticRegression
+   from sklearn.linear_model import LogisticRegression
     
-    with mlflow.start_run():
-        mlflow.sklearn.autolog()
+   with mlflow.start_run():
+       mlflow.sklearn.autolog()
 
-        model = LogisticRegression(C=1/0.1, solver="liblinear").fit(X_train, y_train)
+       model = LogisticRegression(C=1/0.1, solver="liblinear").fit(X_train, y_train)
     ```
 
     代码使用逻辑回归训练分类模型。 使用 MLflow 自动记录参数、指标和项目。
@@ -224,8 +223,8 @@ Microsoft Fabric 将跟踪所有试验，并支持直观地探索它们。
 1. 在“另存为模型”框中选择“保存” 。
 1. 在新打开的弹出窗口中选择“创建新模型”。
 1. 选择 `model` 文件夹。
-1. 将模型命名为 `model-diabetes`，然后选择“保存”。
-1. 在创建模型时屏幕右上角显示的通知中选择“查看模型”。 还可刷新窗口。 已保存的模型在“模型版本”下链接。
+1. 将模型命名为“`model-diabetes`”，然后选择“保存”****。
+1. 在创建模型时屏幕右上角显示的通知中选择“查看模型”。 还可刷新窗口。 已保存的模型在“模型版本”下链接****。
 
 请注意，模型、试验和试验运行是链接的，以便你查看模型的训练方式。
 
