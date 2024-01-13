@@ -10,35 +10,33 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
 完成此练习大约需要 40 分钟
 
-> 注意：需要 Microsoft Fabric 许可证才能完成本练习。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空，如下所示：
+4. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 创建湖屋并上传数据
 
-现在已经有了一个工作区，接下来可以切换到门户中的“数据工程”体验，并为要分析的数据创建一个数据湖屋。
+现在已经有了工作区，可以为要分析的数据创建数据湖屋了。
 
-1. 在 Power BI 门户左下角，选择 Power BI 图标并切换到“数据工程”体验 。
-
-2. 在“Synapse 数据工程”主页中，使用所选名称创建一个新的湖屋 。
+1. 在“Synapse 数据工程”主页中，使用所选名称创建一个新的湖屋 。
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如果适用），然后将其上传到湖屋。
 
-3. 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv` 下载用于本练习的数据文件，在本地计算机上（或者实验室 VM 上，如果适用）将其另存为 products.csv。
+1. 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv` 下载用于本练习的数据文件，在本地计算机上（或者实验室 VM 上，如果适用）将其另存为 products.csv。
 
-4. 返回到包含湖屋的 Web 浏览器选项卡，在“资源管理器”窗格中“Files”文件夹的“...”菜单中，选择“新建子文件夹”并创建名为“products”的文件夹    。
+1. 返回到包含湖屋的 Web 浏览器选项卡，在“资源管理器”窗格中“Files”文件夹的“...”菜单中，选择“新建子文件夹”并创建名为“products”的文件夹    。
 
-5. 在 products 文件夹的“...”菜单中，选择“上传”和“上传文件”，然后将本地计算机（或者实验室 VM，如果适用）中的 products.csv 文件上传到湖屋    。
-6. 上传文件后，选择 products 文件夹；并验证是否已上传 products.csv 文件，如下所示 ：
+1. 在 products 文件夹的“...”菜单中，选择“上传”和“上传文件”，然后将本地计算机（或者实验室 VM，如果适用）中的 products.csv 文件上传到湖屋    。
+1. 上传文件后，选择 products 文件夹；并验证是否已上传 products.csv 文件，如下所示 ：
 
     ![湖屋中已上传的 products.csv 文件的屏幕截图。](./Images/products-file.png)
 
@@ -99,7 +97,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 1. 添加另一个新代码单元格并向其中添加以下代码：
 
     ```python
-   df.write.format("delta").saveAsTable("external_products", path="<abfs_path>/external_products")
+   df.write.format("delta").saveAsTable("external_products", path="abfs_path/external_products")
     ```
 
 2. 在“湖屋资源管理器”窗格中，在“Files”文件夹的“...”菜单中，选择“复制 ABFS 路径”   。
@@ -108,7 +106,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
     *abfss://workspace@tenant-onelake.dfs.fabric.microsoft.com/lakehousename.Lakehouse/Files*
 
-3. 在输入到代码单元格的代码中，将 <abfs_path> 替换为复制到剪贴板的路径，以便代码将数据帧保存为外部表，其中的数据文件位于 Files 文件夹位置中名为 external_products 的文件夹中  。 完整路径应如下所示：
+3. 在输入到代码单元格的代码中，将 abfs_path 替换为复制到剪贴板的路径，以便代码将数据帧保存为外部表，其中的数据文件位于 Files 文件夹位置中名为 external_products 的文件夹中************。 完整路径应如下所示：
 
     *abfss://workspace@tenant-onelake.dfs.fabric.microsoft.com/lakehousename.Lakehouse/Files/external_products*
 
@@ -116,7 +114,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
 5. 在“湖屋资源管理器”窗格中，在 Files 文件夹的“...”菜单中，选择“刷新”   。 然后展开“Files”节点，并验证是否已为表的数据文件创建 external_products 文件夹 。
 
-### 比较托管表与外部表 
+### 比较托管表与外部表
 
 我们来探讨托管表与外部表之间的差异。
 

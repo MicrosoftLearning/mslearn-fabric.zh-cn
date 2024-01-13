@@ -10,41 +10,40 @@ lab:
 
 完成此练习大约需要 **45** 分钟
 
-> 注意：需要 Microsoft Fabric 许可证才能完成本练习。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
-## 创建工作区并启用数据模型编辑
+## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
-4. 打开新工作区时，它应为空，如下所示：
+4. 打开新工作区时，它应为空。
 
-   ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace-medallion.png)
+   ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace-medallion.png)
+
 5. 导航到工作区设置并启用“数据模型编辑”预览功能。 这样一来，你就可以使用 Power BI 数据集在你的湖屋中的表之间创建关系。
 
-    ![Power BI 中工作区设置页的屏幕截图。](./Images/workspace-settings.png)
+    ![Fabric 中工作区设置页的屏幕截图。](./Images/workspace-settings.png)
 
     > 注意：启用预览功能后，可能需要刷新浏览器选项卡。
 
 ## 创建湖屋并将数据上传到铜层
 
-现在已经有了一个工作区，接下来可以切换到 Fabric 门户中的“数据工程”体验，并为要分析的数据创建一个数据湖屋。
+现在已经有了工作区，可以为要分析的数据创建数据湖屋了。
 
-1. 在 Power BI 门户左下角，选择 Power BI 图标并切换到“数据工程”体验 。 如果你未看到数据工程体验，请与 Fabric 管理员联系，并请求[启用 Fabric](https://learn.microsoft.com/fabric/admin/fabric-switch)。
-
-2. 在“Synapse 数据工程”主页中，新建名为“销售”的湖屋。
+1. 在“Synapse 数据工程”主页中，新建名为“销售”的湖屋。
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如果适用），然后将其上传到湖屋。
 
-3. 从 `https://github.com/MicrosoftLearning/dp-data/blob/main/orders.zip` 下载本练习的数据文件。 提取文件并以原始名称保存在本地计算机（或者实验室 VM，如果适用）上。 应该有 3 个包含 3 年销售数据的文件：2019.csv、2020.csv 和 2021.csv。
+1. 从 `https://github.com/MicrosoftLearning/dp-data/blob/main/orders.zip` 下载本练习的数据文件。 提取文件并以原始名称保存在本地计算机（或者实验室 VM，如果适用）上。 应该有 3 个包含 3 年销售数据的文件：2019.csv、2020.csv 和 2021.csv。
 
-4. 返回到包含湖屋的 Web 浏览器选项卡，在“资源管理器”窗格中“Files”文件夹的“...”菜单中，选择“新建子文件夹”并创建名为“bronze”的文件夹    。
+1. 返回到包含湖屋的 Web 浏览器选项卡，在“资源管理器”窗格中“Files”文件夹的“...”菜单中，选择“新建子文件夹”并创建名为“bronze”的文件夹    。
 
-5. 在 bronze 文件夹的“...”菜单中，选择“上传”和“上传文件”，然后将本地计算机（或者实验室 VM，如果适用）中的 3 个文件（2019.csv、2020.csv 和 2021.csv）上传到湖屋   。 使用 Shift 键一次上传全部 3 个文件。
+1. 在 bronze 文件夹的“...”菜单中，选择“上传”和“上传文件”，然后将本地计算机（或者实验室 VM，如果适用）中的 3 个文件（2019.csv、2020.csv 和 2021.csv）上传到湖屋   。 使用 Shift 键一次上传全部 3 个文件。
 
-6. 上传文件后，选择 bronze 文件夹；然后验证文件是否已上传，如下所示：
+1. 上传文件后，选择 bronze 文件夹；然后验证文件是否已上传，如下所示：
 
     ![湖屋中已上传的 products.csv 文件的屏幕截图。](./Images/bronze-files.png)
 
@@ -103,7 +102,7 @@ lab:
 
     你运行的代码已将 **bronze** 文件夹中的 CSV 文件的数据加载到 Spark 数据帧中，然后显示了数据帧的前几行。
 
-    > 注意：可以通过选择输出窗格左上角的“...”菜单来清除、隐藏单元格输出的内容并自动调整其大小。 
+    > 注意：可以通过选择输出窗格左上角的“...”菜单来清除、隐藏单元格输出的内容并自动调整其大小。
 
 7. 现在你将**添加用于数据验证和清理的列**，使用 PySpark 数据帧添加列并更新某些现有列的值。 使用 + 按钮**添加新的代码块**，并将以下代码添加到单元格：
 
@@ -120,8 +119,6 @@ lab:
     ```
 
     代码的第一行从 PySpark 导入必要的函数。 然后，向数据帧添加新列，以便可以跟踪源文件名称、订单是否被标记为在感兴趣的会计年度之前，以及创建和修改行的时间。
-
-    另外，还需要添加 CustomerID 和 ItemID 列，稍后将填充这些列。
 
     最后，如果 CustomerName 列为 null 或为空，则将此列更新为“未知”。
 
@@ -253,7 +250,7 @@ lab:
 
 1. 返回到“数据工程”主页，并创建名为“Transform data for Gold”的新笔记本 。
 
-2. 在湖屋资源管理器窗格中，选择“添加”，然后选择前面创建的“Sales”湖屋来添加“Sales”湖屋。   你将在资源管理器窗格的“Tables”部分看到列出的 sales_silver 表 。
+2. 在湖屋资源管理器窗格中，选择“添加”，然后选择前面创建的“Sales”湖屋来添加“Sales”湖屋。 你将在资源管理器窗格的“Tables”部分看到列出的 sales_silver 表 。
 
 3. 在现有代码块中，删除样本文本并添加以下代码，以便将数据加载到数据帧并开始构建星型架构，然后运行它：
 
@@ -357,7 +354,7 @@ lab:
     ```python
     from pyspark.sql.functions import col, split
     
-    # Create customer_gold dataframe
+    # Create customer_silver dataframe
     
     dfdimCustomer_silver = df.dropDuplicates(["CustomerName","Email"]).select(col("CustomerName"),col("Email")) \
         .withColumn("First",split(col("CustomerName"), " ").getItem(0)) \
@@ -365,7 +362,7 @@ lab:
     
     # Display the first 10 rows of the dataframe to preview your data
 
-    display(dfdimCustomer_silver .head(10))
+    display(dfdimCustomer_silver.head(10))
     ```
 
      此处，你通过执行各种转换（例如删除重复项、选择特定列以及拆分“CustomerName”列以创建“First”和“Last”名称列）创建了一个新的数据帧 dfdimCustomer_silver。 结果是一个数据帧，其中包含已清理和结构化的客户数据，包括从“CustomerName”列中提取的单独“First”和“Last”名称列。
@@ -435,12 +432,12 @@ lab:
         .execute()
     ```
 
-12. **添加另一个代码块**以创建 **customer_gold** 数据帧。 稍后将在 Sales 联接中使用它。
+12. 添加另一个代码块**** 以创建 product_silver**** 数据帧。
   
     ```python
     from pyspark.sql.functions import col, split, lit
     
-    # Create Customer_gold dataframe, this dataframe will be used later on on the Sales join
+    # Create product_silver dataframe
     
     dfdimProduct_silver = df.dropDuplicates(["Item"]).select(col("Item")) \
         .withColumn("ItemName",split(col("Item"), ", ").getItem(0)) \
@@ -470,6 +467,8 @@ lab:
     display(dfdimProduct_gold.head(10))
     ```
 
+      它根据表中的当前数据计算下一个可用的产品 ID，将这些新 ID 分配给产品，然后显示更新的产品信息。
+
 14. 与对其他维度执行的操作类似，你需要确保产品表在新数据传入时保持最新。 在新代码块中，粘贴并运行以下代码：
 
     ```python
@@ -498,8 +497,6 @@ lab:
               ) \
               .execute()
       ```
-
-      它根据表中的当前数据计算下一个可用的产品 ID，将这些新 ID 分配给产品，然后显示更新的产品信息（如果 display 命令取消注释）。
 
       **构建好维度后，最后一步是创建事实数据表。**
 

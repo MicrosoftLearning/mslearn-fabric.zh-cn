@@ -9,15 +9,15 @@ lab:
 
 完成本实验室大约需要 30 分钟。
 
-> 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 执行此操作需要 Microsoft 学校或工作帐户 。 如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：完成本练习需要 Microsoft Fabric 许可证。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 需要 Microsoft 学校或工作帐户才能执行此操作 。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择 Power BI。
+1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择“Power BI”。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+3. 使用所选名称创建一个新工作区，并选择包含 Fabric 容量的授权模式（试用、高级或 Fabric）  。
 4. 打开新工作区时，它应为空，如下所示：
 
    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
@@ -35,7 +35,7 @@ lab:
 
 - 创建 KQL 数据库
 - 将数据复制到 OneLake
-- 创建事件流
+- 创建 Eventstream
 - 将数据从 Eventstream 流式传输到 KQL 数据库
 - 使用 KQL 和 SQL 探索数据
 
@@ -62,11 +62,11 @@ lab:
 ## 创建 Eventstream
 
 1. 在菜单栏中，选择“实时分析”（该图标类似于 ![rta 徽标](./Images/rta_logo.png)）
-2. 在“新建”下，选择“EventStream (预览)” 
+2. 在“新建”下，选择“EventStream (预览)”
 
    ![选择事件流的图像](./Images/select-eventstream.png)
 
-3. 系统会提示为 Eventstream 命名。 为 EventStream 指定一个你能记住的名称（如 *MyStockES），然后按“创建”按钮 。
+3. 系统会提示为 Eventstream 命名。 为 EventStream 指定一个你能记住的名称（如 MyStockES），然后按“创建”按钮********。
 
    ![名称事件流的图像](./Images/name-eventstream.png)
 
@@ -76,14 +76,14 @@ lab:
 
    ![EventStream 画布的图像](./Images/real-time-analytics-canvas.png)
 
-2. 输入下表所示的示例数据的值，然后选择“添加并配置”。
+2. 输入下表所示的示例数据的值，然后选择“添加”****。
 
    | 字段       | 建议的值 |
    | ----------- | ----------------- |
    | 源名称 | StockData         |
    | 示例数据 | 股市      |
 
-3. 现在，通过选择“新建目标”，然后选择“KQL 数据库”来添加目标 
+3. 现在，通过选择“新建目标”，然后选择“KQL 数据库”来添加目标
 
    ![EventStream 目标的图像](./Images/new-kql-destination.png)
 
@@ -95,7 +95,7 @@ lab:
    | 工作区        | 创建 KQL 数据库的工作区 |
    | KQL 数据库     | MyStockData                                    |
 
-3. 选择“添加并配置”。
+3. 选择“创建和配置”****。
 
 ## 配置数据引入
 
@@ -139,7 +139,7 @@ Kusto 查询语言 (KQL) 是处理数据并返回结果的只读请求。 该请
 
    ![KQL 查询结果的图像](./Images/kql-query-results.png)
 
-4. 返回到数据树以选择下一个查询，该查询使用 where 运算符和 between 运算符返回过去 24 小时内引入的记录。
+4. 返回到数据树以选择下一个查询，其使用 where 运算符和 between 运算符返回在过去 24 小时内获取的记录。
 
    ![KQL 查询结果 (最近 24 个) 的图像](./Images/kql-query-results-last24.png)
 

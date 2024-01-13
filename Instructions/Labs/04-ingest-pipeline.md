@@ -12,30 +12,28 @@ Fabric 还支持 Apache Spark，使你能够编写和运行代码以大规模处
 
 完成本实验室大约需要 60 分钟。
 
-> 注意：需要 Microsoft Fabric 许可证才能完成本练习。 有关如何启用免费 Fabric 试用版许可证的详细信息，请参阅 [Fabric 入门](https://learn.microsoft.com/fabric/get-started/fabric-trial)。 需要 Microsoft 学校或工作帐户才能执行此操作 。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 登录到 [Microsoft Fabric](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`)，然后选择“Power BI”。
-2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-3. 使用所选名称创建一个新工作区，并选择包含 Fabric 容量的授权模式（试用、高级或 Fabric）  。
-4. 打开新工作区时，它应为空，如下所示：
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
+1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 打开新工作区时，它应为空。
 
-    ![Power BI 中空工作区的屏幕截图。](./Images/new-workspace.png)
+    ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
 ## 创建湖屋
 
-现在已经有了一个工作区，接下来可以切换到门户中的“数据工程”体验，并创建一个数据湖屋来将数据引入到其中。
+现在已经有了工作区，可以创建数据湖屋，将数据引入其中了。
 
-1. 在 Power BI 门户左下角，选择 Power BI 图标并切换到“数据工程”体验 。
-
-2. 在“数据工程”主页中，使用所选名称创建一个新的湖屋 。
+1. 在“Synapse 数据工程”主页中，新建湖屋并为其指定名称 。
 
     大约一分钟后，将完成创建一个不包含表或文件的新湖屋 。
 
-3. 在左侧窗格的“湖视图”选项卡上，在“Files”节点的“...”菜单中，选择“新建子文件夹”并创建名为“new_data”的子文件夹    。
+1. 在左侧窗格的“湖视图”选项卡上，在“Files”节点的“...”菜单中，选择“新建子文件夹”并创建名为“new_data”的子文件夹    。
 
 ## 创建管道
 
@@ -153,7 +151,7 @@ Fabric 还支持 Apache Spark，使你能够编写和运行代码以大规模处
         - 数据存储类型：工作区
         - 工作区数据存储：湖屋
         - 文件路径类型：通配符文件路径
-        - 文件夹路径：Files/new_data 
+        - 文件夹路径：Files/new_data
         - 通配符文件名：*.csv        
         - 递归：已选中
     - 日志记录设置：

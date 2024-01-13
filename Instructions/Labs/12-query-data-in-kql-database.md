@@ -16,20 +16,13 @@ KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建�
 
 在此场景中，你是一名分析师，负责查询纽约市出租车行程原始指标的示例数据集，并从 Fabric 环境中拉取摘要统计（分析）数据。 你将使用 KQL 查询此数据并收集所需信息，以获取有关数据的信息化见解。
 
-> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。  如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
-
-## 激活 Microsoft Fabric 试用版
-
-1. 注册 Microsoft Fabric 帐户后，导航到 [https://app.fabric.microsoft.com](https://app.fabric.microsoft.com) 处的 Microsoft Fabric 门户。
-1. 选择“帐户管理员”图标（右上角的“用户”图像）
-1. 在“帐户管理员”菜单中，选择“开始试用”以启动 Microsoft Fabric 试用版。
-1. 成功升级到 Microsoft Fabric 后，通过选择“Fabric 主页”导航到主页。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“实时分析”。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“实时分析”。****
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -58,7 +51,7 @@ KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建�
 
    ![在 Data Lake 中选择滑块的图像。](./images/data-availability-data-lake.png)
 
-1. 从“开始获取数据”的选项中选择“示例数据”框。
+1. 从“开始获取数据”的选项中选择“示例数据”框。**********
 
    ![图像显示了一系列选择选项，并突出显示了示例数据](./Images/load-sample-data.png)
 
@@ -70,11 +63,11 @@ KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建�
 
    ![数据正在加载到 KQL 数据库中](./Images/choose-automotive-operations-analytics.png)
 
-1. 加载完数据后，验证数据是否已加载到 KQL 数据库中。 要完成此操作，可以选择表右侧的省略号，导航到“查询表”，然后选择“显示任意 100 条记录”。 
+1. 加载完数据后，验证数据是否已加载到 KQL 数据库中。 要完成此操作，可以选择表右侧的省略号，导航到“查询表”，然后选择“显示任意 100 条记录”。
 
     ![图像显示从 RawServerMetrics 表中选择前 100 个文件](./Images/rawservermetrics-top-100.png)
 
-   > 注：首次运行此功能时，可能需要几秒钟来分配计算资源。
+   > 注意****：首次运行此功能时，可能需要几秒钟来分配计算资源。
 
     ![数据中 100 条记录的图像](./Images/explore-with-kql-take-100.png)
 
@@ -102,7 +95,7 @@ KQL 的重要功能之一是能够快速高效地处理大量数据。 此功能
 
    > **警告：** 无法使用 **T-SQL** 从查询集创建 Power BI 报表，因为 Power BI 不支持 T-SQL 作为数据源。 **Power BI 仅支持 KQL 作为查询集的本机查询语言**。 如果你要使用 T-SQL 查询 Microsoft Fabric 中的数据，则需要使用可模拟 Microsoft SQL Server 并允许你对数据运行 T-SQL 查询的 T-SQL 终结点。 但是，T-SQL 终结点存在一些限制并与本机 SQL Server 有差别，而且它不支持创建报表或将报表发布到 Power BI。
 
-> 注意：除了前面所示的拉取查询窗口的方法外，你还可以在任何时候按下主 KQL 数据库面板中的“浏览数据”按钮.. 
+> 注意：除了前面所示的拉取查询窗口的方法外，你还可以在任何时候按下主 KQL 数据库面板中的“浏览数据”按钮..
 
    ![“浏览数据”按钮的图像](./Images/explore-your-data.png)
 

@@ -10,18 +10,11 @@ lab:
 
 完成本实验室大约需要 30 分钟。
 
-> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。  如果没有，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
-
-## 激活 Microsoft Fabric 试用版
-
-1. 注册 Microsoft Fabric 帐户后，导航到 [https://app.fabric.microsoft.com](https://app.fabric.microsoft.com) 处的 Microsoft Fabric 门户。
-1. 选择“帐户管理员”图标（右上角的“用户”图像）
-1. 在“帐户管理员”菜单中，选择“开始试用”以启动 Microsoft Fabric 试用版。
-1. 成功升级到 Microsoft Fabric 后，通过选择“Fabric 主页”导航到主页。
+> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，在已启用的 Fabric 试用版中创建工作区。
+在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
 1. 在 Microsoft Fabric 主页上，选择“Synapse 数据仓库”。[](https://app.fabric.microsoft.com)
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
@@ -104,8 +97,8 @@ lab:
     - 假设引用完整性：未选中
 
 4. 重复此过程，在以下表之间创建多对一关系：
-    - FactOrderSales.CustomerKey &#8594; DimCustomer.CustomerKey 
-    - FactOrderSales.SalesOrderDateKey &#8594; DimDate.DateKey 
+    - FactOrderSales.CustomerKey &#8594; DimCustomer.CustomerKey
+    - FactOrderSales.SalesOrderDateKey &#8594; DimDate.DateKey
 
     定义所有关系后，模型应如下所示：
 
