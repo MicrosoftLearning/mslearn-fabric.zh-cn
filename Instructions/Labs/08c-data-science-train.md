@@ -119,7 +119,7 @@ lab:
    mlflow.set_experiment(experiment_name)
     ```
 
-    该代码创建名为 `experiment-diabetes` 的 MLflow 试验。 在此试验中跟踪模型。
+    该代码会创建名为“**experiment-diabetes**”的 MLflow 试验。 在此试验中跟踪模型。
 
 1. 在笔记本中添加另一个新代码单元格，在其中输入以下代码并运行它：
 
