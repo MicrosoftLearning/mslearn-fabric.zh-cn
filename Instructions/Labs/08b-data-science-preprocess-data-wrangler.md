@@ -48,7 +48,11 @@ lab:
 
 现在可以运行代码来获取数据了。 将使用 Azure 开放数据集中的 [OJ Sales 数据集](https://learn.microsoft.com/en-us/azure/open-datasets/dataset-oj-sales-simulated?tabs=azureml-opendatasets?azure-portal=true)。 加载数据后，将数据转换为 Pandas 数据帧，这是数据整理器支持的结构。
 
-1. 在笔记本中，使用最新单元格下方的“ **+ 代码**”图标将新代码单元格添加到笔记本中。 输入以下代码以将数据集加载到数据帧中。
+1. 在笔记本中，使用最新单元格下方的“ **+ 代码**”图标将新代码单元格添加到笔记本中。
+
+    > **提示**：若要查看“+ 代码”图标，请将鼠标移到当前单元格输出的正下方和左侧。**** 或者在菜单栏中的“编辑”选项卡上，选择“+ 添加代码单元格”。********
+
+1. 输入以下代码以将数据集加载到数据帧中。
 
     ```python
    # Azure storage access info for open dataset diabetes
