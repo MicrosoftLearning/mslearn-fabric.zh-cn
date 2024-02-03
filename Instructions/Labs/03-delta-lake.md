@@ -16,7 +16,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`) 中，选择“Synapse 数据工程”****。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 4. 打开新工作区时，它应为空。
@@ -31,7 +31,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如果适用），然后将其上传到湖屋。
 
-1. 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv` 下载用于本练习的数据文件，在本地计算机上（或者实验室 VM 上，如果适用）将其另存为 products.csv。
+1. 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv` 下载本练习的[数据文件](https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv)，并在本地计算机上（或者实验室 VM 上，如果适用）将其另存为 **products.csv**。
 
 1. 返回到包含湖屋的 Web 浏览器选项卡，在“资源管理器”窗格中“Files”文件夹的“...”菜单中，选择“新建子文件夹”并创建名为“products”的文件夹    。
 
@@ -65,7 +65,7 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
     > 注意：由于这是你第一次在此笔记本中运行 Spark 代码，因此必须启动 Spark 会话。 这意味着第一次运行可能需要一分钟左右才能完成。 后续运行速度会更快。
 
-6. 单元格命令完成后，查看单元格下方的输出，该输出应如下所示：
+6. 单元格命令完成后，查看单元格下方的输出，输出应如下所示：
 
     | 索引 | ProductID | ProductName | 类别 | ListPrice |
     | -- | -- | -- | -- | -- |
@@ -82,13 +82,17 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
 托管表是其架构元数据和数据文件均由 Fabric 管理的表。 表的数据文件是在 Tables 文件夹中创建的。
 
-1. 如果还不存在代码单元格，请在第一个代码单元格返回的结果下，使用“+ 代码”按钮添加新的代码单元格。 然后在新单元格中输入以下代码并运行它：
+1. 如果尚不存在代码单元格，请在第一个代码单元格返回的结果下，使用“+ 代码”图标添加新的代码单元格****。
+
+    > **提示**：若要查看“+ 代码”图标，请将鼠标移到当前单元格输出的正下方和左侧。**** 或者在菜单栏中的“编辑”选项卡上，选择“+ 添加代码单元格”。********
+
+2. 在新单元格中输入并运行以下代码：
 
     ```python
    df.write.format("delta").saveAsTable("managed_products")
     ```
 
-2. 在“湖屋资源管理器”窗格中，在“Tables”文件夹的“...”菜单中，选择“刷新”   。 然后展开“Tables”节点并验证是否已创建managed_products 表 。
+3. 在“湖屋资源管理器”窗格中，在“Tables”文件夹的“...”菜单中，选择“刷新”   。 然后展开“Tables”节点并验证是否已创建managed_products 表 。
 
 ### 创建外部表
 
