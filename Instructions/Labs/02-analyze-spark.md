@@ -16,9 +16,9 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`) 中，选择“Synapse 数据工程”****。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
+1. 新建一个工作区并为其指定名称，并在“高级”部分选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
 
     ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
@@ -31,7 +31,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 可通过多种方法执行此操作，但在本练习中，只需将文本文件的文件夹下载并解压缩到本地计算机（或实验室 VM，如适用），然后将其上传到湖屋。
 
-1. 从 [https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip](https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip) 下载并解压缩本练习的数据文件。
+1. 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip` 下载并解压缩本练习的[数据文件](https://github.com/MicrosoftLearning/dp-data/raw/main/orders.zip)。
 
 1. 解压缩存档文件后，验证是否有名为 orders 的文件夹，其中是否包含名为 2019.csv、2020.csv 和 2021.csv 的 CSV 文件   。
 1. 返回到包含湖屋的 Web 浏览器标签页，在“资源管理器”窗格的 Files 文件夹的“...”菜单中，依次选择“上传”和“上传文件夹”，然后将从 orders 文件夹从本地计算机（或实验室 VM，如适用）上传到湖屋     。
@@ -71,7 +71,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
     ![包含 Files 窗格的笔记本的屏幕截图。](./Images/notebook-files.png)
 
-2. 在 2019.csv 的“...”菜单中，选择“加载数据” > “Spark”   。 应在笔记本中添加包含以下代码的新代码单元格：
+1. 在 2019.csv 的“...”菜单中，选择“加载数据” > “Spark”   。 应在笔记本中添加包含以下代码的新代码单元格：
 
     ```python
    df = spark.read.format("csv").option("header","true").load("Files/orders/2019.csv")
@@ -81,11 +81,11 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
     > 提示：可使用 << 图标隐藏左侧的湖屋资源管理器窗格 。 这样做有助于专注于笔记本。
 
-3. 使用单元格左侧的“&#9655; 运行单元格”按钮运行单元格。
+1. 使用单元格左侧的“&#9655; 运行单元格”按钮运行单元格。
 
     > 注意：由于这是你第一次运行 Spark 代码，因此必须启动 Spark 会话。 这意味着会话中的第一次运行可能需要一分钟左右才能完成。 后续运行速度会更快。
 
-4. 单元格命令完成后，查看单元格下方的输出，输出应如下所示：
+1. 单元格命令完成后，查看单元格下方的输出，输出应如下所示：
 
     | Index | SO43701 | 11 | 2019-07-01 | Christy Zhu | christy12@adventure-works.com | Mountain-100 Silver, 44 | 16 | 3399.99 | 271.9992 |
     | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -95,7 +95,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
     输出显示 2019.csv 文件中的数据行和列。 但请注意，列标题看起来不正常。 用于将数据加载到数据帧的默认代码假定 CSV 文件的第一行包含列名，但在本例中，CSV 文件只包含数据，没有标头信息。
 
-5. 修改代码以将 header 选项设置为 false，如下所示 ：
+1. 修改代码以将 header 选项设置为 false，如下所示 ：
 
     ```python
    df = spark.read.format("csv").option("header","false").load("Files/orders/2019.csv")
@@ -103,7 +103,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
    display(df)
     ```
 
-6. 重新运行单元格并查看输出，输出应如下所示：
+1. 重新运行单元格并查看输出，输出应如下所示：
 
    | Index | _c0 | _c1 | _c2 | _c3 | _c4 | _c5 | _c6 | _c7 | _c8 |
     | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -114,7 +114,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
     现在，数据帧正确地将第一行作为数据值包含在内，但列名称是自动生成的，并不是很有用。 要理解数据，需要为文件中的数据值显式定义正确的架构和数据类型。
 
-7. 按如下所示修改代码以定义架构，并在加载数据时应用该架构：
+1. 按如下所示修改代码以定义架构，并在加载数据时应用该架构：
 
     ```python
    from pyspark.sql.types import *
@@ -135,7 +135,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
    display(df)
     ```
 
-8. 运行修改后的单元格并查看输出，输出应如下所示：
+1. 运行修改后的单元格并查看输出，输出应如下所示：
 
    | Index | SalesOrderNumber | SalesOrderLineNumber | OrderDate | CustomerName | 电子邮件 | 项 | 数量 | 单价 | 税款 |
     | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
@@ -146,13 +146,15 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
     现在，数据帧包含正确的列名（除了 Index，这是所有数据帧中基于每一行的序号位置的内置列）。 列的数据类型是使用 Spark SQL 库中定义的一组标准类型指定的，这些类型是在单元格开始时导入的。
 
-9. 通过查看数据帧确认更改是否已应用于数据。 在新代码单元格中运行以下代码：
+1. 通过查看数据帧确认更改是否已应用于数据。
 
-    ```python
+1. 使用当前单元格的输出左侧的“+ 代码”链接（移动鼠标时即会显示）添加新的代码单元格（或者在菜单栏上的“编辑”选项卡中，选择“+ 添加代码单元格”）************。 然后在新代码单元中运行以下代码：
+
+    ```Python
    display(df)
     ```
 
-10. 数据帧仅包含 2019.csv 文件中的数据。 修改代码，使文件路径使用 \* 通配符从 orders 文件夹的所有文件中读取销售订单数据：
+1. 数据帧仅包含 2019.csv 文件中的数据。 修改代码，使文件路径使用 \* 通配符从 orders 文件夹的所有文件中读取销售订单数据：
 
     ```python
     from pyspark.sql.types import *
@@ -173,7 +175,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
     display(df)
     ```
 
-11. 运行修改后的代码单元并查看输出，该输出现应包括 2019 年、2020 年和 2021 年的销售情况。
+1. 运行修改后的代码单元并查看输出，该输出现应包括 2019 年、2020 年和 2021 年的销售情况。
 
     注意：仅显示一部分行，因此可能无法查看所有年份的示例。
 
@@ -228,7 +230,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
    display(yearlySales)
     ```
 
-4. 运行添加的代码单元格，并注意结果显示每年的销售订单数。 请注意，select 方法包含一个 SQL year 函数以提取 OrderDate 字段的年份部分（这也是代码包含 import 语句以从 Spark SQL 库导入函数的原因） 。 然后它使用 alias 方法向提取的年份值分配一个列名。 接下来，按派生的“年份”列对数据进行分组，并计算每个组中的行计数，最后使用 orderBy 方法对生成的数据帧进行排序。
+4. 运行添加的代码单元格，并注意结果显示每年的销售订单数。 请注意，select 方法包含一个 SQL year 函数以提取 OrderDate 字段的年份部分（这也是代码包含 import 语句以从 Spark SQL 库导入函数的原因） 。 然后，它会使用 **alias** 方法向提取的年份值分配一个列名。 接下来，按派生的“年份”列对数据进行分组，并计算每个组中的行计数，最后使用 orderBy 方法对生成的数据帧进行排序。
 
 ## 使用 Spark 转换数据文件
 
@@ -269,7 +271,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
 1. 添加包含以下代码的新单元格，以 Parquet 格式保存转换后的数据帧（如果数据已存在，则覆盖数据）：
 
-    ```python
+    ```Python
    transformed_df.write.mode("overwrite").parquet('Files/transformed_data/orders')
    print ("Transformed data saved!")
     ```
@@ -282,7 +284,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
 3. 添加包含以下代码的新单元格，以从 transformed_orders/orders 文件夹中的 parquet 文件加载新的数据帧：
 
-    ```python
+    ```Python
    orders_df = spark.read.format("parquet").load("Files/transformed_data/orders")
    display(orders_df)
     ```
@@ -293,7 +295,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
 1. 添加包含以下代码的新单元格；该代码保存数据帧，并按年份和月份对数据进行分区 ：
 
-    ```python
+    ```Python
    orders_df.write.partitionBy("Year","Month").mode("overwrite").parquet("Files/partitioned_data")
    print ("Transformed data saved!")
     ```
@@ -306,7 +308,7 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
 3. 添加包含以下代码的新单元格，以从 orders.parquet 文件加载新的数据帧：
 
-    ```python
+    ```Python
    orders_2021_df = spark.read.format("parquet").load("Files/partitioned_data/Year=2021/Month=*")
    display(orders_2021_df)
     ```

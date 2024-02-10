@@ -66,7 +66,7 @@ lab:
 
 5. 运行新查询，将三行插入 DimProduct 表中。
 6. 查询完成后，选择数据仓库中页面底部的“数据”选项卡。 在“资源管理器”窗格中，选择 DimProduct 表，并验证是否已将三行添加到表中 。
-7. 在“开始”菜单选项卡上，使用“新建 SQL 查询”按钮创建新查询 。 然后将 Transact-SQL 代码从 [https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/create-dw.txt](https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/create-dw.txt) 复制并粘贴到新的查询窗格中。
+7. 在“开始”菜单选项卡上，使用“新建 SQL 查询”按钮创建新查询 。 然后将 Transact-SQL 代码从 `https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/create-dw.txt` 复制并粘贴到新的查询窗格中。
 <!-- I had to remove the GO command in this query as well -->
 8. 运行查询，创建一个简单的数据仓库架构并加载一些数据。 运行该脚本大约需要 30 秒。
 9. 使用工具栏上的“刷新”按钮刷新视图。 然后在“资源管理器”窗格中，验证数据仓库中的 dbo 架构现在是否包含以下四个表 ：

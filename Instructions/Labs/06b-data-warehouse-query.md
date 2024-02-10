@@ -6,7 +6,7 @@ lab:
 
 # 在 Microsoft Fabric 中查询数据仓库
 
-在 Microsoft Fabric 中，数据仓库提供用于大规模分析的关系数据库。 Microsoft Fabric 中的数据仓库包括 XXXXXX。
+在 Microsoft Fabric 中，数据仓库提供用于大规模分析的关系数据库。 通过 Microsoft Fabric 工作区中内置的一组丰富的体验，客户能够通过一个在 DirectLake 模式下与 Power BI 集成且易于使用、始终连接的语义模型来更快地获得见解。 
 
 完成本实验室大约需要 30 分钟。
 

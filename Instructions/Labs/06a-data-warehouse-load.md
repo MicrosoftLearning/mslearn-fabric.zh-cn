@@ -31,7 +31,7 @@ lab:
 
     大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，需要把 CVS 文件下载到本地计算机（或实验室 VM，如果适用），然后上传到湖屋。
 
-1. 从 [https://github.com/MicrosoftLearning/dp-data/raw/main/sales.csv](https://github.com/MicrosoftLearning/dp-data/raw/main/sales.csv) 下载本练习的文件。
+1. 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/sales.csv` 下载本练习的文件。
 
 1. 返回到包含湖屋的 Web 浏览器标签页，在“**资源管理器**”窗格的 **Files** 文件夹的“**...**”菜单中，依次选择“**上传**”和“**上传文件夹**”，然后将 **sales.csv** 文件从本地计算机（或实验室 VM，如果适用）上传到湖屋。
 
