@@ -49,8 +49,8 @@ KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建�
 
    然后使用滑块启用可用性。
 
-   ![在 Data Lake 中选择滑块的图像。](./images/data-availability-data-lake.png)
-
+   ![在 Data Lake 中选择滑块的图像](./Images/data-availability-data-lake.png)
+   
 1. 从“开始获取数据”的选项中选择“示例数据”框。**********
 
    ![图像显示了一系列选择选项，并突出显示了示例数据](./Images/load-sample-data.png)
@@ -67,7 +67,7 @@ KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建�
 
     ![图像显示从 RawServerMetrics 表中选择前 100 个文件](./Images/rawservermetrics-top-100.png)
 
-   > 注意****：首次运行此功能时，可能需要几秒钟来分配计算资源。
+   > 注意****：首次运行此功能时，可能需要几秒钟的时间来分配计算资源。
 
     ![数据中 100 条记录的图像](./Images/explore-with-kql-take-100.png)
 
