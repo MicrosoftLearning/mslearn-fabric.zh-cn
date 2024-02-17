@@ -1,10 +1,10 @@
 ---
 lab:
-  title: 创建并使用笔记本进行数据探索
+  title: 使用 Microsoft Fabric 中的笔记本探索数据科学数据
   module: Explore data for data science with notebooks in Microsoft Fabric
 ---
 
-# 使用笔记本电脑浏览 Microsoft Fabric 中的数据
+# 使用 Microsoft Fabric 中的笔记本探索数据科学数据
 
 在此实验中，将使用笔记本进行数据探索。 笔记本是强大的工具，用于交互式地探索和分析数据。 在本练习中，将了解如何创建和使用笔记本来探索数据集、生成摘要统计信息以及创建可视化效果以更好地理解数据。 此实验结束时，你将对如何使用笔记本进行数据探索和分析有深入的理解。
 

@@ -1,10 +1,10 @@
 ---
 lab:
-  title: 探索 Microsoft Fabric 中的数据科学
+  title: Microsoft Fabric 中的数据科学入门
   module: Get started with data science in Microsoft Fabric
 ---
 
-# 探索 Microsoft Fabric 中的数据科学
+# Microsoft Fabric 中的数据科学入门
 
 在本实验室中，你将引入数据、浏览笔记本中的数据、使用 Data Wrangler 处理数据、训练两种类型的模型。 通过执行所有这些步骤，你将能够探索 Microsoft Fabric 中的数据科学功能。
 
