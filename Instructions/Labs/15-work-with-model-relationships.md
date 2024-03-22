@@ -6,19 +6,17 @@ lab:
 
 # 处理模型关系
 
-## 概述
+在本练习中，你将专门使用模型关系来满足角色扮演维度的需求。 它将涉及使用活动和非活动关系，以及用于修改关系行为的数据分析表达式 (DAX) 函数。
 
-**预估完成本实验室需要 45 分钟**
-
-在本实验室中，你将专门使用模型关系来满足角色扮演维度的需求。 它将涉及使用活动和非活动关系，以及用于修改关系行为的数据分析表达式 (DAX) 函数。
-
-在此实验室中，你将了解如何完成以下操作：
+在本练习中，你将学习如何：
 
 - 解释模型示意图中的关系属性。
-
 - 设置关系属性。
-
 - 使用用于修改关系行为的 DAX 函数。
+
+完成本实验室大约需要 45 分钟****。
+
+> **注意**：完成本练习需要 Microsoft Fabric 试用版。[](https://learn.microsoft.com/fabric/get-started/fabric-trial)
 
 ## 探索模型关系
 
@@ -26,9 +24,10 @@ lab:
 
 ### 下载入门文件
 
-1. 打开[销售分析入门文件](https://github.com/MicrosoftLearning/mslearn-fabric/raw/main/Allfiles/Labs/15/Starter/Sales%20Analysis%20-%20Work%20with%20model%20relationships.pbix)，并保存到能记住的位置。
+1. 从 `https://aka.ms/fabric-relationships-starter` 下载[销售分析入门文件](https://aka.ms/fabric-relationships-starter)，并将其保存在本地计算机上（任何文件夹中）。
 
 1. 导航到下载的文件并在 Power BI Desktop 中打开它。
+    >备注：忽略并关闭要求应用更改的警告。
 
 ### 查看数据模型
 
@@ -165,8 +164,6 @@ lab:
 
 2. 在编辑栏（位于功能区下方）中，将文本替换为以下度量值定义，然后按 Enter。
 
-    *提示：***** 所有公式都可从 D:\fabric\Allfiles\Labs\15\Assets\Snippets.txt 复制和粘贴。
-
     ```DAX
     Sales Shipped =
     CALCULATE (
@@ -213,9 +210,7 @@ lab:
 
     ![](Images/work-with-model-relationships-image27.png)
 
-3. 当看到确认删除的提示时，选择“确定”。
-
-    ![](Images/work-with-model-relationships-image28.png)
+3. 当看到确认删除的提示时，选择“是”。
 
     删除关系将导致“Sales Shipped”度量值出错。你将在本实验室的后面部分重写度量值公式。
 
@@ -245,17 +240,17 @@ lab:
 
 在此任务中，你将创建用于将另一个日期表添加到模型中的查询。
 
-1. 在“主页”功能区选项卡的“查询”组中，选择“转换数据”图标  。
+1. 在“主页”功能区选项卡上的“查询”组中，选择“转换数据”图标，这会打开“Power Query 编辑器”****************。
 
     ![](Images/work-with-model-relationships-image33.png)
 
-    如果系统提示指定连接方式，请单击“编辑凭据”并指定登录方式。
+    如果系统提示你指定如何连接，请选择“编辑凭据”。******
 
     ![](Images/work-with-model-relationships-image52.png)
 
-    选择“连接”
+    将 Windows 的默认连接设置保留为“使用我的当前凭据”，然后选择“连接”。******
 
-     ![](Images/work-with-model-relationships-image53.png)
+     ![](Images/work-with-model-relationships-image53.png) 选择“是”以关闭警告消息。******
 
 2. 在“Power Query 编辑器”窗口的“查询”窗格（位于左侧）中，右键单击“日期”查询，然后选择“引用”   。
 
