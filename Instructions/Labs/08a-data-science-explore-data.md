@@ -10,7 +10,7 @@ lab:
 
 完成本实验室大约需要 30 分钟。
 
-> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
@@ -185,7 +185,7 @@ lab:
    import matplotlib.pyplot as plt
    import seaborn as sns
 
-   # Scatter plot of Quantity vs. Price
+   # Scatter plot of BMI vs. Target variable
    plt.figure(figsize=(8, 6))
    sns.scatterplot(x='BMI', y='Y', data=df)
    plt.title('BMI vs. Target variable')

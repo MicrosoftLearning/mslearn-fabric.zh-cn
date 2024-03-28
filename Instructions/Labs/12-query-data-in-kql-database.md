@@ -8,15 +8,13 @@ lab:
 
 KQL 查询集是一种工具，可用于查询 KQL 数据库、修改和显示来自其中的查询结果。 可以将 KQL 查询集中的每个选项卡链接到不同的 KQL 数据库，并保存查询以供将来使用或与他人共享进行数据分析。 还可以更换任何选项卡的 KQL 数据库，以比较来自不同数据源的查询结果。
 
+在此方案中，你是一名分析师，负责查询纽约市出租车行程原始指标的示例数据集，并从 Fabric 环境中拉取摘要统计（分析）数据。 你将使用 KQL 查询此数据并收集信息，以获取有关数据的信息化见解。
+
 KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建查询。 详细了解 [kusto 查询 (KQL) 语言](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/?context=%2Ffabric%2Fcontext%2Fcontext)。
 
 完成本实验室大约需要 25 分钟。
 
-## 场景
-
-在此方案中，你是一名分析师，负责查询纽约市出租车行程原始指标的示例数据集，并从 Fabric 环境中拉取摘要统计（分析）数据。 你将使用 KQL 查询此数据并收集信息，以获取有关数据的信息化见解。
-
-> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
@@ -41,7 +39,7 @@ KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建�
 
    ![命名 KQL 数据库的图像](./Images/name-kqldatabase.png)
 
-1. 为 KQL 数据库指定一个你能记住的名称（如 MyStockData），然后按“创建” 。
+1. 为 KQL 数据库指定一个你能记住的名称（如 **TaxiData**），然后按“创建”****。
 
 1. 在“数据库详细信息”面板中，选择铅笔图标以在 OneLake 中打开可用性。
 

@@ -14,7 +14,7 @@ lab:
 
 由于你也在使用示例数据集，因此优化并不能反映出在大规模生产中你可能看到的情况。但是，你仍然可以看到改进，而当每一毫秒都很重要时，优化就是关键。
 
-> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> **注意**：完成本练习需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial)。
 
 ## 创建工作区
 
