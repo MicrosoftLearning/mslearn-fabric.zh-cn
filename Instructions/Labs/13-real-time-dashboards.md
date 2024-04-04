@@ -7,11 +7,12 @@ lab:
 ---
 
 # 在 Microsoft Fabric 中查询 Kusto 数据库入门
+
 通过实时仪表板，可以使用 Kusto 查询语言 (KQL) 从 Microsoft Fabric 中收集见解，以检索结构化和非结构化数据，并在面板中以图表、散点图、表格等形式呈现这些数据，从而实现类似于 Power BI 中切片器的链接。 
 
 完成本实验室大约需要 25 分钟。
 
-> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
@@ -46,7 +47,7 @@ lab:
  
    ![图像显示了一系列选择选项，并突出显示了示例数据](./Images/load-sample-data.png)
 
-6. 从示例数据的选项中选择“**汽车指标分析**”框。
+6. 从示例数据的选项中选择“汽车指标分析”框****。
 
    ![“选择实验室分析数据”的图像](./Images/create-sample-data.png)
 
@@ -54,7 +55,7 @@ lab:
 
    ![数据正在加载到 KQL 数据库中](./Images/choose-automotive-operations-analytics.png)
 
-7. 加载完数据后，验证数据是否已加载到 KQL 数据库中。 要完成此操作，可以选择表右侧的省略号，导航到“查询表”，然后选择“显示任意 100 条记录”。
+7. 加载完数据后，验证数据是否已加载到 KQL 数据库中。 要完成此操作，可以选择表右侧的省略号，导航到“查询表”，然后选择“显示任意 100 条记录”。********
 
     ![图像显示从 RawServerMetrics 表中选择前 100 个文件](./Images/rawservermetrics-top-100.png)
 
@@ -80,7 +81,7 @@ Trips
 | sort by Borough asc 
 
 ```
-3. 按“运行”按钮，验证查询没有错误。
+3. 按“运行”按钮，验证查询没有错误****。
 4. 在面板右侧，选择“视觉对象格式”选项卡，然后填写“磁贴名称”和“视觉对象类型”。
 
    ![“视觉对象格式”磁贴的图像。](./Images/visual-formatting-tile.png)

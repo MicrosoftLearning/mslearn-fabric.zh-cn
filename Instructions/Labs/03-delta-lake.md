@@ -10,13 +10,13 @@ Microsoft Fabric 湖屋中的表基于 Apache Spark 的开源 Delta Lake 格式�
 
 完成此练习大约需要 40 分钟
 
-> 注意：需要 Microsoft 学校或工作帐户才能完成本练习。 如果没有该帐户，可以[注册 Microsoft Office 365 E3 或更高版本的试用版](https://www.microsoft.com/microsoft-365/business/compare-more-office-365-for-business-plans)。
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com) (`https://app.fabric.microsoft.com`) 中，选择“Synapse 数据工程”****。
+1. 在 `https://app.fabric.microsoft.com` 的 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”****。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 4. 打开新工作区时，它应为空。

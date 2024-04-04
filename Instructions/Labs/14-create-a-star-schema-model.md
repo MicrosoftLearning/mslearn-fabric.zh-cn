@@ -6,17 +6,17 @@ lab:
 
 # 创建并浏览语义模型
 
-## 概述
-
-完成本实验室预计需要 30 分钟
-
-在此实验室中，你将使用 Fabric 接口针对 Fabric 数据仓库中的示例纽约出租车数据开发数据模型。
+在本练习中，你将使用 Microsoft Fabric 为数据仓库中的示例纽约市出租车数据开发数据模型。
 
 你将练习：
 
 - 从 Fabric 数据仓库创建自定义语义模型。
 - 创建关系并组织模型图。
 - 直接在 Fabric 中浏览语义模型中的数据。
+
+完成本实验室大约需要 30 分钟。
+
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
