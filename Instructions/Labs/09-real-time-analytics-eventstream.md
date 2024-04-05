@@ -1,7 +1,7 @@
 ---
 lab:
-  title: Microsoft Fabric 中的 Real-Time Analytics 入门
-  module: Get started with Real-Time Analytics in Microsoft Fabric
+  title: Microsoft Fabric 中的 Eventstream 入门
+  module: Get started with Eventstream in Microsoft Fabric
 ---
 # Real-Time Analytics (RTA) 中的 EventStream 入门
 
