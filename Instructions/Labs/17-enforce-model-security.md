@@ -6,21 +6,18 @@ lab:
 
 # 强制实施模型安全性
 
-## 概述
+在本练习中，你将更新预先开发的数据模型以强制实施安全性。 具体来说，Adventure Works 公司的销售人员应该只能看到与其指定销售区域相关的销售数据。
 
-**预估完成本实验室需要 45 分钟**
-
-在本实验室中，你将更新预先开发的数据模型以强制实施安全性。 具体来说，Adventure Works 公司的销售人员应该只能看到与其指定销售区域相关的销售数据。
-
-在此实验室中，你将了解如何完成以下操作：
+在本练习中，你将学习如何：
 
 - 创建静态角色。
-
 - 创建动态角色。
-
 - 验证角色。
-
 - 将安全主体映射到语义模型角色。
+
+完成本实验室大约需要 **45** 分钟。
+
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 开始使用
 
@@ -28,7 +25,7 @@ lab:
 
 ### 下载 Power BI 初学者文件
 
-1. 打开[销售分析入门文件](https://github.com/MicrosoftLearning/mslearn-fabric/raw/main/Allfiles/Labs/17/Starter/Sales%20Analysis%20-%20Enforce%20model%20security.pbix)，并保存到能记住的位置。
+1. 从 `https://aka.ms/fabric-security-starter` 下载[销售分析入门文件](https://aka.ms/fabric-security-starter)，并将其保存在本地计算机上（任何文件夹中）。
 
 1. 导航到下载的文件并在 Power BI Desktop 中打开它。
 
@@ -38,7 +35,7 @@ lab:
 
 在此任务中，你将登录到 Power BI 服务并启动试用许可证，然后创建工作区。
 
-1. 在 Web 浏览器中转到 [app.powerbi.com](https://app.powerbi.com/)。
+1. 在 Web 浏览器中转到 `https://app.powerbi.com/`。
 
 2. 使用 Power BI Desktop 中使用的同一帐户完成登录过程。
 
@@ -50,17 +47,13 @@ lab:
 
 在此任务中，你将创建一个工作区。
 
-1. 若要在 Power BI 服务中创建工作区，请在“导航”窗格中（位于左侧）选择“工作区”，然后选择“创建工作区”  。
+1. 若要在 Power BI 服务中创建工作区，请在“导航”窗格中（位于左侧）选择“工作区”，然后选择“+ 新建工作区”************。
 
-    ![](Images/enforce-model-security-image5.png)
+2. 在“创建工作区”窗格（位于右侧）的“名称”框中，输入工作区的名称********。
 
-2. 在“创建工作区”窗格（位于右侧）的“工作区名称”框中，输入工作区的名称 。
+    工作区名称在租户内必须唯一
 
-    工作区名称在租户内必须是唯一的。
-
-    ![](Images/enforce-model-security-image6.png)
-
-3. 选择“保存”。
+3. 选择“应用”。
 
     *创建后会打开该工作区。在后面的练习中，你会将一个语义模型发布到此工作区。*
 
@@ -172,7 +165,7 @@ lab:
 
 在此任务中，你将发布报表。
 
-1. 保存 Power BI Desktop 文件。
+1. 保存 Power BI Desktop 文件。 当系统要求应用挂起的更改时，请选择“稍后应用”。****
 
     ![](Images/enforce-model-security-image27.png)
 
@@ -283,6 +276,16 @@ lab:
 2. 在“主页”功能区选项卡的“查询”组中，选择“转换数据”图标  。
 
     ![](Images/enforce-model-security-image44.png)
+
+    如果系统提示指定连接方式，请单击“编辑凭据”并指定登录方式。
+
+    ![](Images/work-with-model-relationships-image52.png)
+
+    选择“连接”
+
+     ![](Images/work-with-model-relationships-image53.png)
+
+    在“加密支持”页中，选择“确定”。**********
 
 3. 在“Power Query 编辑器”窗口的“查询”窗格（位于左侧）中，右键单击“客户”查询，然后选择“复制”   。
 
@@ -400,7 +403,7 @@ lab:
 
     ![](Images/enforce-model-security-image65.png)
 
-6. 在“表筛选 DAX 表达式”框中，将“值”替换为“USERPRINCIPALNAME()”  。
+6. 在“表筛选 DAX 表达式”框中，将“值”替换为“`USERPRINCIPALNAME()`”********。
 
     ![](Images/enforce-model-security-image66.png)
 
