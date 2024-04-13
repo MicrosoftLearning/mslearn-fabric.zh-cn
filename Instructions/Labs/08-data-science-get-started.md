@@ -12,7 +12,7 @@ lab:
 
 完成本实验室大约需要 20 分钟。
 
-> **注意**：完成本练习需要 Microsoft Fabric 试用版。[](https://learn.microsoft.com/fabric/get-started/fabric-trial)
+> **注意**：完成本练习需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial)。
 
 ## 创建工作区
 

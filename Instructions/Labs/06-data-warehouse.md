@@ -10,7 +10,7 @@ lab:
 
 完成本实验室大约需要 30 分钟。
 
-> **注意**：完成本练习需要 Microsoft Fabric 试用版。[](https://learn.microsoft.com/fabric/get-started/fabric-trial)
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
@@ -97,8 +97,8 @@ lab:
     - 假设引用完整性：未选中
 
 4. 重复此过程，在以下表之间创建多对一关系：
-    - FactOrderSales.CustomerKey &#8594; DimCustomer.CustomerKey
-    - FactOrderSales.SalesOrderDateKey &#8594; DimDate.DateKey
+    - FactSalesOrder.CustomerKey &#8594; DimCustomer.CustomerKey********
+    - FactSalesOrder.SalesOrderDateKey &#8594; DimDate.DateKey********
 
     定义所有关系后，模型应如下所示：
 

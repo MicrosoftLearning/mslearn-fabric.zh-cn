@@ -10,7 +10,7 @@ Microsoft Fabric 中的 Data Activator 根据数据发生的情况采取操作�
 
 完成本实验室大约需要 30 分钟。
 
-> **注意**：完成本练习需要 Microsoft Fabric 试用版。[](https://learn.microsoft.com/fabric/get-started/fabric-trial)
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
