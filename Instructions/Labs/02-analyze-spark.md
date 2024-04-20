@@ -149,9 +149,9 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 1. 数据帧仅包含 2019.csv 文件中的数据。 修改代码，使文件路径使用 \* 通配符从 orders 文件夹的所有文件中读取销售订单数据：
 
     ```python
-    from pyspark.sql.types import *
+   from pyspark.sql.types import *
 
-    orderSchema = StructType([
+   orderSchema = StructType([
        StructField("SalesOrderNumber", StringType()),
        StructField("SalesOrderLineNumber", IntegerType()),
        StructField("OrderDate", DateType()),
@@ -163,8 +163,8 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
        StructField("Tax", FloatType())
        ])
 
-    df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
-    display(df)
+   df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
+   display(df)
     ```
 
 1. 运行修改后的代码单元并查看输出，该输出现应包括 2019 年、2020 年和 2021 年的销售情况。
