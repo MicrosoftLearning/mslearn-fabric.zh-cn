@@ -270,11 +270,11 @@ Apache Spark 是用于分布式数据处理的开放源代码引擎，广泛用�
 
     > 注意：对于用于进一步分析或引入到分析存储的数据文件，通常首选 Parquet 格式。 Parquet 是一种非常高效的格式，大多数大规模数据分析系统都支持这种格式。 事实上，有时数据转换要求可能只是将数据从其他格式（如 CSV）转换为 Parquet！
 
-2. 运行单元格并等待数据已保存的消息。 然后在左侧的“湖屋”窗格中，在“Files”节点的“...”菜单中，选择“刷新”；然后选择 transformed_orders 文件夹以验证它是否包含名为 orders 的新文件夹，该文件夹是否又包含一个或多个 Parquet 文件************************。
+2. 运行单元格并等待数据已保存的消息。 然后在左侧的“湖屋”窗格中，在“Files”节点的“...”菜单中选择“刷新”；然后选择 transformed_data 文件夹以验证它是否包含名为 orders 的新文件夹，该文件夹是否又包含一个或多个 Parquet 文件************************。
 
     ![包含 parquet 文件的文件夹的屏幕截图。](./Images/saved-parquet.png)
 
-3. 添加包含以下代码的新单元格，以从 transformed_orders/orders 文件夹中的 parquet 文件加载新的数据帧：
+3. 添加包含以下代码的新单元格，以从 transformed_data/orders 文件夹中的 parquet 文件加载新的数据帧****：
 
     ```Python
    orders_df = spark.read.format("parquet").load("Files/transformed_data/orders")
@@ -358,7 +358,7 @@ Spark 元存储中的表是数据湖中文件的关系抽象。 表可以管理�
    GROUP BY YEAR(OrderDate)
    ORDER BY OrderYear;
     ```
-
+ 
 2. 运行单元格并查看结果。 观察以下情况：
     - 单元格开头的 `%%sql` 行（称为 magic）指示应使用 Spark SQL 语言运行时来运行此单元格中的代码，而不是 PySpark。
     - SQL 代码引用以前创建的 salesorders 表。
@@ -587,4 +587,4 @@ Spark 元存储中的表是数据湖中文件的关系抽象。 表可以管理�
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
 2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
-3. 在“其他”部分中，选择“删除此工作区” 。
+3. 在“常规”部分中，选择“删除此工作区”。********

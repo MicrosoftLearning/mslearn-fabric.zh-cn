@@ -43,7 +43,7 @@ lab:
 
 ## 上传文件
 
-Fabric 提供了多种将数据加载到湖屋的方法，包括对复制数据外部源和可以基于 Power Query 使用可视化工具定义的数据流 (Gen 2) 的管道的内置支持。 但是，引入少量数据的最简单方法之一是从本地计算机（或实验室 VM，如果适用）上传文件或文件夹。
+Fabric 提供了多种将数据加载到湖屋的方法，包括对从外部源复制数据的管道和可以基于 Power Query 使用可视化工具定义的数据流 (Gen 2) 的内置支持。 但是，引入少量数据的最简单方法之一是从本地计算机（或实验室 VM，如果适用）上传文件或文件夹。
 
 1. 从 `https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/sales.csv` 下载 sales.csv 文件，在本地计算机（或实验室 VM，如果适用）上将其保存为 sales.csv。
 
@@ -98,6 +98,7 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对复制数据�
    GROUP BY Item
    ORDER BY Revenue DESC;
     ```
+> **注意**：如果你位于实验室 VM 中并且输入 SQL 查询时出现问题，则可以从 `https://github.com/MicrosoftLearning/mslearn-fabric/raw/main/Allfiles/Labs/01/Assets/01-Snippets.txt` 下载 01-Snippets.txt[](https://github.com/MicrosoftLearning/mslearn-fabric/raw/main/Allfiles/Labs/01/Assets/01-Snippets.txt) 文件，并将其保存在 VM 上。 然后，你可以从该文本文件复制查询。
 
 3. 使用 &#9655;（“运行”）按钮运行查询并查看结果，结果应显示每个产品的总收入。
 
@@ -134,9 +135,11 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对复制数据�
 
 1. 在“SQL 终结点”页底部，选择“模型”选项卡。**** 显示语义模型的数据模型架构。
 
-    ![语义模型的屏幕截图。](./Images/data-model.png)
+    ![屏幕截图 2024-04-29 155248](https://github.com/afelix-95/mslearn-fabric/assets/148110824/ba9bd67d-8968-4c46-ac7a-f96a9f697f4c)
 
-    > **注意**：在本练习中，数据模型由单个表组成。 在实际场景中，你可能会在湖屋中创建多个表，每个表都将包含在模型中。 然后，可以在模型中定义这些表之间的关系。
+    > **说明 1**：在本练习中，数据模型由单个表组成。 在实际场景中，你可能会在湖屋中创建多个表，每个表都将包含在模型中。 然后，可以在模型中定义这些表之间的关系。
+    
+    > 备注 2****：视图 `frequently_run_queries`、`long_running_queries`、`exec_sessions_history` 和 `exec_requests_history` 是 Fabric 自动创建的 `queryinsights` 架构的一部分。 此功能提供 SQL 分析终结点上历史查询活动的整体视图。 由于此功能已超出本练习的范围，因此暂时应当忽略这些视图。
 
 2. 在菜单功能区中，选择“报告”选项卡。然后选择“新建报表” 。 此时会打开一个新的浏览器选项卡，你可以在其中设计报表。
 
@@ -169,4 +172,4 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对复制数据�
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
 2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
-3. 在“其他”部分中，选择“删除此工作区” 。
+3. 在“常规”部分中，选择“删除此工作区”。********
