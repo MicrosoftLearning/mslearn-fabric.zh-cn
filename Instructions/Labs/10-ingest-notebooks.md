@@ -143,42 +143,6 @@ lab:
 
 现在，你已成功连接到外部数据、将其写入 parquet 文件、将数据加载到 DataFrame、转换了数据并将其加载到 Delta 表。
 
-## 优化 Delta 表写入
-
-你可能在组织中使用大数据，并且这就是你选择 Fabric 笔记本进行数据引入的原因，因此我们还会介绍如何优化数据的引入和读取。 首先，我们将重复转换和写入 Delta 表的步骤，其中包括写入优化。
-
-1. 新建一个代码单元格并插入以下代码：
-
-    ```python
-    from pyspark.sql.functions import col, to_timestamp, current_timestamp, year, month
- 
-    # Read the parquet data from the specified path
-    raw_df = spark.read.parquet(output_parquet_path)    
-
-    # Add dataload_datetime column with current timestamp
-    opt_df = raw_df.withColumn("dataload_datetime", current_timestamp())
-    
-    # Filter columns to exclude any NULL values in storeAndFwdFlag
-    opt_df = opt_df.filter(opt_df["storeAndFwdFlag"].isNotNull())
-    
-    # Enable V-Order
-    spark.conf.set("spark.sql.parquet.vorder.enabled", "true")
-    
-    # Enable automatic Delta optimized write
-    spark.conf.set("spark.microsoft.delta.optimizeWrite.enabled", "true")
-    
-    # Load the filtered data into a Delta table
-    table_name = "yellow_taxi_opt"  # New table name
-    opt_df.write.format("delta").mode("append").saveAsTable(table_name)
-    
-    # Display results
-    display(opt_df.limit(1))
-    ```
-
-1. 确认结果与优化代码之前的结果相同。
-
-现在，记下这两个代码块的运行时间。 运行时间会有所不同，但可以看到使用优化的代码可以显著提高性能。
-
 ## 使用 SQL 查询分析 Delta 表数据
 
 本实验室侧重于数据引入，它真正解释了“提取、转换、加载”过程，但预览数据也很有用。
@@ -223,10 +187,10 @@ lab:
 
 ## 清理资源
 
-在本练习中，你在 Fabric 中将笔记本与 PySpark 配合使用来加载数据，并将其保存到 Parquet。 然后，你使用该 Parquet 文件进一步转换数据，并优化了 Delta 表写入。 最后，你使用 SQL 查询 Delta 表。
+在本练习中，你在 Fabric 中将笔记本与 PySpark 配合使用来加载数据，并将其保存到 Parquet。 然后，你使用该 Parquet 文件进一步转换数据。 最后，你使用 SQL 查询 Delta 表。
 
 如果已完成探索，可删除为本练习创建的工作区。
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
 2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
-3. 在“常规”部分中，选择“移除此工作区”********。
+3. 在“常规”部分中，选择“删除此工作区”。********

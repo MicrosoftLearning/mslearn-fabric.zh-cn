@@ -167,7 +167,7 @@ lab:
 
    # Save the data in a delta table
    table_name = "diabetes_test"
-   df.write.format("delta").mode("overwrite").save(f"Tables/{table_name}")
+   df.write.format("delta").mode("overwrite").saveAsTable(table_name)
    print(f"Spark dataframe saved to delta table: {table_name}")
     ```
 
@@ -196,7 +196,7 @@ lab:
    df_test = model.transform(df)
 
    # Save the results (the original features PLUS the prediction)
-   df_test.write.format('delta').mode("overwrite").option("mergeSchema", "true").save(f"Tables/{table_name}")
+   df_test.write.format('delta').mode("overwrite").option("mergeSchema", "true").saveAsTable(table_name)
     ```
 
 1. 代码完成后，选择“湖屋资源管理器”窗格中“diabetes_test”表旁的“...”，然后选择“刷新”。**************** 其中添加了新字段“预测”****。
@@ -210,4 +210,4 @@ lab:
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
 2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
-3. 在“常规”部分中，选择“移除此工作区”********。
+3. 在“常规”部分中，选择“删除此工作区”。********
