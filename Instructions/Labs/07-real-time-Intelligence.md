@@ -16,7 +16,7 @@ Microsoft Fabric 提供一个运行时，可用于使用 Kusto 查询语言 (KQL
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“实时智能”。****
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“实时智能”****。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -34,11 +34,16 @@ Microsoft Fabric 提供一个运行时，可用于使用 Kusto 查询语言 (KQL
 
 Kusto 查询语言 (KQL) 用于查询 KQL 数据库中定义的表中的静态或流数据。 若要分析销售数据，必须在 KQL 数据库中创建一个表，并从文件引入数据。
 
-1. 在 **Microsoft Fabric** 体验门户中，选择“实时智能”体验图像，如下所示：****
+1. 在门户的左下角，切换到“实时智能”体验。
 
-    ![所选 Fabric 体验主页的屏幕截图，其中选择了“实时智能”](./Images/fabric-experience-home.png)
+    ![体验切换器菜单的屏幕截图。](./Images/fabric-real-time.png)
 
-2. 在“实时智能”体验的“主页”上，选择“KQL 数据库”，并使用所选的名称创建新数据库************。
+2. 在实时智能主页中，创建一个新的 **Eventhouse**，名称自定。
+
+   ![RTI 编辑器的屏幕截图，其中突出显示了 Eventhouse。](./Images/create-kql-db.png)
+
+   Eventhouse 用于对跨项目的数据库进行分组和管理。 一个空的 KQL 数据库会自动以 eventhouse 的名称创建。
+   
 3. 创建新数据库后，选择从本地文件获取数据的选项。 然后，通过选择以下选项，使用向导将数据导入新表：
     - 目标：
         - 数据库：已选择创建的数据库
