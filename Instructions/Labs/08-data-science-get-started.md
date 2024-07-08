@@ -105,7 +105,7 @@ lab:
 
 引入并浏览数据后，可以转换数据。 可以在笔记本中运行代码，也可以使用 Data Wrangler 为你生成代码。
 
-1. 数据作为 Spark 数据帧加载。 要启动 Data Wrangler，需要将数据转换为 Pandas 数据帧。 在笔记本中运行以下代码：
+1. 数据作为 Spark 数据帧加载。 虽然 Data Wrangler 可接受 Spark 或 Pandas 数据帧，但目前已针对 Pandas 进行优化。 因此，你将把数据转换为 Pandas 数据帧。 在笔记本中运行以下代码：
 
     ```python
    df = df.toPandas()
