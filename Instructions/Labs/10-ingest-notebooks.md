@@ -123,7 +123,7 @@ lab:
     filtered_df = filtered_df.filter(raw_df["storeAndFwdFlag"].isNotNull())
     
     # Load the filtered data into a Delta table
-    table_name = "yellow_taxi"  # Replace with your desired table name
+    table_name = "yellow_taxi"
     filtered_df.write.format("delta").mode("append").saveAsTable(table_name)
     
     # Display results
@@ -164,26 +164,11 @@ lab:
     display(table_df.limit(10))
     ```
 
-1. 创建另一个代码单元格，并同样插入以下代码：
+1. 选择代码单元格旁边的“&#9655; 运行单元格”。
 
-    ```python
-    # Load table into df
-    delta_table_name = "yellow_taxi_opt"
-    opttable_df = spark.read.format("delta").table(delta_table_name)
-    
-    # Create temp SQL table
-    opttable_df.createOrReplaceTempView("yellow_taxi_opt")
-    
-    # SQL Query to confirm
-    opttable_df = spark.sql('SELECT * FROM yellow_taxi_opt')
-    
-    # Display results
-    display(opttable_df.limit(10))
-    ```
+     许多数据分析师更习惯使用 SQL 语法。 Spark SQL 是 Spark 中的 SQL 语言 API，可用于运行 SQL 语句，甚至可将数据保存在关系表中。
 
-1. 现在，为这两个查询中的第一个查询选择“**运行单元格**”按钮旁边的 &#9660; 箭头，然后从下拉列表中选择“**运行此单元格及其之下**”。
-
-    这将运行最后两个代码单元格。 请注意查询具有非优化数据的表和具有优化数据的表之间的执行时间差异。
+   刚刚运行的代码可在数据帧中创建数据的关系*视图*，然后将使用 **spark.sql** 库在 Python 代码中嵌入 Spark SQL 语法，查询视图并将结果作为数据帧返回。
 
 ## 清理资源
 
