@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”。****
+1. 在 `https://app.fabric.microsoft.com/home?experience=fabric` 的 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric)中，选择“Synapse 数据工程”****。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 4. 打开新工作区时，它应为空。
@@ -98,7 +98,7 @@ lab:
     | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
     | 1 | SO49172 | 1 | 2021-01-01 | Brian Howard | brian23@adventure-works.com | Road-250 Red, 52 | 1 | 2443.35 | 195.468 |
     | 2 |  SO49173 | 1 | 2021-01-01 | Linda Alvarez | linda19@adventure-works.com | Mountain-200 Silver, 38 | 1 | 2071.4197 | 165.7136 |
-    | ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
+    | [.] | [.] | [.] | [.] | [.] | [.] | [.] | [.] | [.] | [.] |
 
     你运行的代码已将 **bronze** 文件夹中的 CSV 文件的数据加载到 Spark 数据帧中，然后显示了数据帧的前几行。
 
@@ -436,7 +436,7 @@ lab:
 12. 添加另一个代码块**** 以创建 product_silver**** 数据帧。
   
     ```python
-    from pyspark.sql.functions import col, split, lit
+    from pyspark.sql.functions import col, split, lit, when
     
     # Create product_silver dataframe
     
@@ -612,4 +612,4 @@ lab:
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
 2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
-3. 在“常规”部分中，选择“移除此工作区”********。
+3. 在“常规”部分中，选择“删除此工作区”。********
