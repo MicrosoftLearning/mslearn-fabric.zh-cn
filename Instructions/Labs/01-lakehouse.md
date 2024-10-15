@@ -4,7 +4,7 @@ lab:
   module: Get started with lakehouses in Microsoft Fabric
 ---
 
-# 创建湖屋
+# 创建 Microsoft Fabric 湖屋
 
 大规模数据分析解决方案传统上是围绕数据仓库构建的，其中数据存储在关系表中，并使用 SQL 进行查询。 “大数据”的增长（其特点是新数据资产的大容量、多样性和速度）以及低成本存储和云规模的分布式计算技术的可用性，导致了分析数据存储的替代方法：数据湖   。 在数据湖中，数据存储为文件，而不会为存储设置固定架构。 数据工程师和分析师越来越多地寻求通过将这两种方法组合到数据湖屋来利用这两种方法的最佳功能；其中数据存储在数据湖的文件中，关系架构作为元数据层应用于它们，这样可以使用传统的 SQL 语义对其进行查询。
 
@@ -18,7 +18,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 `https://app.fabric.microsoft.com` 的 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“Synapse 数据工程”****。
+1. 在 `https://app.fabric.microsoft.com/home?experience=fabric` 的 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric)中，选择“Synapse 数据工程”****。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并在“高级”部分选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -50,7 +50,7 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对从外部源�
    > 注意：若要下载文件，请在浏览器中打开一个新选项卡并粘贴 URL。 右键单击包含数据的页面上的任意位置，然后选择“另存为”，将页面另存为 CSV 文件。
 
 2. 返回到包含湖屋的 Web 浏览器选项卡，在“湖屋资源管理器”窗格中“Files”文件夹的“...”菜单中，选择“新建子文件夹”并创建名为“data”的子文件夹    。
-3. 在新的 data 文件夹的“...”菜单中，选择“上传”和“上传文件”，然后上传本地计算机（或者实验室 VM，如果适用）中的 sales.csv 文件    。
+3. 在新的 **data** 文件夹的“**...**”菜单中，选择“**上传**”和“**上传文件**”，然后上传本地计算机（或者实验室 VM，如果适用）中的 **sales.csv** 文件。
 4. 上传文件后，选择 Files/data 文件夹；并验证是否已上传 sales.csv 文件，如下所示 ：
 
     ![湖屋中已上传的 sales.csv 文件的屏幕截图。](./Images/uploaded-sales-file.png)
@@ -139,9 +139,9 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对从外部源�
 
     > **说明 1**：在本练习中，数据模型由单个表组成。 在实际场景中，你可能会在湖屋中创建多个表，每个表都将包含在模型中。 然后，可以在模型中定义这些表之间的关系。
     
-    > 备注 2****：视图 `frequently_run_queries`、`long_running_queries`、`exec_sessions_history` 和 `exec_requests_history` 是 Fabric 自动创建的 `queryinsights` 架构的一部分。 此功能提供 SQL 分析终结点上历史查询活动的整体视图。 由于此功能已超出本练习的范围，因此暂时应当忽略这些视图。
+    > **备注 2**：视图 **frequently_run_queries**、**long_running_queries**、**exec_sessions_history** 和 **exec_requests_history** 是 Fabric 自动创建的 **queryinsights** 架构的一部分。 此功能提供 SQL 分析终结点上历史查询活动的整体视图。 由于此功能已超出本练习的范围，因此暂时应当忽略这些视图。
 
-2. 在菜单功能区中，选择“报告”选项卡。然后选择“新建报表” 。 此时会打开一个新的浏览器选项卡，你可以在其中设计报表。
+2. 在菜单功能区中，选择“报告”选项卡。然后选择“新建报表” 。 当前页将更改为报表设计器视图。
 
     ![报表设计器的屏幕截图。](./Images/report-designer.png)
 
@@ -157,8 +157,8 @@ Fabric 提供了多种将数据加载到湖屋的方法，包括对从外部源�
 
     ![包含簇状条形图的报表的屏幕截图。](./Images/clustered-bar-chart.png)
 
-5. 在“文件”菜单中，选择“保存”。 然后在之前创建的工作区中，将报表另存为“Item Sales Report”。
-6. 关闭包含报表的浏览器选项卡，返回到湖屋的 SQL 终结点。 然后，在左侧的中心菜单栏中，选择工作区以验证它是否包含以下项：
+5. 在“文件”菜单中，选择“保存”。 然后在之前创建的工作区中，将报表另存为“`Item Sales Report`”。
+6. 现在，在左侧的中心菜单栏中，选择工作区以验证它是否包含以下项：
     - 你的湖屋。
     - 湖屋的 SQL 分析终结点。
     - 湖屋中表的默认语义模型。

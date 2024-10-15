@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 Microsoft Fabric 主页上，选择“Synapse 数据仓库”。[](https://app.fabric.microsoft.com)
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**Synapse 数据仓库**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -184,4 +184,4 @@ SQL 查询编辑器支持 IntelliSense、代码完成、语法突出显示、客
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
 2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
-3. 在“常规”部分中，选择“移除此工作区”********。
+3. 在“常规”部分中，选择“删除此工作区”。********

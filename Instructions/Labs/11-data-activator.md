@@ -16,7 +16,7 @@ Microsoft Fabric 中的 Data Activator 根据数据发生的情况采取操作�
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 Microsoft Fabric 主页上，选择“Data Activator”。[](https://app.fabric.microsoft.com)
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**Data Activator**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
