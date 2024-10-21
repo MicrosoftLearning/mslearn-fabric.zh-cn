@@ -1,7 +1,7 @@
 ---
 lab:
-  title: Microsoft Fabric 中的实时仪表板
-  module: Get Started with Real-Time Dashboards in Microsoft Fabric
+  title: Microsoft Fabric 中的实时仪表板入门
+  module: Get started with Real-Time Dashboards in Microsoft Fabric
 ---
 
 # Microsoft Fabric 中的实时仪表板入门
@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com)中，选择“实时智能”。****
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**实时智能**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 使用所选名称创建一个新工作区，并选择包含 Fabric 容量的授权模式（试用、高级或 Fabric）  。 或者，也可以使用现有工作区生成实时仪表板。
 1. 打开新工作区时，它应为空。

@@ -4,7 +4,7 @@ lab:
   module: Design and build tabular models
 ---
 
-# 强制实施模型安全性
+# 强制实施语义模型安全性
 
 在本练习中，你将更新预先开发的数据模型以强制实施安全性。 具体来说，Adventure Works 公司的销售人员应该只能看到与其指定销售区域相关的销售数据。
 
