@@ -4,7 +4,7 @@ lab:
   module: Ingest Data with Dataflows Gen2 in Microsoft Fabric
 ---
 
-# 在 Microsoft Fabric 中创建数据流 (Gen2)
+# 在 Microsoft Fabric 中创建和使用数据流 (Gen2)
 
 在 Microsoft Fabric 中，数据流 (Gen2) 连接到各种数据源并在 Power Query Online 中执行转换。 然后，可以在数据管道中使用它们，将数据引入湖屋或其他分析存储，或定义 Power BI 报表的数据集。
 
@@ -82,7 +82,7 @@ lab:
 
    ![数据目标配置页。](./Images/data-destination-target.png)
 
-4. 在“**选择目标设置**”页上，选择“**追加**”，然后选择“**保存设置**”。
+4. 选择“**下一步**”，然后在“**选择目标设置**”页上，禁用“**使用自动设置**”选项，选择“**追加**”，然后选择“**保存设置**”。
     > **注意：** 我们建议使用“*Power query*”编辑器更新数据类型，但你也可以根据需要从此页面执行此操作。
 
     ![“数据目标设置”页。](./Images/destination-settings.png)
@@ -92,8 +92,6 @@ lab:
    ![使用湖屋目标进行查询。](./Images/lakehouse-destination.png)
 
 6. 选择“发布”以发布数据流。 然后等待在工作区中创建 Dataflow 1 数据流。
-
-7. 发布后，可以在工作区中单击数据流旁边的省略号 (...)，选择“属性”，然后重命名数据流。********
 
 ## 将数据流添加到管道
 
@@ -123,7 +121,7 @@ lab:
 
    ![数据流加载的表。](./Images/loaded-table.png)
 
-> 提示：使用 Power BI Desktop 数据流连接器直接连接到使用数据流完成的数据转换。
+> **提示**：在 Power BI Desktop 中，可以使用 *Power BI 数据流（旧版）* 连接器直接连接到使用数据流完成的数据转换。
 >
 > 还可以进行其他转换，发布为新数据集，并向专用数据集的目标受众分发。
 >
