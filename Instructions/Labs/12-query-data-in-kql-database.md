@@ -1,6 +1,6 @@
 ---
 lab:
-  title: 在 Microsoft Fabric 中查询 Kusto 数据库入门
+  title: 在 KQL 数据库中查询数据
   module: Query data from a Kusto Query database in Microsoft Fabric
 ---
 

@@ -309,10 +309,10 @@ lab:
     
     dfUpdates = dfdimDate_gold
     
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
         dfUpdates.alias('updates'),
-        'gold.OrderDate = updates.OrderDate'
+        'silver.OrderDate = updates.OrderDate'
       ) \
        .whenMatchedUpdate(set =
         {
@@ -397,10 +397,10 @@ lab:
     
     dfUpdates = dfdimCustomer_gold
     
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
         dfUpdates.alias('updates'),
-        'gold.CustomerName = updates.CustomerName AND gold.Email = updates.Email'
+        'silver.CustomerName = updates.CustomerName AND silver.Email = updates.Email'
       ) \
        .whenMatchedUpdate(set =
         {
@@ -436,7 +436,7 @@ lab:
 12. 添加另一个代码块**** 以创建 product_silver**** 数据帧。
   
     ```python
-    from pyspark.sql.functions import col, split, lit, when
+    from pyspark.sql.functions import col, split, lit
     
     # Create product_silver dataframe
     
@@ -479,10 +479,10 @@ lab:
             
     dfUpdates = dfdimProduct_gold
             
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
             dfUpdates.alias('updates'),
-            'gold.ItemName = updates.ItemName AND gold.ItemInfo = updates.ItemInfo'
+            'silver.ItemName = updates.ItemName AND silver.ItemInfo = updates.ItemInfo'
             ) \
             .whenMatchedUpdate(set =
             {
@@ -556,10 +556,10 @@ lab:
     
     dfUpdates = dffactSales_gold
     
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
         dfUpdates.alias('updates'),
-        'gold.OrderDate = updates.OrderDate AND gold.CustomerID = updates.CustomerID AND gold.ItemID = updates.ItemID'
+        'silver.OrderDate = updates.OrderDate AND silver.CustomerID = updates.CustomerID AND silver.ItemID = updates.ItemID'
       ) \
        .whenMatchedUpdate(set =
         {
