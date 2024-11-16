@@ -4,7 +4,7 @@ lab:
   module: Secure a Microsoft Fabric data warehouse
 ---
 
-# 保护 Microsoft Fabric 数据仓库
+# 保护数据仓库中的数据
 
 Microsoft Fabric 权限和精细 SQL 权限协同工作，以控制仓库访问和用户权限。 在此练习中，你将使用精细权限、列级安全性、行级安全性和动态数据掩码来保护数据。
 
