@@ -23,7 +23,7 @@ lab:
 1. 为新工作区指定一个名称，并在“**高级**”部分中，选择适当的许可模式。 如果已启动 Microsoft Fabric 试用版，请选择“试用版”。
 1. 选择“**应用**”以创建空工作区。
  
-![上传到新 Fabric 工作区的 CSV 文件的屏幕图片。](Images/uploaded-files.jpg)
+    ![上传到新 Fabric 工作区的 CSV 文件的屏幕图片。](Images/uploaded-files.jpg)
 
 ## 创建湖屋并上传文件
 
@@ -36,7 +36,7 @@ lab:
 1. 返回到新湖屋。 在“**资源管理器**”窗格中，选择 **Files** 文件夹旁边的 **…** 菜单，然后选择“**上传**”和“**上传文件夹**”。 定位到本地计算机上的订单文件夹（或者实验室虚拟机，如适用）并选择“**上传**”。
 1. 上传文件后，展开 **Files** 并选择 **orders** 文件夹。 检查 CSV 文件是否已上传，如下所示：
 
-![新 Fabric 工作区的屏幕图片。](Images/new-workspace.jpg)
+    ![新 Fabric 工作区的屏幕图片。](Images/new-workspace.jpg)
 
 ## 创建笔记本
 
@@ -47,104 +47,108 @@ lab:
 1. 选择第一个单元格（当前是代码单元格），然后在其右上角的动态工具栏中，使用 **M↓** 按钮将单元格转换为 Markdown 单元格。 然后，单元格中包含的文本将显示为带格式的文本。
 1. 使用 🖉（编辑）按钮将单元格切换到编辑模式，然后修改 Markdown，如下所示：
 
-```markdown
-# Sales order data exploration
-Use this notebook to explore sales order data
-```
-![带有 Markdown 单元格的 Fabric 笔记本的屏幕图片。](Images/name-notebook-markdown.jpg)
+    ```markdown
+   # Sales order data exploration
+   Use this notebook to explore sales order data
+    ```
+
+    ![带有 Markdown 单元格的 Fabric 笔记本的屏幕图片。](Images/name-notebook-markdown.jpg)
 
 单击笔记本中单元格以外的任意位置，即可停止编辑并查看呈现的 Markdown。
-
 
 ## 创建 DataFrame
 
 创建工作区、湖屋和笔记本后，即可处理数据。 你将使用 PySpark，这是 Fabric 笔记本的默认语言，以及针对 Spark 优化的 Python 版本。
 
-**备注：** Fabric 笔记本支持多种编程语言，包括 Scala、R 和 Spark SQL。
+>[!NOTE]
+> Fabric 笔记本支持多种编程语言，包括 Scala、R 和 Spark SQL。
 
 1. 从左侧栏中选择新工作区。 将看到工作区中包含的项列表，包括湖屋和笔记本。
 2. 选择“湖屋”以显示“资源管理器”窗格，包括 **orders** 文件夹。
 3. 在顶部菜单中，选择“**打开笔记本**”、“**现有笔记本**”，然后打开之前创建的笔记本。 笔记本现在应该在“资源管理器”窗格旁边打开。 展开湖屋，展开“Files”列表，然后选择 orders 文件夹。 上传的 CSV 文件列在笔记本编辑器旁边，如下所示：
 
-![资源管理器视图中 csv 文件的屏幕图片。](Images/explorer-notebook-view.jpg)
+    ![资源管理器视图中 csv 文件的屏幕图片。](Images/explorer-notebook-view.jpg)
 
 4. 在 2019.csv 的“...”菜单中，选择“**加载数据**” > “**Spark**”。 该代码会在新代码单元格中自动生成:
 
-```python
-df = spark.read.format("csv").option("header","true").load("Files/orders/2019.csv")
-# df now is a Spark DataFrame containing CSV data from "Files/orders/2019.csv".
-display(df)
-```
+    ```python
+    df = spark.read.format("csv").option("header","true").load("Files/orders/2019.csv")
+    # df now is a Spark DataFrame containing CSV data from "Files/orders/2019.csv".
+    display(df)
+    ```
 
-**提示：** 可使用 « 图标隐藏左侧的“湖屋资源管理器”窗格。 这为笔记本提供了更多空间。
+>[!TIP]
+> 可使用 « 图标隐藏左侧的“湖屋资源管理器”窗格。 这为笔记本提供了更多空间。
 
 5. 选择单元格左侧的 ▷ “**运行单元格**”以运行代码。
 
-**备注：** 第一次运行 Spark 代码时会启动 Spark 会话。 这可能需要几秒钟或更长的时间。 同一会话中的后续运行将更快。
+>[!NOTE]
+> 第一次运行 Spark 代码时会启动 Spark 会话。 这可能需要几秒钟或更长的时间。 同一会话中的后续运行将更快。
 
 6. 单元格完成后，查看单元格下方的输出，输出应如下所示：
  
-![显示自动生成的代码和数据的屏幕图片。](Images/auto-generated-load.jpg)
+    ![显示自动生成的代码和数据的屏幕图片。](Images/auto-generated-load.jpg)
 
 7. 输出显示以列和行显示的 2019.csv 文件中的数据。  请注意，列标题包含数据的第一行。 若要更正此问题，需要修改代码的第一行，如下所示：
 
-```python
-df = spark.read.format("csv").option("header","false").load("Files/orders/2019.csv")
-```
+    ```python
+    df = spark.read.format("csv").option("header","false").load("Files/orders/2019.csv")
+    ```
 
 8. 再次运行代码，使数据帧正确地将第一行标识为数据。 请注意，列名称现已更改为_c0、_c1等。
 
 9. 描述性列名有助于理解数据。 若要创建有意义的列名，需要定义架构和数据类型。 还需要导入一组标准 Spark SQL 类型来定义数据类型。 将现有代码替换为以下代码：
 
-```python
-from pyspark.sql.types import *
+    ```python
+    from pyspark.sql.types import *
 
-orderSchema = StructType([
-    StructField("SalesOrderNumber", StringType()),
-    StructField("SalesOrderLineNumber", IntegerType()),
-    StructField("OrderDate", DateType()),
-    StructField("CustomerName", StringType()),
-    StructField("Email", StringType()),
-    StructField("Item", StringType()),
-    StructField("Quantity", IntegerType()),
-    StructField("UnitPrice", FloatType()),
-    StructField("Tax", FloatType())
+    orderSchema = StructType([
+        StructField("SalesOrderNumber", StringType()),
+        StructField("SalesOrderLineNumber", IntegerType()),
+        StructField("OrderDate", DateType()),
+        StructField("CustomerName", StringType()),
+        StructField("Email", StringType()),
+        StructField("Item", StringType()),
+        StructField("Quantity", IntegerType()),
+        StructField("UnitPrice", FloatType()),
+        StructField("Tax", FloatType())
     ])
 
-df = spark.read.format("csv").schema(orderSchema).load("Files/orders/2019.csv")
+    df = spark.read.format("csv").schema(orderSchema).load("Files/orders/2019.csv")
 
-display(df)
-
-```
+    display(df)
+    ```
+    
 10. 运行单元格并查看输出：
 
-![代码的屏幕图片，其中定义了架构和数据。](Images/define-schema.jpg)
+    ![代码的屏幕图片，其中定义了架构和数据。](Images/define-schema.jpg)
 
 11. 数据帧仅包含 2019.csv 文件中的数据。 修改代码，使文件路径使用 * 通配符从 orders 文件夹中读取所有文件：
 
-```python
-from pyspark.sql.types import *
+    ```python
+    from pyspark.sql.types import *
 
-orderSchema = StructType([
-    StructField("SalesOrderNumber", StringType()),
-    StructField("SalesOrderLineNumber", IntegerType()),
-    StructField("OrderDate", DateType()),
-    StructField("CustomerName", StringType()),
-    StructField("Email", StringType()),
-    StructField("Item", StringType()),
-    StructField("Quantity", IntegerType()),
-    StructField("UnitPrice", FloatType()),
-    StructField("Tax", FloatType())
-    ])
+    orderSchema = StructType([
+        StructField("SalesOrderNumber", StringType()),
+        StructField("SalesOrderLineNumber", IntegerType()),
+        StructField("OrderDate", DateType()),
+        StructField("CustomerName", StringType()),
+        StructField("Email", StringType()),
+        StructField("Item", StringType()),
+        StructField("Quantity", IntegerType()),
+        StructField("UnitPrice", FloatType()),
+        StructField("Tax", FloatType())
+        ])
 
-df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
+    df = spark.read.format("csv").schema(orderSchema).load("Files/orders/*.csv")
 
-display(df)
-```
+    display(df)
+    ```
 
 12. 运行修改后的代码时，应会看到 2019、2020 和 2021 的销售情况。 只显示行的子集，因此可能看不到每一年的行。
 
-**备注：** 可以通过选择结果旁边的“...”来隐藏或显示单元格的输出 。 这样，在笔记本中工作就更容易了。
+>[!NOTE]
+> 通过选择“**...**”可以隐藏或显示单元格的输出。 。 这样，在笔记本中工作就更容易了。
 
 ## 探索数据帧中的数据
 
@@ -156,35 +160,35 @@ display(df)
 
 2.  以下代码筛选数据，以便只返回两列。 它还使用 *count* 和 *distinct* 来汇总记录数：
 
-```python
-customers = df['CustomerName', 'Email']
+    ```python
+    customers = df['CustomerName', 'Email']
 
-print(customers.count())
-print(customers.distinct().count())
+    print(customers.count())
+    print(customers.distinct().count())
 
-display(customers.distinct())
-```
+    display(customers.distinct())
+    ```
 
 3. 运行代码，检查输出：
 
-* 该代码将创建一个名为 **customers** 的新数据帧，其中包含原始 **df** 数据帧中的列子集。 执行数据帧转换时，不会修改原始数据帧，而是返回一个新数据帧。
-* 实现相同结果的另一种方法是使用“select”方法：
+    * 该代码将创建一个名为 **customers** 的新数据帧，其中包含原始 **df** 数据帧中的列子集。 执行数据帧转换时，不会修改原始数据帧，而是返回一个新数据帧。
+    * 实现相同结果的另一种方法是使用“select”方法：
 
-```
-customers = df.select("CustomerName", "Email")
-```
+    ```
+    customers = df.select("CustomerName", "Email")
+    ```
 
-* 数据帧函数 *count* 和 *distinct* 用于提供客户数和唯一客户数的总数。
+    * 数据帧函数 *count* 和 *distinct* 用于提供客户数和唯一客户数的总数。
 
 4. 使用 *select* 和 *where* 函数修改代码的第一行，如下所示：
 
-```python
-customers = df.select("CustomerName", "Email").where(df['Item']=='Road-250 Red, 52')
-print(customers.count())
-print(customers.distinct().count())
+    ```python
+    customers = df.select("CustomerName", "Email").where(df['Item']=='Road-250 Red, 52')
+    print(customers.count())
+    print(customers.distinct().count())
 
-display(customers.distinct())
-```
+    display(customers.distinct())
+    ```
 
 5. 运行修改后的代码，只选择已购买的 Road-250 Red, 52 产品的客户。 请注意，可以“链接”多个函数，以便一个函数的输出成为下一个函数的输入。 在本例中，*select* 方法创建的 DataFrame 是用于应用过滤条件的 **where** 方法的源 DataFrame。
 
@@ -192,33 +196,33 @@ display(customers.distinct())
 
 1. 添加代码单元格，并输入以下代码：
 
-```python
-productSales = df.select("Item", "Quantity").groupBy("Item").sum()
+    ```python
+    productSales = df.select("Item", "Quantity").groupBy("Item").sum()
 
-display(productSales)
-```
+    display(productSales)
+    ```
 
 2. 运行代码。 可以看到，结果会显示按产品分组的订单数量之和。 *groupBy* 方法按“项”对行进行分组，随后将 *sum* 聚合函数应用于剩余的数值列，在本例中为“*数量*”。
 
 3. 在笔记本中添加另一个代码单元格，并输入以下代码：
 
-```python
-from pyspark.sql.functions import *
+    ```python
+    from pyspark.sql.functions import *
 
-yearlySales = df.select(year(col("OrderDate")).alias("Year")).groupBy("Year").count().orderBy("Year")
+    yearlySales = df.select(year(col("OrderDate")).alias("Year")).groupBy("Year").count().orderBy("Year")
 
-display(yearlySales)
-```
+    display(yearlySales)
+    ```
 
 4. 运行该单元。 检查输出。 现在结果显示每年的销售订单数：
 
-* *import* 语句可以使用 Spark SQL 库。
-* “*select*”方法与 SQL 年份函数一起使用，用于提取 *OrderDate* 字段的年份组件。
-* 使用“*alias*”方法向提取的年份值分配一个列名。
-* “*groupBy*”方法按派生的“年份”列对数据进行分组。
-* 在使用 *orderBy* 方法对生成的数据帧进行排序之前，先计算每个组中的行计数。
+    * *import* 语句可以使用 Spark SQL 库。
+    * “*select*”方法与 SQL 年份函数一起使用，用于提取 *OrderDate* 字段的年份组件。
+    * 使用“*alias*”方法向提取的年份值分配一个列名。
+    * “*groupBy*”方法按派生的“年份”列对数据进行分组。
+    * 在使用 *orderBy* 方法对生成的数据帧进行排序之前，先计算每个组中的行计数。
 
-![显示数据帧中聚合和分组数据结果的屏幕图片。](Images/spark-sql-dataframe.jpg)
+    ![显示数据帧中聚合和分组数据结果的屏幕图片。](Images/spark-sql-dataframe.jpg)
 
 ## 使用 Spark 转换数据文件
 
@@ -228,27 +232,27 @@ display(yearlySales)
 
 1. 在笔记本中添加代码单元格，并输入以下内容：
 
-```python
-from pyspark.sql.functions import *
+    ```python
+    from pyspark.sql.functions import *
 
-# Create Year and Month columns
-transformed_df = df.withColumn("Year", year(col("OrderDate"))).withColumn("Month", month(col("OrderDate")))
+    # Create Year and Month columns
+    transformed_df = df.withColumn("Year", year(col("OrderDate"))).withColumn("Month", month(col("OrderDate")))
 
-# Create the new FirstName and LastName fields
-transformed_df = transformed_df.withColumn("FirstName", split(col("CustomerName"), " ").getItem(0)).withColumn("LastName", split(col("CustomerName"), " ").getItem(1))
+    # Create the new FirstName and LastName fields
+    transformed_df = transformed_df.withColumn("FirstName", split(col("CustomerName"), " ").getItem(0)).withColumn("LastName", split(col("CustomerName"), " ").getItem(1))
 
-# Filter and reorder columns
-transformed_df = transformed_df["SalesOrderNumber", "SalesOrderLineNumber", "OrderDate", "Year", "Month", "FirstName", "LastName", "Email", "Item", "Quantity", "UnitPrice", "Tax"]
+    # Filter and reorder columns
+    transformed_df = transformed_df["SalesOrderNumber", "SalesOrderLineNumber", "OrderDate", "Year", "Month", "FirstName", "LastName", "Email", "Item", "Quantity", "UnitPrice", "Tax"]
 
-# Display the first five orders
-display(transformed_df.limit(5))
-```
+    # Display the first five orders
+    display(transformed_df.limit(5))
+    ```
 
 2. 运行该单元。 根据原始订单数据创建新的数据帧，并进行以下转换：
 
-- 基于 OrderDate 列添加了“年份”和“月份”列。
-- 基于 CustomerName 列添加了 FirstName 和 LastName 列。
-- 对列进行筛选并重新排序，删除 CustomerName 列。
+    - 基于 OrderDate 列添加了“年份”和“月份”列。
+    - 基于 CustomerName 列添加了 FirstName 和 LastName 列。
+    - 对列进行筛选并重新排序，删除 CustomerName 列。
 
 3. 查看输出并验证是否已对数据进行了转换。
 
@@ -265,24 +269,24 @@ display(transformed_df.limit(5))
 
 1. 若要以 Parquet 格式保存转换的数据帧，请添加代码单元格并添加以下代码：  
 
-```python
-transformed_df.write.mode("overwrite").parquet('Files/transformed_data/orders')
+    ```python
+    transformed_df.write.mode("overwrite").parquet('Files/transformed_data/orders')
 
-print ("Transformed data saved!")
-```
+    print ("Transformed data saved!")
+    ```
 
 2. 运行单元格并等待数据已保存的消息。 然后，在左侧的“湖屋”窗格中，在 “Files”节点的“...”菜单，选择“**刷新**”。 选择 transformed_data 文件夹以验证它是否包含一个名为 orders 的新文件夹，而该文件夹又包含一个或多个 Parquet 文件。
 
 3. 添加包含以下代码的单元格：
 
-```python
-orders_df = spark.read.format("parquet").load("Files/transformed_data/orders")
-display(orders_df)
-```
+    ```python
+    orders_df = spark.read.format("parquet").load("Files/transformed_data/orders")
+    display(orders_df)
+    ```
 
 4. 运行该单元。  从 *transformed_data/orders* 文件夹中的 parquet 文件创建新的数据帧。 验证结果是否显示已从 parquet 文件加载的订单数据。
 
-![显示 Parquet 文件的屏幕图片。](Images/parquet-files.jpg)
+    ![显示 Parquet 文件的屏幕图片。](Images/parquet-files.jpg)
 
 ### 以分区文件的形式保存数据
 
@@ -290,23 +294,23 @@ display(orders_df)
 
 1. 添加包含代码的单元格以保存数据帧，并按“年份”和“月份”对数据进行分区：
 
-```python
-orders_df.write.partitionBy("Year","Month").mode("overwrite").parquet("Files/partitioned_data")
+    ```python
+    orders_df.write.partitionBy("Year","Month").mode("overwrite").parquet("Files/partitioned_data")
 
-print ("Transformed data saved!")
-```
+    print ("Transformed data saved!")
+    ```
 
 2.  运行单元格并等待数据已保存的消息。 然后，在左侧的“湖屋”窗格中，在 在“Files”节点的“...”菜单中，选择“**刷新**”，然后展开 partitioned_orders 文件夹以验证它是否包含名为 *Year=xxxx* 的文件夹层次结构，每个文件夹是否包含名为 *Month=xxxx* 的文件夹。 每个月份文件夹均包含一个 parquet 文件，该文件包含该月的订单。
 
-![显示按“年份”和“月份”分区的数据的屏幕图片。](Images/partitioned-data.jpg)
+    ![显示按“年份”和“月份”分区的数据的屏幕图片。](Images/partitioned-data.jpg)
 
 3. 添加包含以下代码的新单元格，以从 orders.parquet 文件加载新的数据帧：
 
-```python
-orders_2021_df = spark.read.format("parquet").load("Files/partitioned_data/Year=2021/Month=*")
+    ```python
+    orders_2021_df = spark.read.format("parquet").load("Files/partitioned_data/Year=2021/Month=*")
 
-display(orders_2021_df)
-```
+    display(orders_2021_df)
+    ```
 
 4. 运行单元格并验证结果是否显示 2021 年的销售订单数据。 请注意，数据帧不包含路径中指定的分区列（“年份”和“月份”）。
 
@@ -322,13 +326,13 @@ Spark 元存储中的表是数据湖中文件的关系抽象。 表可以由元�
 
 1.  在笔记本中添加代码单元格，然后输入以下代码，该代码将销售订单数据的数据帧另存为名为 *salesorders* 的表：
 
-```python
-# Create a new table
-df.write.format("delta").saveAsTable("salesorders")
+    ```python
+    # Create a new table
+    df.write.format("delta").saveAsTable("salesorders")
 
-# Get the table description
-spark.sql("DESCRIBE EXTENDED salesorders").show(truncate=False)
-```
+    # Get the table description
+    spark.sql("DESCRIBE EXTENDED salesorders").show(truncate=False)
+    ```
 
 >[!NOTE]
 > 在此示例中，未提供显式路径，因此表的文件将由元存储托管。 此外，表以增量格式保存，从而向表添加关系数据库功能。 这包括对事务、行版本控制和其他有用功能的支持。 对于 Fabric 中的数据湖屋，以增量格式创建表是首选。
@@ -337,15 +341,15 @@ spark.sql("DESCRIBE EXTENDED salesorders").show(truncate=False)
 
 3. 在“**湖屋**”窗格中，在 Tables 文件夹的“...”菜单，选择“**刷新**”。 然后展开 Tables 节点并验证是否已创建 salesorders 表 。
 
-![显示已创建 salesorders 表的屏幕图片。](Images/salesorders-table.jpg)
+    ![显示已创建 salesorders 表的屏幕图片。](Images/salesorders-table.jpg)
 
 4. 在 salesorders 表的“...”菜单，选择“**加载数据**” > “**Spark**”。 添加新代码单元格，其中包含与以下代码类似的代码：
 
-```pyspark
-df = spark.sql("SELECT * FROM [your_lakehouse].salesorders LIMIT 1000")
+    ```pyspark
+    df = spark.sql("SELECT * FROM [your_lakehouse].salesorders LIMIT 1000")
 
-display(df)
-```
+    display(df)
+    ```
 
 5. 运行新代码，该代码使用 Spark SQL 库在 PySpark 代码中嵌入针对 *salesorder* 表的 SQL 查询，并将查询结果加载到数据帧中。
 
@@ -355,20 +359,20 @@ display(df)
 
 1. 在笔记本中添加新代码单元格，并输入以下代码：
 
-```SparkSQL
-%%sql
-SELECT YEAR(OrderDate) AS OrderYear,
-       SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue
-FROM salesorders
-GROUP BY YEAR(OrderDate)
-ORDER BY OrderYear;
-```
+    ```SparkSQL
+    %%sql
+    SELECT YEAR(OrderDate) AS OrderYear,
+           SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue
+    FROM salesorders
+    GROUP BY YEAR(OrderDate)
+    ORDER BY OrderYear;
+    ```
 
 7. 运行单元格并查看结果。 观察以下情况：
 
-* 单元格开头的 **%%sql** 命令（称为“magic”）将语言更改为 Spark SQL 而不是 PySpark。
-* SQL 代码引用以前创建的 salesorders 表。
-* SQL 查询的输出将自动显示为单元格下的结果。
+    * 单元格开头的 **%%sql** 命令（称为“magic”）将语言更改为 Spark SQL 而不是 PySpark。
+    * SQL 代码引用以前创建的 salesorders 表。
+    * SQL 查询的输出将自动显示为单元格下的结果。
 
 >[!NOTE]
 > 有关 Spark SQL 和数据帧的详细信息，请参阅 [Apache Spark SQL](https://spark.apache.org/sql/) 文档。
@@ -381,141 +385,141 @@ ORDER BY OrderYear;
 
 1. 添加新代码单元格，并输入以下代码：
 
-```python
-%%sql
-SELECT * FROM salesorders
-```
+    ```python
+    %%sql
+    SELECT * FROM salesorders
+    ```
 
 2. 运行代码以显示之前创建的 salesorders 视图中的数据。 在单元格下方的结果部分中，将“视图”选项从“表格”更改为“图表”  。
 
 3.  使用图表右上方的“**自定义图表**”按钮设置以下选项：
 
-* 图表类型：条形图
-* 键：项
-* 值：数量
-* 序列组：留空
-* 聚合：Sum
-* 堆积：未选中
+    * 图表类型：条形图
+    * 键：项
+    * 值：数量
+    * 序列组：留空
+    * 聚合：Sum
+    * 堆积：未选中
 
 完成后，选择“**应用**”。
 
 4. 图表应与此相似：
 
-![Fabric 笔记本图表视图的屏幕图片。](Images/built-in-chart.jpg) 
+    ![Fabric 笔记本图表视图的屏幕图片。](Images/built-in-chart.jpg) 
 
 ### matplotlib 入门
 
 1. 添加新代码单元格，并输入以下代码：
 
-```python
-sqlQuery = "SELECT CAST(YEAR(OrderDate) AS CHAR(4)) AS OrderYear, \
-                SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue \
-            FROM salesorders \
-            GROUP BY CAST(YEAR(OrderDate) AS CHAR(4)) \
-            ORDER BY OrderYear"
-df_spark = spark.sql(sqlQuery)
-df_spark.show()
-```
+    ```python
+    sqlQuery = "SELECT CAST(YEAR(OrderDate) AS CHAR(4)) AS OrderYear, \
+                    SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue \
+                FROM salesorders \
+                GROUP BY CAST(YEAR(OrderDate) AS CHAR(4)) \
+                ORDER BY OrderYear"
+    df_spark = spark.sql(sqlQuery)
+    df_spark.show()
+    ```
 
 2. 运行代码。 它返回包含年收入的 Spark 数据帧。 若要将数据可视化为图表，需首先使用 matplotlib Python 库。 此库是其他许多库所基于的核心绘图库，在创建图表方面提供了极大的灵活性。
 
 3. 添加新代码单元格并添加以下代码：
 
-```python
-from matplotlib import pyplot as plt
+    ```python
+    from matplotlib import pyplot as plt
 
-# matplotlib requires a Pandas dataframe, not a Spark one
-df_sales = df_spark.toPandas()
+    # matplotlib requires a Pandas dataframe, not a Spark one
+    df_sales = df_spark.toPandas()
 
-# Create a bar plot of revenue by year
-plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'])
+    # Create a bar plot of revenue by year
+    plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'])
 
-# Display the plot
-plt.show()
-```
+    # Display the plot
+    plt.show()
+    ```
 
 4. 运行单元格并查看结果，结果中包含每年总收入的柱形图。 查看代码，并注意以下事项：
 
-* matplotlib 库需要 Pandas 数据帧，因此需要将 Spark SQL 查询返回的 Spark 数据帧转换为此格式。
-* matplotlib 库的核心是 *pyplot* 对象。 这是大多数绘图功能的基础。
-* 默认设置会生成一个可用的图表，但它有很大的自定义空间。
+    * matplotlib 库需要 Pandas 数据帧，因此需要将 Spark SQL 查询返回的 Spark 数据帧转换为此格式。
+    * matplotlib 库的核心是 *pyplot* 对象。 这是大多数绘图功能的基础。
+    * 默认设置会生成一个可用的图表，但它有很大的自定义空间。
 
 5.  修改代码以绘制图表，如下所示：
 
-```python
-from matplotlib import pyplot as plt
+    ```python
+    from matplotlib import pyplot as plt
 
-# Clear the plot area
-plt.clf()
+    # Clear the plot area
+    plt.clf()
 
-# Create a bar plot of revenue by year
-plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'], color='orange')
+    # Create a bar plot of revenue by year
+    plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'], color='orange')
 
-# Customize the chart
-plt.title('Revenue by Year')
-plt.xlabel('Year')
-plt.ylabel('Revenue')
-plt.grid(color='#95a5a6', linestyle='--', linewidth=2, axis='y', alpha=0.7)
-plt.xticks(rotation=45)
+    # Customize the chart
+    plt.title('Revenue by Year')
+    plt.xlabel('Year')
+    plt.ylabel('Revenue')
+    plt.grid(color='#95a5a6', linestyle='--', linewidth=2, axis='y', alpha=0.7)
+    plt.xticks(rotation=45)
 
-# Show the figure
-plt.show()
-```
+    # Show the figure
+    plt.show()
+    ```
 
 6. 重新运行代码单元格并查看结果。 现在，图表更易于理解。
 7. 严格来说，绘图包含图。 在前面的示例中，图是隐式创建的，但也可以显式创建。 修改代码以绘制图表，如下所示：
 
-```python
-from matplotlib import pyplot as plt
+    ```python
+    from matplotlib import pyplot as plt
 
-# Clear the plot area
-plt.clf()
+    # Clear the plot area
+    plt.clf()
 
-# Create a Figure
-fig = plt.figure(figsize=(8,3))
+    # Create a Figure
+    fig = plt.figure(figsize=(8,3))
 
-# Create a bar plot of revenue by year
-plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'], color='orange')
+    # Create a bar plot of revenue by year
+    plt.bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'], color='orange')
 
-# Customize the chart
-plt.title('Revenue by Year')
-plt.xlabel('Year')
-plt.ylabel('Revenue')
-plt.grid(color='#95a5a6', linestyle='--', linewidth=2, axis='y', alpha=0.7)
-plt.xticks(rotation=45)
+    # Customize the chart
+    plt.title('Revenue by Year')
+    plt.xlabel('Year')
+    plt.ylabel('Revenue')
+    plt.grid(color='#95a5a6', linestyle='--', linewidth=2, axis='y', alpha=0.7)
+    plt.xticks(rotation=45)
 
-# Show the figure
-plt.show()
-```
+    # Show the figure
+    plt.show()
+    ```
 
 8. 重新运行代码单元格并查看结果。 图确定绘图的形状和大小。
 9. 图可以包含多个子图，每个子图都其自己的轴上。 修改代码以绘制图表，如下所示：
 
-```python
-from matplotlib import pyplot as plt
+    ```python
+    from matplotlib import pyplot as plt
 
-# Clear the plot area
-plt.clf()
+    # Clear the plot area
+    plt.clf()
 
-# Create a figure for 2 subplots (1 row, 2 columns)
-fig, ax = plt.subplots(1, 2, figsize = (10,4))
+    # Create a figure for 2 subplots (1 row, 2 columns)
+    fig, ax = plt.subplots(1, 2, figsize = (10,4))
 
-# Create a bar plot of revenue by year on the first axis
-ax[0].bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'], color='orange')
-ax[0].set_title('Revenue by Year')
+    # Create a bar plot of revenue by year on the first axis
+    ax[0].bar(x=df_sales['OrderYear'], height=df_sales['GrossRevenue'], color='orange')
+    ax[0].set_title('Revenue by Year')
 
-# Create a pie chart of yearly order counts on the second axis
-yearly_counts = df_sales['OrderYear'].value_counts()
-ax[1].pie(yearly_counts)
-ax[1].set_title('Orders per Year')
-ax[1].legend(yearly_counts.keys().tolist())
+    # Create a pie chart of yearly order counts on the second axis
+    yearly_counts = df_sales['OrderYear'].value_counts()
+    ax[1].pie(yearly_counts)
+    ax[1].set_title('Orders per Year')
+    ax[1].legend(yearly_counts.keys().tolist())
 
-# Add a title to the Figure
-fig.suptitle('Sales Data')
+    # Add a title to the Figure
+    fig.suptitle('Sales Data')
 
-# Show the figure
-plt.show()
-```
+    # Show the figure
+    plt.show()
+    ```
 
 10. 重新运行代码单元格并查看结果。 
 
@@ -528,50 +532,50 @@ plt.show()
 
 1. 在笔记本中添加新代码单元格，并输入以下代码： 
 
-```python
-import seaborn as sns
+    ```python
+    import seaborn as sns
 
-# Clear the plot area
-plt.clf()
+    # Clear the plot area
+    plt.clf()
 
-# Create a bar chart
-ax = sns.barplot(x="OrderYear", y="GrossRevenue", data=df_sales)
+    # Create a bar chart
+    ax = sns.barplot(x="OrderYear", y="GrossRevenue", data=df_sales)
 
-plt.show()
-```
+    plt.show()
+    ```
 
 2. 运行代码以显示使用 seaborn 库创建的条形图。
 3. 按如下所示修改代码：
 
-```python
-import seaborn as sns
+    ```python
+    import seaborn as sns
 
-# Clear the plot area
-plt.clf()
+    # Clear the plot area
+    plt.clf()
 
-# Set the visual theme for seaborn
-sns.set_theme(style="whitegrid")
+    # Set the visual theme for seaborn
+    sns.set_theme(style="whitegrid")
 
-# Create a bar chart
-ax = sns.barplot(x="OrderYear", y="GrossRevenue", data=df_sales)
+    # Create a bar chart
+    ax = sns.barplot(x="OrderYear", y="GrossRevenue", data=df_sales)
 
-plt.show()
-```
+    plt.show()
+    ```
 
 4.  运行修改后的代码，注意 seaborn 能够让你为绘图设置颜色主题。
 5.  按如下所示再次修改代码：
 
-```python
-import seaborn as sns
+    ```python
+    import seaborn as sns
 
-# Clear the plot area
-plt.clf()
+    # Clear the plot area
+    plt.clf()
 
-# Create a line chart
-ax = sns.lineplot(x="OrderYear", y="GrossRevenue", data=df_sales)
+    # Create a line chart
+    ax = sns.lineplot(x="OrderYear", y="GrossRevenue", data=df_sales)
 
-plt.show()
-```
+    plt.show()
+    ```
 
 6.  运行修改后的代码，查看折线图形式的年收入。
 
