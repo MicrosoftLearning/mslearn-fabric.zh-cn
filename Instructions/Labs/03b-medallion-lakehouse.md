@@ -21,8 +21,6 @@ lab:
 3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 4. 打开新工作区时，它应为空。
 
-   ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace-medallion.png)
-
 5. 导航到工作区设置并启用“数据模型编辑”预览功能。 这样一来，你就可以使用 Power BI 语义模型在你的湖屋中的表之间创建关系。
 
     ![Fabric 中工作区设置页的屏幕截图。](./Images/workspace-settings.png)
@@ -153,8 +151,6 @@ lab:
 10. 使用 ****&#9655;** (*运行单元格*)** 按钮运行单元格以执行代码。
 
 11. 在湖屋资源管理器窗格的“Tables”部分选择“...”，然后选择“刷新” 。 此时会看到列出的新 sales_silver 表。 &#9650;（三角形图标）表示它是一个 Delta 表。
-
-    ![湖屋中 sales_silver 表的屏幕截图。](./Images/sales-silver-table.png)
 
     > 注意：如果看不到新表，请等待几秒钟，然后再次选择“刷新”，或刷新整个浏览器选项卡。
 
@@ -598,7 +594,7 @@ lab:
    - dimproduct_gold
    - factsales_gold
 
-    此时将在 Fabric 中打开语义模型，可以在其中创建关系和度量值，如下所示：
+    此时将在 Fabric 中打开语义模型，你可以在其中创建关系和度量，如下所示：
 
     ![Fabric 中语义模型的屏幕截图。](./Images/dataset-relationships.png)
 
