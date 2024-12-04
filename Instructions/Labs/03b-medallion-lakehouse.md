@@ -16,10 +16,12 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**Power BI**”。
+1. 在 `https://app.fabric.microsoft.com/home?experience=fabric` 的 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric)中，选择“Synapse 数据工程”****。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 3. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 4. 打开新工作区时，它应为空。
+
+   ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace-medallion.png)
 
 5. 导航到工作区设置并启用“数据模型编辑”预览功能。 这样一来，你就可以使用 Power BI 语义模型在你的湖屋中的表之间创建关系。
 
@@ -31,9 +33,9 @@ lab:
 
 现在已经有了工作区，可以为要分析的数据创建数据湖屋了。
 
-1. 在刚刚创建的工作区中，单击“**新建项**”按钮创建名为“**销售**”的新**湖屋**。
+1. 在“Synapse 数据工程”主页中，新建名为“销售”的湖屋。
 
-    大约一分钟后，一个新的空湖屋创建完成。 接下来，将把一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如果适用），然后将其上传到湖屋。
+    大约一分钟后，一个新的空湖屋创建完成。 需要将一些数据引入数据湖屋进行分析。 有多种方法可以执行此操作，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如果适用），然后将其上传到湖屋。
 
 1. 从 `https://github.com/MicrosoftLearning/dp-data/blob/main/orders.zip` 下载本练习的数据文件。 提取文件并以原始名称保存在本地计算机（或者实验室 VM，如果适用）上。 应该有 3 个包含 3 年销售数据的文件：2019.csv、2020.csv 和 2021.csv。
 
@@ -152,6 +154,8 @@ lab:
 
 11. 在湖屋资源管理器窗格的“Tables”部分选择“...”，然后选择“刷新” 。 此时会看到列出的新 sales_silver 表。 &#9650;（三角形图标）表示它是一个 Delta 表。
 
+    ![湖屋中 sales_silver 表的屏幕截图。](./Images/sales-silver-table.png)
+
     > 注意：如果看不到新表，请等待几秒钟，然后再次选择“刷新”，或刷新整个浏览器选项卡。
 
 12. 现在，你将对 Delta 表执行**更新插入操作**，根据特定条件更新现有记录，并在找不到匹配项时插入新记录。 添加新代码块并粘贴以下代码：
@@ -202,15 +206,15 @@ lab:
 
 ## 使用 SQL 终结点浏览银层中的数据
 
-现在，银层中已有数据，可以使用 SQL 分析终结点来浏览数据并执行一些基本分析。 如果熟悉 SQL 并想要对数据进行一些基本探索，这将非常有用。 在本练习中，我们使用 Fabric 中的 SQL 终结点视图，但请注意，也可以使用其他工具，例如 SQL Server Management Studio (SSMS) 和 Azure 数据资源管理器。
+现在，银层中已有数据，可以使用 SQL 终结点来浏览数据并执行一些基本分析。 如果你熟悉 SQL 并想要对数据进行一些基本探索，这是一个很好的选择。 在本练习中，我们使用 Fabric 中的 SQL 终结点视图，但请注意，也可以使用其他工具，例如 SQL Server Management Studio (SSMS) 和 Azure 数据资源管理器。
 
-1. 导航回工作区，注意，现在列出了几个项目。 选择“**销售 SQL 分析终结点**”，在 SQL 终结点视图中打开湖屋。
+1. 导航回工作区，注意，现在列出了一些资产。 选择“**SQL 终结点**”，在 SQL 终结点视图中打开你的湖屋。
 
     ![湖屋中 SQL 终结点的屏幕截图。](./Images/sql-endpoint-item.png)
 
 2. 从功能区中选择“**新建 SQL 查询**”，这将打开 SQL 查询编辑器。 请注意，可以使用湖屋资源管理器窗格中现有查询名称旁边的 **...** 菜单项重命名查询。
 
-   接下来，你将运行两个 SQL 查询来浏览数据。
+   我们将运行两个 sql 查询来浏览数据。
 
 3. 将以下查询粘贴到查询编辑器中，然后选择“**运行**”：
 
@@ -226,7 +230,7 @@ lab:
 
     ![湖屋中 SQL 查询结果的屏幕截图。](./Images/total-sales-sql.png)
 
-4. 接下来，你将查看哪些客户的购买量最大（就数量而言）。 将以下查询粘贴到查询编辑器中，然后选择“**运行**”：
+4. 现在，我们将了解一下哪些客户（在数量方面）购买的最多。 将以下查询粘贴到查询编辑器中，然后选择“**运行**”：
 
     ```sql
     SELECT TOP 10 CustomerName, SUM(Quantity) AS TotalQuantity
@@ -243,13 +247,13 @@ lab:
 
 你已成功从铜层获取数据，对其进行转换，并将其加载到银 Delta 表中。 现在，你将使用新的笔记本进一步转换数据，将其建模为星型架构，并将其加载到金 Delta 表中。
 
-你可以在单个笔记本中完成以上操作，但在本练习中，你将使用单独的笔记本来演示将数据从铜层转换为银层，然后从银层转换为金层的过程。 这有助于调试、故障排除和重复使用。
+请注意，你可以在单个笔记本中完成以上操作，但在本练习中，你将使用单独的笔记本来演示将数据从铜级转换为银级，然后从银级转换为金级的过程。 这有助于调试、故障排除和重复使用。
 
-1. 返回工作区主页，创建名为“**转换金层数据**”的新笔记本。
+1. 返回到“数据工程”主页，并创建名为“Transform data for Gold”的新笔记本 。
 
-2. 在湖屋资源管理器窗格中，选择“添加”，然后选择前面创建的“Sales”湖屋来添加“Sales”湖屋。 在“**添加湖屋**”窗口中，选择“**无架构的现有湖屋**”。 你将在资源管理器窗格的“Tables”部分看到列出的 sales_silver 表 。
+2. 在湖屋资源管理器窗格中，选择“添加”，然后选择前面创建的“Sales”湖屋来添加“Sales”湖屋。 你将在资源管理器窗格的“Tables”部分看到列出的 sales_silver 表 。
 
-3. 在现有代码块中，移除注释文本并**添加以下代码**，以便将数据加载到数据帧并开始构建星型架构，然后运行它：
+3. 在现有代码块中，删除样本文本并添加以下代码，以便将数据加载到数据帧并开始构建星型架构，然后运行它：
 
    ```python
     # Load data to the dataframe as a starting point to create the gold layer
@@ -305,10 +309,10 @@ lab:
     
     dfUpdates = dfdimDate_gold
     
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
         dfUpdates.alias('updates'),
-        'gold.OrderDate = updates.OrderDate'
+        'silver.OrderDate = updates.OrderDate'
       ) \
        .whenMatchedUpdate(set =
         {
@@ -322,13 +326,13 @@ lab:
           "Month": "updates.Month",
           "Year": "updates.Year",
           "mmmyyyy": "updates.mmmyyyy",
-          "yyyymm": "updates.yyyymm"
+          "yyyymm": "yyyymm"
         }
       ) \
       .execute()
     ```
 
-    现已设置日期维度。 现在，你将创建客户维度。
+    恭喜！ 你的日期维度全部设置好了。 现在，你将创建客户维度。
 7. 要生成客户维度表，添加新代码块，然后粘贴并运行以下代码：
 
     ```python
@@ -393,10 +397,10 @@ lab:
     
     dfUpdates = dfdimCustomer_gold
     
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
         dfUpdates.alias('updates'),
-        'gold.CustomerName = updates.CustomerName AND gold.Email = updates.Email'
+        'silver.CustomerName = updates.CustomerName AND silver.Email = updates.Email'
       ) \
        .whenMatchedUpdate(set =
         {
@@ -432,7 +436,7 @@ lab:
 12. 添加另一个代码块**** 以创建 product_silver**** 数据帧。
   
     ```python
-    from pyspark.sql.functions import col, split, lit, when
+    from pyspark.sql.functions import col, split, lit
     
     # Create product_silver dataframe
     
@@ -475,10 +479,10 @@ lab:
             
     dfUpdates = dfdimProduct_gold
             
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
             dfUpdates.alias('updates'),
-            'gold.ItemName = updates.ItemName AND gold.ItemInfo = updates.ItemInfo'
+            'silver.ItemName = updates.ItemName AND silver.ItemInfo = updates.ItemInfo'
             ) \
             .whenMatchedUpdate(set =
             {
@@ -552,10 +556,10 @@ lab:
     
     dfUpdates = dffactSales_gold
     
-    deltaTable.alias('gold') \
+    deltaTable.alias('silver') \
       .merge(
         dfUpdates.alias('updates'),
-        'gold.OrderDate = updates.OrderDate AND gold.CustomerID = updates.CustomerID AND gold.ItemID = updates.ItemID'
+        'silver.OrderDate = updates.OrderDate AND silver.CustomerID = updates.CustomerID AND silver.ItemID = updates.ItemID'
       ) \
        .whenMatchedUpdate(set =
         {

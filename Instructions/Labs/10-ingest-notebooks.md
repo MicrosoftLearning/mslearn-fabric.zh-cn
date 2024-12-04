@@ -20,7 +20,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 `https://app.fabric.microsoft.com/home?experience=fabric` 的 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric)中，选择“Synapse 数据工程”****。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 中，选择“**数据工程**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -31,7 +31,7 @@ lab:
 
 首先创建一个新的湖屋和湖屋中的目标文件夹。
 
-1. 在工作区中，选择“+ 新建”>“湖屋”，提供一个名称，然后选择“创建” 。
+1. 在工作区中，选择 **“+新建项”>“湖屋”**，提供一个名称，然后选择“**创建**”。
 
     > **注意：** 创建一个没有**表**或**文件**的新湖屋可能需要几分钟时间。
 
@@ -85,15 +85,15 @@ lab:
 1. 在新代码单元格中插入以下代码：
 
     ```python
-        # Declare file name    
-        file_name = "yellow_taxi"
+    # Declare file name    
+    file_name = "yellow_taxi"
     
-        # Construct destination path
-        output_parquet_path = f"**InsertABFSPathHere**/{file_name}"
-        print(output_parquet_path)
+    # Construct destination path
+    output_parquet_path = f"**InsertABFSPathHere**/{file_name}"
+    print(output_parquet_path)
         
-        # Load the first 1000 rows as a Parquet file
-        blob_df.limit(1000).write.mode("overwrite").parquet(output_parquet_path)
+    # Load the first 1000 rows as a Parquet file
+    blob_df.limit(1000).write.mode("overwrite").parquet(output_parquet_path)
     ```
 
 1. 添加你的 **RawData** ABFS 路径并选择“ **&#9655; 运行单元格**”以将 1000 行写入 yellow_taxi.parquet 文件。
@@ -120,7 +120,7 @@ lab:
     filtered_df = raw_df.withColumn("dataload_datetime", current_timestamp())
     
     # Filter columns to exclude any NULL values in storeAndFwdFlag
-    filtered_df = filtered_df.filter(raw_df["storeAndFwdFlag"].isNotNull())
+    filtered_df = filtered_df.filter(col("storeAndFwdFlag").isNotNull())
     
     # Load the filtered data into a Delta table
     table_name = "yellow_taxi"
@@ -177,5 +177,5 @@ lab:
 如果已完成探索，可删除为本练习创建的工作区。
 
 1. 在左侧栏中，选择工作区的图标以查看其包含的所有项。
-2. 在工具栏上的“...”菜单中，选择“工作区设置” 。
-3. 在“常规”部分中，选择“删除此工作区”。********
+1. 选择“**工作区设置**”，然后在“**常规**”部分中向下滚动并选择“**删除此工作区**”。
+1. 选择“**删除**”以删除工作区。

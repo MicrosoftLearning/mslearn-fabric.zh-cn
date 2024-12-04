@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**Synapse 数据仓库**”。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**数据仓库**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,7 +27,7 @@ lab:
 
 现已有了工作空间，可以创建数据仓库了。 “Synapse 数据仓库”主页包含创建新仓库的快捷方式：
 
-1. 在“Synapse 数据仓库”主页中，使用所选的名称创建新的仓库 。
+1. 在“数据仓库”主页中，使用所选的名称创建新的仓库 。
 
     大约一分钟后，一个新的仓库创建完成：
 
@@ -37,7 +37,7 @@ lab:
 
 仓库是一个关系数据库，可在其中定义表和其他对象。
 
-1. 在新仓库中，选择“使用 T-SQL 创建表”磁贴，并将默认 SQL 代码替换为以下 CREATE TABLE 语句：
+1. 在新仓库中，选择 **T-SQL** 磁贴，并使用以下 CREATE TABLE 语句：
 
     ```sql
    CREATE TABLE dbo.DimProduct
@@ -65,9 +65,8 @@ lab:
     ```
 
 5. 运行新查询，将三行插入 DimProduct 表中。
-6. 查询完成后，选择数据仓库中页面底部的“数据”选项卡。 在“资源管理器”窗格中，选择 DimProduct 表，并验证是否已将三行添加到表中 。
+6. 查询完成后，在“**资源管理器**”窗格中，选择 **DimProduct** 表，并验证是否已将三行添加到表中。
 7. 在“开始”菜单选项卡上，使用“新建 SQL 查询”按钮创建新查询 。 然后将 Transact-SQL 代码从 `https://raw.githubusercontent.com/MicrosoftLearning/dp-data/main/create-dw.txt` 复制并粘贴到新的查询窗格中。
-<!-- I had to remove the GO command in this query as well -->
 8. 运行查询，创建一个简单的数据仓库架构并加载一些数据。 运行该脚本大约需要 30 秒。
 9. 使用工具栏上的“刷新”按钮刷新视图。 然后在“资源管理器”窗格中，验证数据仓库中的 dbo 架构现在是否包含以下四个表 ：
     - **DimCustomer**
@@ -81,15 +80,17 @@ lab:
 
 关系数据仓库通常由事实数据表和维度表组成 。 事实数据表包含可以聚合以分析业务绩效（例如销售收入）的数字度量值，维度表包含实体的属性，可以按照这些属性来聚合数据（例如产品、客户或时间）。 在 Microsoft Fabric 数据仓库中，可以使用这些键来定义封装表之间的关系的数据模型。
 
-1. 在数据仓库中页面的底部，选择“模型”选项卡。
+1. 在工具栏中，选择“**模型布局**”按钮。
 2. 在模型窗格中，重新排列数据仓库中的表，使 FactSalesOrder 表位于中间，如下所示：
 
     ![数据仓库模型页的屏幕截图。](./Images/model-dw.png)
 
+> **备注**：视图 **frequently_run_queries**、**long_running_queries**、**exec_sessions_history** 和 **exec_requests_history** 是 Fabric 自动创建的 **queryinsights** 架构的一部分。 此功能提供 SQL 分析终结点上历史查询活动的整体视图。 由于此功能已超出本练习的范围，因此暂时应当忽略这些视图。
+
 3. 将 FactSalesOrder 表中的 ProductKey 字段拖放到 DimProduct 表中的 ProductKey 字段上   。 然后确认以下关系详细信息：
-    - 表 1：FactSalesOrder
+    - **从表**：FactSalesOrder
     - 列：ProductKey
-    - 表 2：DimProduct
+    - **到表**：DimProduct
     - 列：ProductKey
     - 基数：多对一 (*:1)
     - 交叉筛选器方向：单向
@@ -125,7 +126,7 @@ lab:
    ORDER BY CalendarYear, MonthOfYear;
     ```
 
-    请注意，时间维度中的属性使你可以在多个分层级别（在本例中为年和月）聚合事实数据表中的度量值。 这是数据仓库中的常见模式。
+    请注意，日期维度中的属性使你能够在多个层次结构级别（在本例中为年和月）聚合事实表中的度量。 这是数据仓库中的常见模式。
 
 2. 按如下所示修改查询，向聚合添加第二个维度。
 
@@ -177,7 +178,7 @@ Microsoft Fabric 中的数据仓库具有许多可能在关系数据库中使用
 
 可以使用图形查询设计器来查询数据仓库中的表，而不是编写 SQL 代码。 此体验类似于 Power Query online，在其中无需代码即可创建数据转换步骤。 对于更复杂的任务，可以使用 Power Query 的 M (Mashup) 语言。
 
-1. 在“开始”菜单上，选择“新建视觉查询” 。
+1. 在“**开始**”菜单上，展开“**新建 SQL 查询**”下的选项，然后选择“**新建可视化查询**”。
 
 1. 将 FactSalesOrder 拖动到画布上 。 请注意，表的预览显示在下面的“预览”窗格中。
 
@@ -200,7 +201,7 @@ Microsoft Fabric 中的数据仓库具有许多可能在关系数据库中使用
 
 可以在单个查询或数据仓库中轻松可视化数据。 在可视化之前，请隐藏对报表设计器不友好的列和/或表。
 
-1. 在“资源管理器”窗格中，选择“模型”视图 。 
+1. 选择“**模型布局**”按钮。 
 
 1. 在事实数据表和维度表中隐藏以下列，创建报告不需要这些列。 请注意，这不会从模型中移除列，而只是在报表画布上的视图中将其隐藏。
    1. FactSalesOrder
@@ -217,7 +218,7 @@ Microsoft Fabric 中的数据仓库具有许多可能在关系数据库中使用
       - **ProductKey**
       - **ProductAltKey** 
 
-1. 现在，你已准备好生成报表并将此数据集提供给其他人。 在“开始”菜单上，选择“新建报表”。 这会打开一个新窗口，可在其中创建 Power BI 报表。
+1. 现在，你已准备好生成报表并将此数据集提供给其他人。 在“报告”菜单上，选择“**新建报告**”。 这会打开一个新窗口，可在其中创建 Power BI 报表。
 
 1. 在“数据”窗格中，展开 FactSalesOrder 。 请注意，隐藏的列不再可见。 
 
