@@ -27,7 +27,7 @@ Microsoft Fabric 中的 SQL 数据库是对开发人员友好的事务数据库�
 
 现在有了工作区，可以创建 SQL 数据库了。
 
-1. 在 Fabric 门户的左侧面板上，选择“**+ 新建项**”。
+1. 在 Fabric 门户的左侧面板上，选择“**+ 新建物料项目**”。
 1. 导航到“**存储数据**”部分，然后选择“**SQL 数据库**”。
 1. 输入 **AdventureWorksLT** 作为数据库名称，然后选择“**创建**”。
 1. 创建数据库后，可以从**示例数据库**卡将示例数据加载到数据库中。
@@ -102,15 +102,14 @@ SQL 查询编辑器支持 IntelliSense、代码完成、语法突出显示、客
 
     ```sql
     INSERT INTO SalesLT.PublicHolidays (CountryOrRegion, HolidayName, Date, IsPaidTimeOff)
-    SELECT CountryOrRegion, HolidayName, Date, IsPaidTimeOff
-    FROM OPENROWSET 
-    (BULK 'abs://holidaydatacontainer@azureopendatastorage.blob.core.windows.net/Processed/*.parquet'
-    , FORMAT = 'PARQUET') AS [PublicHolidays]
-    WHERE countryorRegion in ('Canada', 'United Kingdom', 'United States')
-        AND YEAR([date]) = 2024
+    VALUES
+        ('Canada', 'Victoria Day', '2024-02-19', 1),
+        ('United Kingdom', 'Christmas Day', '2024-12-25', 1),
+        ('United Kingdom', 'Spring Bank Holiday', '2024-05-27', 1),
+        ('United States', 'Thanksgiving Day', '2024-11-28', 1);
     ```
     
-    此查询从 Azure Blob 存储 中的 Parquet 文件读取假日数据，对其进行筛选，使其仅包括 加拿大、英国和美国 2024 年的假日，然后将此筛选的数据插入 `SalesLT.PublicHolidays` 表中。    
+    在此示例中，此查询将加拿大、英国和美国 2024 年的假期插入 `SalesLT.PublicHolidays` 表中。    
 
 1. 在新的或现有的查询编辑器中，输入并执行以下 T-SQL 代码。
 
@@ -190,7 +189,7 @@ SQL 查询编辑器支持 IntelliSense、代码完成、语法突出显示、客
 
 > **详细信息**：请参阅 Microsoft Fabric 文档中的[什么是 Microsoft Fabric？](https://learn.microsoft.com/fabric/get-started/microsoft-fabric-overview)，以了解有关平台中其他可用组件的详细信息。
 
-在本练习中，你已在 Microsoft Fabric 的 SQL 数据库中创建、导入外部数据、查询和保护数据。
+在本练习中，你已在 Microsoft Fabric 的 SQL 数据库中创建、查询数据并保护其安全。
 
 ## 清理资源
 

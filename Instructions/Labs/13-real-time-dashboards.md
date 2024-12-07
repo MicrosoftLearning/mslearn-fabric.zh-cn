@@ -1,7 +1,7 @@
 ---
 lab:
-  title: Microsoft Fabric 中的实时仪表板
-  module: Get Started with Real-Time Dashboards in Microsoft Fabric
+  title: Microsoft Fabric 中的实时仪表板入门
+  module: Get started with Real-Time Dashboards in Microsoft Fabric
 ---
 
 # Microsoft Fabric 中的实时仪表板入门
