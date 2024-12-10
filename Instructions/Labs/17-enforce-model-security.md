@@ -101,37 +101,30 @@ lab:
 
     ![](Images/enforce-model-security-image13.png)
 
-4. 在“管理角色”窗口中，选择“创建” 。
+4. 在“**管理角色**”窗口中，选择“**+ 新建**”。
 
-    ![](Images/enforce-model-security-image14.png)
+5. 要命名角色，请将所选“*无标题*”文本替换为“**Australia**”，然后按 **Enter**。
 
-5. 若要命名角色，请将所选文本替换为“Australia”，然后按 Enter 。
-
-    ![](Images/enforce-model-security-image15.png)
-
-6. 在“表”列表中，对于“Sales Territory”表，选择省略号，然后选择“添加筛选器” > “[Region]”   。
+6. 在“**选择表**”列表中，选择“**销售区域**”，然后在“**筛选数据**”部分选择“**+ 新建**”。
+  
+7. 在新规则行中，进行以下设置：
+    * **列**：Region
+    * **条件**：Equals
+    * **值**：Australia
 
     ![](Images/enforce-model-security-image16.png)
 
-7. 在“表筛选 DAX 表达式”框中，将“值”替换为“Australia”  。
+    *此规则通过值“**Australia**”筛选“**Region**”列。*
 
-    ![](Images/enforce-model-security-image17.png)
+10. 要创建另一个角色，请按“**角色**”部分中的“**+ 新建**”。
 
-    此表达式通过值“Australia”筛选“Region”列 。
-
-8. 若要创建其他角色，请按“创建”。
-
-    ![](Images/enforce-model-security-image18.png)
-
-9. 重复此任务中的步骤，创建一个名为“Canada”的角色，该角色通过“Canada”筛选“Region”列  。
+11. 重复此任务中的步骤，创建一个名为“Canada”的角色，该角色通过“Canada”筛选“Region”列  。
 
     ![](Images/enforce-model-security-image19.png)
 
     在本实验室中，你将只创建这两个角色。但是在实际解决方案中，必须为 11 个 Adventure Works 区域中的每个区域创建一个角色。
 
-10. 选择“保存”。
-
-    ![](Images/enforce-model-security-image20.png)
+12. 选择“保存”。
 
 ### 验证静态角色
 
@@ -247,19 +240,13 @@ lab:
 
     ![](Images/enforce-model-security-image39.png)
 
-5. 在“管理角色”窗口中，若要移除第一个角色，请选择“删除” 。
+5. 在“**管理角色**”窗口中，要移除第一个角色，请选择角色旁边的省略号，然后选择“**删除**”。
 
     ![](Images/enforce-model-security-image40.png)
 
-6. 当系统提示确认删除时，按“是，删除”。
+6. 此外，请删除第二个角色。
 
-    ![](Images/enforce-model-security-image41.png)
-
-7. 此外，请删除第二个角色。
-
-8. 选择“保存”。
-
-    ![](Images/enforce-model-security-image42.png)
+7. 选择“保存”。
 
 ## 创建动态角色
 
