@@ -1,18 +1,18 @@
 ---
 lab:
-  title: 在 Microsoft Fabric 中查询 KQL 数据库入门
-  module: Query data from a KQL database in Microsoft Fabric
+  title: 在 Microsoft Fabric 事件库中使用数据
+  module: Work with data in a Microsoft Fabric eventhouse
 ---
 
-# 在 Microsoft Fabric 中查询 KQL 数据库入门
+# 在 Microsoft Fabric 事件库中使用数据
 
-KQL 查询集是一种工具，可用于查询 KQL 数据库、修改和显示来自其中的查询结果。 可以将 KQL 查询集中的每个选项卡链接到不同的 KQL 数据库，并保存查询以供将来使用或与他人共享进行数据分析。 还可以更换任何选项卡的 KQL 数据库，以比较来自不同数据源的查询结果。
+在 Microsoft Fabric 中，*事件库*用于存储与事件相关的实时数据；通常由*事件流*从流式数据源捕获。
 
-在本练习中，你将承担分析师的角色，负责查询纽约市出租车行程数据的数据集。 你将使用 KQL 查询此数据并收集信息，以获取有关数据的信息化见解。
+在事件库中，数据存储在一个或多个 KQL 数据库中，每个数据库都包含表和其他对象，可以使用 Kusto 查询语言 (KQL) 或结构化查询语言子集 (SQL) 进行查询。
 
-> **提示**：KQL 查询集使用 Kusto 查询语言（与许多 SQL 函数兼容）来创建查询。 要详细了解 KQL，请参阅 [Kusto 查询语言 (KQL) 概述](https://learn.microsoft.com/azure/data-explorer/kusto/query/?context=%2Ffabric%2Fcontext%2Fcontext)。
+在本练习中，你将使用与出租车行程相关的一些示例数据创建和填充事件库，然后使用 KQL 和 SQL 查询数据。
 
-完成本实验室大约需要 25 分钟。
+此练习大约需要 **25** 分钟。
 
 ## 创建工作区
 
@@ -27,13 +27,20 @@ KQL 查询集是一种工具，可用于查询 KQL 数据库、修改和显示�
 
 ## 创建 Eventhouse
 
+现在，你已有一个支持 Fabric 容量的工作区，可以在其中创建一个事件库。
+
 1. 在“**实时智能**”主页中，创建一个新的 **Eventhouse**，名称自定。 创建 eventhouse 后，请关闭显示的任何提示或使用技巧，直到看到 eventhouse 页面：
 
    ![新 eventhouse 的屏幕截图。](./Images/create-eventhouse.png)
-   
-1. 在 eventhouse 中创建的 KQL 数据库的“**...**”菜单中，选择“**获取数据** > **示例**”。 然后，选择“**汽车运营分析**”示例数据。
 
-1. 数据加载完成后，请验证是否已创建“**汽车**”表。
+1. 在左侧窗格中，请注意事件屋包含一个与事件屋同名的 KQL 数据库。
+1. 选择要查看的 KQL 数据库。
+
+    目前数据库中没有表。 在本练习的其余部分中，你将使用事件流将数据从实时源加载到表中。
+   
+1. 在 KQL 数据库的页面中，选择“**获取数据** > **样本**”。 然后，选择“**汽车运营分析**”示例数据。
+
+1. 数据加载完成后（可能需要一些时间），请验证是否已创建“**汽车**”表。
 
    ![Eventhouse 数据库中“汽车”表的屏幕截图。](./Images/choose-automotive-operations-analytics.png)
 
@@ -156,7 +163,7 @@ KQL 数据库并不原生支持 Transact-SQL，但它提供了一个可仿真 Mi
 
 1. 在查询集中，添加并运行以下 Transact-SQL 查询： 
 
-    ```sql  
+    ```sql
     SELECT TOP 100 * from Automotive
     ```
 

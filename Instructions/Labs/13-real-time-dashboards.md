@@ -6,175 +6,280 @@ lab:
 
 # Microsoft Fabric 中的实时仪表板入门
 
-通过实时仪表板，可以使用 Kusto 查询语言 (KQL) 从 Microsoft Fabric 中收集见解，以检索结构化和非结构化数据，并在面板中以图表、散点图、表格等形式呈现这些数据，从而实现类似于 Power BI 中切片器的链接。 
+使用 Microsoft Fabric 中的实时仪表板，可以让你使用 Kusto 查询语言 (KQL) 可视化和浏览流数据。  在本练习中，你将了解如何基于实时数据源创建和使用实时仪表板。
 
 完成本实验室大约需要 25 分钟。
 
-> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
+> **备注**：你需要 [Microsoft Fabric 租户](https://learn.microsoft.com/fabric/get-started/fabric-trial)才能完成本练习。
 
 ## 创建工作区
 
-在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
+在 Fabric 中处理数据之前，需要创建一个已启用 Fabric 容量的工作区。
 
 1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**实时智能**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
-1. 使用所选名称创建一个新工作区，并选择包含 Fabric 容量的授权模式（试用、高级或 Fabric）  。 或者，也可以使用现有工作区生成实时仪表板。
+1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
 
     ![Fabric 中空工作区的屏幕截图。](./Images/new-workspace.png)
 
-在本实验室中，你将使用 Fabric 中的实时智能创建实时仪表板。 实时智能提供了一个方便的示例数据集，可以用它来探索实时智能的功能。 你将使用此示例数据创建 KQL | SQL 查询和查询集，用于分析实时数据，并在下游进程中用于其他用途。
+## 创建 Eventhouse
+
+现在，你已拥有工作区，可以开始创建实时智能解决方案所需的 Fabric 项。 首先，我们将创建一个事件库。
+
+1. 在左侧菜单栏上，选择“**开始**”；然后在“实时智能”主页中，创建新的“**Eventhouse**”，为其指定所选的唯一名称。
+1. 关闭显示的所有建议或提示，直到看到新的空事件屋。
+
+    ![新事件屋的屏幕截图](./Images/create-eventhouse.png)
+
+1. 在左侧窗格中，请注意事件屋包含一个与事件屋同名的 KQL 数据库。
+1. 选择要查看的 KQL 数据库。
+
+## 创建事件流
+
+目前数据库中没有表。 我们将使用事件流将数据从实时源加载到表中。
+
+1. 在 KQL 数据库的主页中，选择“**获取数据**”。
+2. 对于数据源，请选择“**Eventstream**” > “**新建 Eventstream**”。 将事件流命名为 `Bicycle-data`。
+
+    ![创建新事件流的屏幕截图。](./Images/empty-eventstream.png)
+
+    只需片刻即可在工作区完成创建新事件流。 建立后，将自动重定向到为事件流选择数据源。
+
+1. 选择“**使用示例数据**”。
+1. 将该源命名为 `Bicycles`，并选择“**自行车**”示例数据。
+
+    流将被映射，并且会自动显示在**事件流画布**上。
+
+   ![查看事件流画布](./Images/real-time-intelligence-eventstream-sourced.png)
+
+1. 在“**添加目标**”下拉列表中，选择“**事件库**”。
+1. 在“**Eventhouse**”窗格中，配置以下设置选项。
+   - **数据引入模式：** 引入前的事件处理
+   - **目标名称：**`bikes-table`
+   - **工作区：***选择在本练习开始时创建的工作区*
+   - **Eventhouse**：*选择事件屋*
+   - **KQL 数据库：***选择 KQL 数据库*
+   - **目标表：** 创建名为 `bikes` 的新表
+   - **输入数据格式：** JSON
+
+   ![事件流目标设置。](./Images/kql-database-event-processing-before-ingestion.png)
+
+1. 在“**Eventhouse**”窗格中，选择“**保存**”。 
+1. 将 **Bicycles-data** 节点的输出连接到**自行车表**节点，然后选择“**发布**”。
+1. 等待一分钟左右，让数据目标变为活动状态。 然后在设计画布中选择**自行车表**节点，然后查看下面的“**数据预览**”窗格，以查看已引入的最新数据：
+
+   ![事件流中目标表的屏幕截图。](./Images/stream-data-preview.png)
+
+1. 等待几分钟，然后使用“**刷新**”按钮刷新“**数据预览**”窗格。 流将永久运行，因此新数据可能已添加到表中。
 
 ## 创建实时仪表板
 
-1. 在“实时智能”内，选中“实时仪表板”框********。
+现在，已将实时数据流加载到事件库中的表中，可以使用实时仪表板将其可视化。
 
-   ![选择“实时仪表板”的图像](./Images/create-real-time-dashboard.png)
+1. 在左侧菜单栏中，选择“**主页**”中心。 然后在主页上，创建名为 `bikes-dashboard` 的新**实时仪表板**。
 
-2. 系统将提示你为实时仪表板命名****。
+    创建新的空仪表板。
 
-   ![为实时仪表板命名的图像。](./Images/new-real-time-dashboard.png)
 
-3. 为实时仪表板指定一个你能记住的名称（如基于主源的某个名称），然后按“创建”****。
+    ![新仪表板的屏幕截图。](./Images/new-dashboard.png)
 
-4. 在“数据库详细信息”面板中，选择铅笔图标以在 OneLake 中打开可用性。
+1. 在工具栏中，选择“**新数据源**”并添加新的 **One Lake 数据中心**数据源。 然后选择事件库并使用以下设置创建新的数据源：
+    - **显示名称**：`Bike Rental Data`
+    - **数据库**：*事件库中的默认数据库*。
+    - **直通标识**：*已选中*
 
-   [ ![启用 onelake 的图像。](./Images/real-time-dashboard-details.png)](./Images/real-time-dashboard-details-large.png#lightbox)
+1. 关闭“**数据源**”窗格，然后在仪表板设计画布上，选择“**添加磁贴**”。
+1. 在查询编辑器中，确保已选择“**自行车租赁数据**”源，并输入以下 KQL 代码：
 
-## 添加数据源
+    ```kql
+    bikes
+        | where ingestion_time() between (ago(30min) .. now())
+        | summarize latest_observation = arg_max(ingestion_time(), *) by Neighbourhood
+        | project Neighbourhood, latest_observation, No_Bikes, No_Empty_Docks
+        | order by Neighbourhood asc
+    ```
 
-数据源充当对与实时仪表板位于同一工作区中的特定数据库或查询的可重用引用，因而各种磁贴能够利用不同的数据源来满足其数据需求。
+1. 运行查询，该查询显示过去 30 分钟内每条街区观察到的自行车和空自行车停靠的数量。
+1. 应用更改以查看仪表板磁贴中表中显示的数据。
 
-1. 选择“管理”选项卡，然后在菜单栏上选择“新建数据源”**************。
-1. 在“数据源”窗格中选择“+ 添加”按钮********。
+   ![带有包含表的磁贴的仪表板屏幕截图。](./Images/tile-table.png)
 
-    [ ![向实时仪表板添加新的数据源。](./Images/add-data-source-to-real-time-dashboard-large.png) ](./Images/add-data-source-to-real-time-dashboard-large.png#lightbox)
+1. 在磁贴上，选择“**编辑**”图标（看起来像铅笔）。 然后在“**视觉格式设置**”窗格中，设置以下属性：
+    - **磁贴名称**：自行车和停靠
+    - **视觉对象类型**：条形图
+    - **视觉格式**：堆积条形图
+    - **Y 列**：No_Bikes、No-Empty_Docks
+    - **X 列**：邻里
+    - **系列列**：推断
+    - **图例位置**：底部
 
-1. 选择“OneLake 数据中心”和“Azure 数据资源管理器”两个主选项之一********。
+    编辑后的时间应如下所示：
 
-    ![为实时仪表板选择一个数据源。](./Images/data-source-options-real-time-dashboards.png)
+   ![正在进行编辑以包含条形图的磁贴屏幕截图。](./Images/tile-bar-chart.png)
 
-1. 选择满足业务需求的数据源，然后选择“连接”按钮********。
+1. 应用更改，然后调整磁贴的大小，以占据仪表板左侧的全部高度。
 
-    [ ![选择适当的数据源。](./Images/select-onelake-data-hub.png) ](./Images/select-onelake-data-hub-large.png#lightbox)
+1. 在工具栏中，选择“**新建磁贴**”
+1. 在查询编辑器中，确保已选择“**自行车租赁数据**”源，并输入以下 KQL 代码：
 
-    > 注意**** 连接到数据源后，你将能够进行确认并在所选位置内创建其他数据源。
+    ```kql
+    bikes
+        | where ingestion_time() between (ago(30min) .. now())
+        | summarize latest_observation = arg_max(ingestion_time(), *) by Neighbourhood
+        | project Neighbourhood, latest_observation, Latitude, Longitude, No_Bikes
+        | order by Neighbourhood asc
+    ```
 
-1. 在“创建新数据源”窗格中确认数据源连接，然后选择“创建”************。
+1. 运行查询，该查询显示过去 30 分钟内每条街道观察到的自行车位置和数量。
+1. 应用更改以查看仪表板磁贴中表中显示的数据。
+1. 在磁贴上，选择“**编辑**”图标（看起来像铅笔）。 然后在“**视觉格式设置**”窗格中，设置以下属性：
+    - **磁贴名称**：自行车位置
+    - **视觉对象类型**：地图
+    - **定义位置依据**：纬度和经度
+    - **纬度列**：纬度
+    - **经度列**：经度
+    - **标签列**：邻里
+    - **大小**：显示
+    - **大小列**：No_Bikes
 
-    [ ![在“创建新数据源”中确认数据库。](./Images/conected-now-create-datasource.png) ](./Images/conected-now-create-datasource-large.png#lightbox)
+1. 应用更改，然后调整地图图块的大小，使其填满仪表板右侧的可用空间：
 
-1. 此时，需要选择“第 n 页”右侧的省略号“...”，然后选择“重命名页面”以提供一个适合磁贴用法的名称************。
-1. 选择“+ 添加磁贴”****
+   ![包含图表和地图的仪表板的屏幕截图。](./Images/dashboard-chart-map.png)
 
-    [ ![“重命名页面”和“添加磁贴”。](./Images/rename-page-add-tile.png) ](./Images/rename-page-add-tile-large.png#lightbox)
+## 创建基础查询
 
-1. 你将重定向到“磁贴查询窗格”，从中可添加参数并引入基本查询来支持磁贴****。 
+仪表板包含两个基于类似查询的视觉对象。 为了避免重复并使仪表板更易于维护，可以将通用数据合并到单个*基本查询*中。
 
-    [ ![“查询”窗口和“添加新数据源”窗格。](./Images/write-query-for-tile.png) ](./Images/write-query-for-tile-large.png#lightbox)
+1. 在仪表板工具栏上，选择“**基础查询**”。 然后选择“+添加”。
+1. 在基本查询编辑器中，将**变量名称**设置为 `base_bike_data`，并确保已选择“**自行车租赁数据**”源。 然后输入以下查询：
 
-    > 注意**** 可以选择在同一窗口的下拉窗口中添加新的数据源。 此源可能位于你的个人工作区中，也可能位于有另一个 KQL 数据库存储在你有权访问的 Evenhouse 内的任何工作区中。
+    ```kql
+    bikes
+        | where ingestion_time() between (ago(30min) .. now())
+        | summarize latest_observation = arg_max(ingestion_time(), *) by Neighbourhood
 
-## 编写查询
+1. Run the query and verify that it returns all of the columns needed for both visuals in the dashboard (and some others).
 
-由于实时仪表板磁贴使用 Kusto 查询语言代码片段来检索数据和呈现视觉对象， 每个磁贴/查询可支持一个视觉对象。
+   ![A screenshot of a base query.](./Images/dashboard-base-query.png)
 
-1. 在每个磁贴内，都可以编写查询或从 Copilot 中粘贴查询（如果选择将它们固定到新磁贴或现有磁贴），然后根据需要进行修改****。 只需通过一个简单的查询，我们就可以创建根据自行车数量将大小用于地图的地图可视化效果。
+1. Select **Done** and then close the **Base queries** pane.
+1. Edit the **Bikes and Docks** bar chart visual, and change the query to the following code:
 
-```kusto
+    ```kql
+    base_bike_data
+    | project Neighbourhood, latest_observation, No_Bikes, No_Empty_Docks
+    | order by Neighbourhood asc
+    ```
 
-['Bike-count']
-BikepointID, Latitude, Longitude, No_Bikes
+1. 应用更改并验证条形图是否仍显示所有邻里的数据。
 
-```
+1. 编辑“**自行车位置**”地图视觉对象，并将查询更改为以下代码：
 
-## 创建可视化效果
+    ```kql
+    base_bike_data
+    | project Neighbourhood, latest_observation, No_Bikes, Latitude, Longitude
+    | order by Neighbourhood asc
+    ```
 
-对可视化效果感到满意后，只需选择“应用更改”，然后添加其他可视化效果来支持实时仪表板，或者执行其他步骤，如“参数”或“日程安排”************。
-
-   [ ![从 KQL 查询创建可视化效果。](./Images/create-visual-in-tiles.png) ](./Images/create-visual-in-tiles-large.png#lightbox)
-
-应用更改后，你将看到数据，然后可以进行调整以便于用户阅读和理解。
-
-   [ ![已对自行车地图可视化效果应用更改。](./Images/first-published-visual.png) ](./Images/first-published-visual-large.png#lightbox)
-
-可以继续创建具有表信息和可视化效果信息的新磁贴，以便于社区用户理解****。 你还可以执行前面所述的“添加页面”、“新建数据源”操作********。 接下来，我们将重点添加一个参数，以帮助导航并减少向用户显示的信息量。
+1. 应用更改并验证地图是否仍显示所有邻里的数据。
 
 ## 添加参数
-参数可提高仪表板呈现的效率，并允许在查询过程中的最早阶段使用筛选器值。 在链接到磁贴的查询中包含参数会激活筛选功能。 可以跨仪表板使用参数，多个参数可以筛选基础可视化效果（包括表）中表示的数据。
 
-创建参数一开始就很容易： 
+仪表板当前显示所有社区的最新自行车、停靠和位置数据。 现在，让我们添加参数，以便你可以选择特定的邻里。
 
-1. 选择顶部菜单上的“新建参数”按钮。 “参数”窗格随即打开。
-1. 在右窗格的顶部，选择“+ 添加”按钮。
+1. 在仪表板工具栏上的“**管理**”选项卡上，选择“**参数**”。
+1. 请注意已自动创建的任何现有参数（例如*时间范围*参数）。 然后**删除**它们。
+1. 选择“+ 添加”。
+1. 添加一个参数，设置如下：
+    - **标签：**`Neighbourhood`
+    - 参数类型：多选
+    - **说明**：`Choose neighbourhoods`
+    - 变量名称：`selected_neighbourhoods`
+    - **数据类型**：字符串
+    - 在页面上显示：全选
+    - 源：查询
+    - **数据源**：自行车租赁数据
+    - **编辑查询**：
 
-    [ ![添加新参数。](./Images/add-new-parameter.png) ](./Images/add-new-parameter-large.png#lightbox)
+        ```kql
+        bikes
+        | distinct Neighbourhood
+        | order by Neighbourhood asc
+        ```
 
-1. 为参数填充相关的属性。
-
-    [ ![配置参数设置。](./Images/configure-parameter.png) ](./Images/configure-parameter-large.png#lightbox)
-
-1. 参数更为重要的一项功能是能够添加查询，为用户提供仅与基础信息相关的选项****。
-
-    ![向参数选择项中添加查询。](./Images/add-lookup-query.png)
+    - **值列**：邻里
+    - **标签列**：匹配值选择
+    - **添加“全选”值**：*已选中*
+    - **“全选”发送空字符串**：*已选中*
+    - **自动重置为默认值**：已选择
+    - **默认值**：全选
 
 1. 选择“完成”以创建参数。
 
-    [ ![完成配置并在参数设置中选择“完成”。](./Images/complete-parameter-settings.png) ](./Images/complete-parameter-settings-large.png#lightbox)
+    添加参数后，需要修改基本查询，以基于所选临近区域筛选数据。
 
-### 参数属性
+1. 在工具栏上，选择“**基础查询**”。 然后选择 **base_bike_data** 查询并对其进行编辑，在 **where** 子句中添加 **and** 条件，以便根据所选参数值进行筛选，如下代码所示：
 
-| 字段            | 说明 |
-|------------------|-------------|
-| **标签**        | 参数的名称显示在仪表板或编辑卡上。 |
-| **参数类型** | 以下类型之一： <ul><li>单选：只能在筛选器中选择一个值作为参数的输入。</li><li>多选：可在筛选器中选择一个或多个值作为参数的输入。</li><li>时间范围：允许创建附加参数以基于时间筛选查询和仪表板。 每个仪表板都有默认的时间范围选取器。</li><li>任意文本：允许用户在筛选字段中键入或粘贴值，而无需预先填充值，从而保留最近使用的值。</li></ul> |
-| **描述**  | 参数的可选说明。 |
-| **变量名称** | 查询中的参数所使用的名称。 |
-| **Data type**    | 参数值表示的数据类型。 |
-| **在页面上显示** | 将要显示参数的页面，其中包含用于选择所有页面的选项。 |
-| **Source**       | 参数值的原点，可以是： <ul><li>固定值：手动输入的静态筛选器值。</li><li>查询：使用 KQL 查询引入的动态值。</li></ul> |
-| **添加“全选”值** | 适用于单选和多选参数类型，此选项可检索所有参数值的数据，并且必须集成到查询中才能实现功能。 |
-| **默认值** | 筛选器的默认值，该值在最初呈现仪表板时设置。 |
+    ```kql
+    bikes
+        | where ingestion_time() between (ago(30min) .. now())
+          and (isempty(['selected_neighbourhoods']) or Neighbourhood  in (['selected_neighbourhoods']))
+        | summarize latest_observation = arg_max(ingestion_time(), *) by Neighbourhood
+    ```
 
-6. 确保向磁贴中的每个查询添加参数，然后选择“应用更改”****。
+1. 选择“**完成**”，保存基础查询。
 
-**KQL 查询之前**
-```kusto
-//Add the street parameter to each tile's query
-['bike-count']
-| where No_Bikes > 0
-| project BikepointID, Latitude, Longitude, No_Bikes
+1. 在仪表板中，使用**社区**参数根据所选邻里筛选数据。
 
-```
+   ![选中参数的仪表板的屏幕截图。](./Images/dashboard-parameters.png)
 
-**KQL 查询之后**
-```kusto
-//Add the street parameter to each tile's query
-['bike-count']
-| where No_Bikes > 0 and Street == street
-| project BikepointID, Latitude, Longitude, No_Bikes
+1. 选择“**重置**”以删除所选参数筛选器。
 
-```
-   [ ![更新磁贴中的每个查询以包含参数。](./Images/update-each-query.png) ](./Images/update-each-query-large.png#lightbox)
+## 添加页面
 
-## 启用自动刷新
+仪表板当前包含单个页面。 可以添加更多页面以提供更多数据。
 
-自动刷新是一项功能，支持自动更新仪表板数据，而无需手动重新加载或按“刷新”按钮。 初始的自动刷新频率可由数据库编辑者配置。 编辑者和查看者都能够修改仪表板查看期间的实际自动刷新速率。 数据库编辑者有权确立最小刷新速率，以缓解群集上的过度负载。 设置此最小速率后，数据库用户将受到限制，无法选择低于指定最小值的刷新速率。 这可确保系统的性能得到保持，而不会使资源负担过重。
+1. 在仪表板左侧，展开“**页面**”窗格，然后选择“**+ 添加页**”。
+1. 将新页命名为**第 2 页**。 然后选择它。
+1. 在新页面上，选择“**+ 添加磁贴**”
+1. 在新磁贴的查询编辑器中，输入以下查询：
 
-1. 选择“管理”选项卡 >“自动刷新”。
+    ```kql
+    base_bike_data
+    | project Neighbourhood, latest_observation
+    | order by latest_observation desc
+    ```
 
-    [ ![启用“自动刷新”功能。](./Images/enable-auto-refresh.png) ](./Images/enable-auto-refresh-large.png#lightbox)
+1. 应用更改。 然后调整磁贴的大小，使其填满仪表板的高度。
 
-1. 切换选项以启用“自动刷新”。
-1. 为“最小时间间隔”和“默认刷新率”选择值 。
-1. 选择“应用”，然后保存仪表板 。
+   ![有两个页面的仪表板的屏幕截图](./Images/dashboard-page-2.png)
 
-    [ ![启用“自动刷新”并设置间隔。](./Images/enable-and-configure-refresh-rate.png) ](./Images/enable-and-configure-refresh-rate-large.png#lightbox)
+## 配置自动刷新
+
+用户可以手动刷新仪表板，但在设定的时间间隔内自动刷新数据可能会很有用。
+
+1. 在仪表板工具栏上的“**管理**”选项卡上，选择“**自动刷新**”。
+1. 在“**自动刷新**”窗格中，配置以下设置：
+    - **已启用**：*已选中*
+    - **最小时间间隔**：允许所有刷新间隔
+    - **默认刷新速率**：30 分钟
+1. 应用自动刷新设置。
+
+## 保存并共享仪表板
+
+现在，你有一个有用的仪表板，你可以保存它并与其他用户共享。
+
+1. 在仪表板工具栏上，选择“**保存**”。
+1. 保存仪表板后，选择“**共享**”。
+1. 在“**共享**”对话框中，选择“**复制链接**”，然后将仪表板的链接复制到剪贴板。
+1. 打开新的浏览器选项卡，粘贴复制的链接以导航到共享仪表板。 如果出现提示，请使用 Fabric 凭据再次登录。
+1. 浏览仪表板，使用它查看有关整个城市的自行车和空自行车停靠的最新信息。
 
 ## 清理资源
 
-在本练习中，你已创建一个 KQL 数据库并设置了一个可供查询的示例数据集。 然后，使用 KQL 和 SQL 查询了数据。 如果已完成 KQL 数据库探索，可删除为本练习创建的工作区。
-1. 在左侧栏中，选择你的工作区的图标。
-2. 在工具栏上的“...”菜单中，选择“工作区设置”。
-3. 在“常规”部分中，选择“删除此工作区”。********
+如果已浏览完仪表板，可删除为本练习创建的工作区。
 
+1. 在左侧栏中，选择你的工作区的图标。
+2. 在工具栏中，选择“**工作区设置**”。
+3. 在“常规”部分中，选择“删除此工作区”。********
