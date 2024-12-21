@@ -16,7 +16,7 @@ Microsoft Fabric 中的*监视中心*提供了一个可以监视活动的中心�
 
 在 Fabric 中处理数据之前，请在启用 Fabric 容量的租户中创建一个工作区。
 
-1. 在 `https://app.fabric.microsoft.com/home?experience=fabric` 的 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric)中，选择“Synapse 数据工程”****。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 中，选择“**数据工程**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并在“高级”部分选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,7 +27,7 @@ Microsoft Fabric 中的*监视中心*提供了一个可以监视活动的中心�
 
 现在已经有了工作区，可以为数据创建数据湖屋了。
 
-1. 在“Synapse 数据工程”主页中，新建湖屋并为其指定名称 。
+1. 在“**数据工程**”主页中，创建一个新的**湖屋**并自选名称。
 
     大约一分钟后，一个新的湖屋创建完成：
 
@@ -89,7 +89,7 @@ Microsoft Fabric 中的*监视中心*提供了一个可以监视活动的中心�
 
 ## 监视项目历史记录
 
-工作区中的某些项可能会多次运行。 可以使用监视中心查看其运行历史记录。
+工作区中的某些项可能会多次运行。 你可以使用监视中心查看其运行历史记录。
 
 1. 在导航栏中，返回到工作区页。 然后使用**获取产品数据**数据流的 **&#8635;**（*立即刷新*）按钮重新运行它。
 1. 在导航窗格中，选择“**监视**”页以查看监视中心，并验证数据流是否正在运行中。
@@ -113,7 +113,7 @@ Microsoft Fabric 中的*监视中心*提供了一个可以监视活动的中心�
     ![应用筛选器的监视中心的屏幕截图。](./Images/monitor-filter.png)
 
 1. 使用“**列选项**”按钮在视图中包含以下列（使用“**应用**”按钮应用更改）：
-    - 活动时间
+    - 活动名称
     - Status
     - 项目类型
     - 开始时间
