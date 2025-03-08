@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，需要创建一个已启用 Fabric 容量的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**实时智能**”。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,7 +27,10 @@ lab:
 
 现在，你已拥有工作区，可以开始创建实时智能解决方案所需的 Fabric 项。 首先，我们将创建一个事件库。
 
-1. 在左侧菜单栏上，选择“**开始**”；然后在“实时智能”主页中，创建新的“**Eventhouse**”，为其指定所选的唯一名称。
+1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的“*实时智能*”部分下，选择“**Eventhouse**”。 为其指定唯一的名称。
+
+    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
+
 1. 关闭显示的所有建议或提示，直到看到新的空事件屋。
 
     ![新事件屋的屏幕截图](./Images/create-eventhouse.png)
@@ -42,7 +45,7 @@ lab:
 1. 在 KQL 数据库的主页中，选择“**获取数据**”。
 2. 对于数据源，请选择“**Eventstream**” > “**新建 Eventstream**”。 将 Eventstream 命名为 `Bicycle-data`。
 
-    ![创建新事件流的屏幕截图。](./Images/name-eventstream.png)
+    ![创建新事件流的屏幕截图。](./Images/empty-eventstream.png)
 
     只需片刻即可在工作区完成创建新事件流。 建立后，将自动重定向到为事件流选择数据源。
 
@@ -53,7 +56,7 @@ lab:
 
    ![查看事件流画布](./Images/real-time-intelligence-eventstream-sourced.png)
 
-1. 在“**转换事件或添加目标**”下拉列表的“**目标**”部分中，选择“**Eventhouse**”。
+1. 在“**添加目标**”下拉列表中，选择“**事件库**”。
 1. 在“**Eventhouse**”窗格中，配置以下设置选项。
    - **数据引入模式：** 引入前的事件处理
    - **目标名称：**`bikes-table`
@@ -66,7 +69,7 @@ lab:
    ![事件流目标设置。](./Images/kql-database-event-processing-before-ingestion.png)
 
 1. 在“**Eventhouse**”窗格中，选择“**保存**”。 
-1. 在工具栏上，选择“发布”****。
+1. 将 **Bicycles-data** 节点的输出连接到**自行车表**节点，然后选择“**发布**”。
 1. 等待一分钟左右，让数据目标变为活动状态。 然后，在设计画布中选择“**自行车表**”节点，然后查看下面的“**数据预览**”窗格，以查看已引入的最新数据：
 
    ![事件流中目标表的屏幕截图。](./Images/stream-data-preview.png)
@@ -158,13 +161,13 @@ lab:
     bikes
         | where ingestion_time() between (ago(30min) .. now())
         | summarize latest_observation = arg_max(ingestion_time(), *) by Neighbourhood
+    ```
+1. 运行查询并验证它是否返回仪表板中两个视觉对象所需的所有列（以及其他一些列）。
 
-1. Run the query and verify that it returns all of the columns needed for both visuals in the dashboard (and some others).
+   ![基础查询的屏幕截图。](./Images/dashboard-base-query.png)
 
-   ![A screenshot of a base query.](./Images/dashboard-base-query.png)
-
-1. Select **Done** and then close the **Base queries** pane.
-1. Edit the **Bikes and Docks** bar chart visual, and change the query to the following code:
+1. 选择“**完成**”，然后关闭“**基础查询**”窗格。
+1. 编辑“**自行车和停靠**”条形图视觉对象，并将查询更改为以下代码：
 
     ```kql
     base_bike_data
@@ -190,8 +193,8 @@ lab:
 
 1. 在仪表板工具栏上的“**管理**”选项卡上，选择“**参数**”。
 1. 请注意已自动创建的任何现有参数（例如*时间范围*参数）。 然后**删除**它们。
-1. 选择“**新建参数**”。
-1. 添加一个新的参数，设置如下:
+1. 选择“+ 添加”。
+1. 添加一个参数，设置如下：
     - **标签：**`Neighbourhood`
     - 参数类型：多选
     - **说明**：`Choose neighbourhoods`

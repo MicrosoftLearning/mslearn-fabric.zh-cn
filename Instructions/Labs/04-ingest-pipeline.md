@@ -10,15 +10,15 @@ lab:
 
 Fabric 还支持 Apache Spark，使你能够编写和运行代码以大规模处理数据。 通过组合 Fabric 中的管道和 Spark 功能，可以实现复杂的数据引入逻辑，将数据从外部源复制到湖屋所基于的 OneLake 存储中，然后先使用 Spark 代码执行自定义数据转换，再将其加载到表中进行分析。
 
-完成本实验室大约需要 60 分钟。
+完成本实验室大约需要 45 分钟。
 
-> **注意**：完成本练习需要 Microsoft Fabric 试用版。[](https://learn.microsoft.com/fabric/get-started/fabric-trial)
+> **注意**：需要 [Microsoft Fabric 试用版](https://learn.microsoft.com/fabric/get-started/fabric-trial) 才能完成本练习。
 
 ## 创建工作区
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 中，选择“**数据工程**”。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -29,7 +29,9 @@ Fabric 还支持 Apache Spark，使你能够编写和运行代码以大规模处
 
 现在已经有了工作区，可以创建数据湖屋，将数据引入其中了。
 
-1. 在“**数据工程**”主页中，创建一个新的**湖屋**并自选名称。
+1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的 *“数据工程”* 部分下，选择“**湖屋**”。 为其指定唯一的名称。
+
+    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
 
     大约一分钟后，将完成创建一个不包含表或文件的新湖屋 。
 
