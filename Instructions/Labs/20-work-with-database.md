@@ -16,7 +16,7 @@ Microsoft Fabric 中的 SQL 数据库是对开发人员友好的事务数据库�
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric)上，网址为：`https://app.fabric.microsoft.com/home?experience=fabric`。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 在左侧菜单栏中，选择“**新建工作区**”。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,8 +27,10 @@ Microsoft Fabric 中的 SQL 数据库是对开发人员友好的事务数据库�
 
 现在有了工作区，可以创建 SQL 数据库了。
 
-1. 在 Fabric 门户的左侧面板上，选择“**+ 新建物料项目**”。
-1. 导航到“**存储数据**”部分，然后选择“**SQL 数据库**”。
+1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的“*数据库*”部分下，选择“**SQL 数据库**”。
+
+    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
+
 1. 输入 **AdventureWorksLT** 作为数据库名称，然后选择“**创建**”。
 1. 创建数据库后，可以从**示例数据库**卡将示例数据加载到数据库中。
 

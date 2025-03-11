@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**数据仓库**”。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,11 +27,13 @@ lab:
 
 现已有了工作空间，可以创建数据仓库了。 “Synapse 数据仓库”主页包含创建新仓库的快捷方式：
 
-1. 在“数据仓库”主页中，使用所选的名称创建新的仓库 。
+1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的“*数据仓库*”部分下，选择“**仓库**”。 为其指定唯一的名称。
+
+    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
 
     大约一分钟后，一个新的仓库创建完成：
 
-    ![新仓库的屏幕截图。](./Images/new-data-warehouse.png)
+    ![新仓库的屏幕截图。](./Images/new-data-warehouse2.png)
 
 ## 创建表和插入数据
 
@@ -195,7 +197,7 @@ Microsoft Fabric 中的数据仓库具有许多可能在关系数据库中使用
 
 1. 如果有兴趣根据管理者的请求查看单个产品的数据，现在可以使用 ProductName 列来筛选查询中的数据。 筛选 ProductName 列以仅查看“Cable Lock”数据 。
 
-1. 在此处，可以通过选择“可视化结果”或“在 Excel 中打开”来分析此单个查询的结果 。 现在可以看到管理者的确切要求，因此我们不需要进一步分析结果。
+1. 在此处，可以通过选择“**可视化结果**”或“**下载 Excel 文件**”来分析此单一查询的结果。 现在可以看到管理者的确切要求，因此我们不需要进一步分析结果。
 
 ### 可视化数据
 
@@ -232,7 +234,7 @@ Microsoft Fabric 中的数据仓库具有许多可能在关系数据库中使用
 
 1. 在“文件”菜单上，选择“保存”   。 然后在之前创建的工作区中，将报表另存为“Sales Report”。
 
-1. 在左侧的菜单中心，导航回工作区。 请注意，现在工作区中保存了三个项：数据仓库、其默认数据集和创建的报表。
+1. 在左侧的菜单中心，导航回工作区。 请注意，现在工作区中保存了三个项：数据仓库、其默认语义模型和创建的报表。
 
     ![工作区的屏幕截图，其中列出了三个项。](./Images/workspace-items.png)
 

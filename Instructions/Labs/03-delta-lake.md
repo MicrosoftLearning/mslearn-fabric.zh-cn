@@ -17,7 +17,7 @@ Microsoft Fabric 湖屋中的表基于开源 Delta Lake 格式。 Delta Lake 添
 
 首先，创建启用了 *Fabric 试用版*的工作区。
 
-1. 在 `https://app.fabric.microsoft.com` 的 Microsoft Fabric 主页上，选择“**数据工程**”体验。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 在左侧菜单栏中，选择“**工作区**” (🗇)。
 1. 使用所选名称创建“**新工作区**”，并选择包含 Fabric 容量的授权模式（试用版、高级版或 Fabric）。
 1. 打开新工作区时，它应为空。
@@ -28,7 +28,10 @@ Microsoft Fabric 湖屋中的表基于开源 Delta Lake 格式。 Delta Lake 添
 
 现在已经有了工作区，可以创建湖屋并上传一些数据了。
 
-1. 在“**数据工程**”主页中，创建一个新的**湖屋**并自选名称。 
+1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的 *“数据工程”* 部分下，选择“**湖屋**”。 为其指定唯一的名称。
+
+    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
+
 1. 有多种引入数据的方法，但在本练习中，只需将文本文件下载到本地计算机（或者实验室 VM，如适用），然后将其上传到湖屋。 从 `https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv` 中下载[数据文件](https://github.com/MicrosoftLearning/dp-data/raw/main/products.csv)，将其另存为 *products.csv*。
 1.  返回到包含湖屋的 Web 浏览器选项卡，然后在“资源管理器”窗格中，选择 **Files** 文件夹旁边的 ... 。  创建名为 *products* 的**新子文件夹**。
 1.  在 在产品文件夹的菜单上，从本地计算机（或实验室 VM，如适用）**上传***products.csv*文件。

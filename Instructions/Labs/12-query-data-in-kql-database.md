@@ -18,7 +18,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用 Fabric 容量的工作区。
 
-1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**实时智能**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -29,13 +29,20 @@ lab:
 
 现在，你已有一个支持 Fabric 容量的工作区，可以在其中创建一个事件库。
 
-1. 在左侧菜单栏中，选择“**工作负载**”。 然后选择“**实时智能**”磁贴。
-1. 在“**实时智能**”主页上，选择“**浏览实时智能示例**”磁贴。 它将自动创建名为 **RTISample** 的 eventhouse：
+1. 在“**实时智能**”主页中，创建一个新的 **Eventhouse**，名称自定。 创建 eventhouse 后，请关闭显示的任何提示或使用技巧，直到看到 eventhouse 页面：
 
-   ![包含示例数据的新 eventhouse 的屏幕截图。](./Images/create-eventhouse-sample.png)
+   ![新 eventhouse 的屏幕截图。](./Images/create-eventhouse.png)
 
 1. 在左侧窗格中，请注意事件屋包含一个与事件屋同名的 KQL 数据库。
-1. 验证是否已创建 **Bikestream** 表。
+1. 选择要查看的 KQL 数据库。
+
+    目前数据库中没有表。 在本练习的其余部分中，你将使用事件流将数据从实时源加载到表中。
+   
+1. 在 KQL 数据库页面，选择“**获取数据** > **样本**”。 然后，选择“**汽车运营分析**”示例数据。
+
+1. 数据加载完成后（可能需要一些时间），请验证是否创建了**汽车**表。
+
+   ![Eventhouse 数据库中“汽车”表的屏幕截图。](./Images/choose-automotive-operations-analytics.png)
 
 ## 使用 KQL 查询数据
 
@@ -47,7 +54,7 @@ Kusto 查询语言 (KQL) 是一种直观、全面的语言，可用于查询 KQL
 1. 按如下所示修改第一个示例查询。
 
     ```kql
-    Bikestream
+    Automotive
     | take 100
     ```
 
@@ -63,8 +70,8 @@ Kusto 查询语言 (KQL) 是一种直观、全面的语言，可用于查询 KQL
 
     ```kql
     // Use 'project' and 'take' to view a sample number of records in the table and check the data.
-    Bikestream
-    | project Street, No_Bikes
+    Automotive 
+    | project vendor_id, trip_distance
     | take 10
     ```
 
@@ -75,8 +82,8 @@ Kusto 查询语言 (KQL) 是一种直观、全面的语言，可用于查询 KQL
 1. 尝试运行以下查询：
 
     ```kql
-    Bikestream 
-    | project Street, ["Number of Empty Docks"] = No_Empty_Docks
+    Automotive 
+    | project vendor_id, ["Trip Distance"] = trip_distance
     | take 10
     ```
 
@@ -84,35 +91,33 @@ Kusto 查询语言 (KQL) 是一种直观、全面的语言，可用于查询 KQL
 
 可以将 *summarize* 关键字与函数一起使用来聚合数据，否则可以操作数据。
 
-1. 请尝试以下查询，该查询使用 **sum** 函数汇总租赁数据，以查看总共有多少辆自行车可用：
+1. 请尝试以下查询，该查询使用 **sum** 函数汇总行程数据，以查看总旅行英里数：
 
     ```kql
 
-    Bikestream
-    | summarize ["Total Number of Bikes"] = sum(No_Bikes)
+    Automotive
+    | summarize ["Total Trip Distance"] = sum(trip_distance)
     ```
 
     你可以按指定的列或表达式对汇总数据进行分组。
 
-1. 运行以下查询，按街区对自行车数量进行分组，以确定每个街区的可用自行车数量：
+1. 运行以下查询，以在纽约出租车系统中按行政区对行程距离进行分组，确定在每个行政区中行驶的总距离。
 
     ```kql
-    Bikestream
-    | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
-    | project Neighbourhood, ["Total Number of Bikes"]
+    Automotive
+    | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
+    | project Borough = pickup_boroname, ["Total Trip Distance"]
     ```
 
-    如果任何一个自行车点的街区条目为 Null 或空，汇总的结果将包含一个空值，这绝不适合分析。
+    结果包含一个空值，该值始终不适用于分析。
 
-1. 修改此处所示的查询，以将 *case* 函数与 *isempty* 和 *isnull* 函数一起使用，从而将该街区未知的所有行程分组到一个***未识别***类别以便跟进。
+1. 修改此处所示的查询，以将 *case* 函数与 *isempty* 和 *isnull* 函数一起使用，从而将该行政区未知的所有行程分组到一个***未识别***类别以便跟进。
 
     ```kql
-    Bikestream
-    | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
-    | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
+    Automotive
+    | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
+    | project Borough = case(isempty(pickup_boroname) or isnull(pickup_boroname), "Unidentified", pickup_boroname), ["Total Trip Distance"]
     ```
-
-    >**备注**：由于此示例数据集维护良好，因此查询结果中可能没有“未识别”字段。
 
 ### 使用 KQL 对数据进行排序
 
@@ -121,33 +126,33 @@ Kusto 查询语言 (KQL) 是一种直观、全面的语言，可用于查询 KQL
 1. 尝试运行以下查询：
 
     ```kql
-    Bikestream
-    | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
-    | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
-    | sort by Neighbourhood asc
+    Automotive
+    | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
+    | project Borough = case(isempty(pickup_boroname) or isnull(pickup_boroname), "Unidentified", pickup_boroname), ["Total Trip Distance"]
+    | sort by Borough asc
     ```
 
 1. 按如下所示修改查询并再次运行，并注意 *order by* 运算符与 *sort by* 作用相同：
 
     ```kql
-    Bikestream
-    | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
-    | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
-    | order by Neighbourhood asc
+    Automotive
+    | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
+    | project Borough = case(isempty(pickup_boroname) or isnull(pickup_boroname), "Unidentified", pickup_boroname), ["Total Trip Distance"]
+    | order by Borough asc 
     ```
 
 ### 使用 KQL 筛选数据
 
 在 KQL 中，*where* 子句用于筛选数据。 可以使用 *and* 和 *or* 逻辑运算符将 *where* 子句中的条件合并在一起。
 
-1. 运行以下查询来筛选自行车数据，以仅包含切尔西街区的自行车点：
+1. 运行以下查询来筛选行程数据，以仅包括从曼哈顿出发的行程：
 
     ```kql
-    Bikestream
-    | where Neighbourhood == "Chelsea"
-    | summarize ["Total Number of Bikes"] = sum(No_Bikes) by Neighbourhood
-    | project Neighbourhood = case(isempty(Neighbourhood) or isnull(Neighbourhood), "Unidentified", Neighbourhood), ["Total Number of Bikes"]
-    | sort by Neighbourhood asc
+    Automotive
+    | where pickup_boroname == "Manhattan"
+    | summarize ["Total Trip Distance"] = sum(trip_distance) by pickup_boroname
+    | project Borough = case(isempty(pickup_boroname) or isnull(pickup_boroname), "Unidentified", pickup_boroname), ["Total Trip Distance"]
+    | sort by Borough asc
     ```
 
 ## 使用 Transact-SQL 查询数据
@@ -159,90 +164,90 @@ KQL 数据库并不原生支持 Transact-SQL，但它提供了一个可仿真 Mi
 1. 在查询集中，添加并运行以下 Transact-SQL 查询： 
 
     ```sql
-    SELECT TOP 100 * from Bikestream
+    SELECT TOP 100 * from Automotive
     ```
 
 1. 按如下所示修改查询以检索特定列
 
     ```sql
-    SELECT TOP 10 Street, No_Bikes
-    FROM Bikestream
+    SELECT TOP 10 vendor_id, trip_distance
+    FROM Automotive
     ```
 
-1. 修改查询来分配别名，以将 **No_Empty_Docks** 重命名为用户友好程度更高的名称。
+1. 修改查询来分配别名，以将 **trip_distance** 重命名为用户友好程度更高的名称。
 
     ```sql
-    SELECT TOP 10 Street, No_Empty_Docks as [Number of Empty Docks]
-    from Bikestream
+    SELECT TOP 10 vendor_id, trip_distance as [Trip Distance]
+    from Automotive
     ```
 
 ### 使用 Transact-SQL 汇总数据
 
-1. 运行以下查询以查找可用的自行车总数：
+1. 运行以下查询以查找旅行的总距离：
 
     ```sql
-    SELECT sum(No_Bikes) AS [Total Number of Bikes]
-    FROM Bikestream
+    SELECT sum(trip_distance) AS [Total Trip Distance]
+    FROM Automotive
     ```
 
-1. 修改查询，以按街区对自行车总数进行分组：
+1. 修改查询以按提货行政区对总距离进行分组：
 
     ```sql
-    SELECT Neighbourhood, Sum(No_Bikes) AS [Total Number of Bikes]
-    FROM Bikestream
-    GROUP BY Neighbourhood
+    SELECT pickup_boroname AS Borough, Sum(trip_distance) AS [Total Trip Distance]
+    FROM Automotive
+    GROUP BY pickup_boroname
     ```
 
-1. 进一步修改查询，以使用 *CASE* 语句将未知来源的自行车点分组到***未识别***类别以进行跟进。 
+1. 进一步修改查询，以使用 *CASE* 语句将未知来源的行程分组到***未识别***类别以进行跟进。 
 
     ```sql
     SELECT CASE
-             WHEN Neighbourhood IS NULL OR Neighbourhood = '' THEN 'Unidentified'
-             ELSE Neighbourhood
-           END AS Neighbourhood,
-           SUM(No_Bikes) AS [Total Number of Bikes]
-    FROM Bikestream
+             WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'Unidentified'
+             ELSE pickup_boroname
+           END AS Borough,
+           SUM(trip_distance) AS [Total Trip Distance]
+    FROM Automotive
     GROUP BY CASE
-               WHEN Neighbourhood IS NULL OR Neighbourhood = '' THEN 'Unidentified'
-               ELSE Neighbourhood
+               WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'Unidentified'
+               ELSE pickup_boroname
              END;
     ```
 
 ### 使用 Transact-SQL 对数据进行排序
 
-1. 运行以下查询，以按街区对分组结果进行排序
+1. 运行以下查询，以按行政区对分组结果进行排序
  
     ```sql
     SELECT CASE
-             WHEN Neighbourhood IS NULL OR Neighbourhood = '' THEN 'Unidentified'
-             ELSE Neighbourhood
-           END AS Neighbourhood,
-           SUM(No_Bikes) AS [Total Number of Bikes]
-    FROM Bikestream
+             WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+             ELSE pickup_boroname
+           END AS Borough,
+           SUM(trip_distance) AS [Total Trip Distance]
+    FROM Automotive
     GROUP BY CASE
-               WHEN Neighbourhood IS NULL OR Neighbourhood = '' THEN 'Unidentified'
-               ELSE Neighbourhood
+               WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+               ELSE pickup_boroname
              END
-    ORDER BY Neighbourhood ASC;
+    ORDER BY Borough ASC;
     ```
 
 ### 使用 Transact-SQL 筛选数据
     
-1. 运行以下查询来筛选分组数据，以便结果中仅包含街区为“切尔西”的行
+1. 运行以下查询来筛选分组数据，以便结果中仅包含行政区为“曼哈顿”的行
 
     ```sql
     SELECT CASE
-             WHEN Neighbourhood IS NULL OR Neighbourhood = '' THEN 'Unidentified'
-             ELSE Neighbourhood
-           END AS Neighbourhood,
-           SUM(No_Bikes) AS [Total Number of Bikes]
-    FROM Bikestream
+             WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+             ELSE pickup_boroname
+           END AS Borough,
+           SUM(trip_distance) AS [Total Trip Distance]
+    FROM Automotive
     GROUP BY CASE
-               WHEN Neighbourhood IS NULL OR Neighbourhood = '' THEN 'Unidentified'
-               ELSE Neighbourhood
+               WHEN pickup_boroname IS NULL OR pickup_boroname = '' THEN 'unidentified'
+               ELSE pickup_boroname
              END
-    HAVING Neighbourhood = 'Chelsea'
-    ORDER BY Neighbourhood ASC;
+    HAVING Borough = 'Manhattan'
+    ORDER BY Borough ASC;
     ```
 
 ## 清理资源

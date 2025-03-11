@@ -16,7 +16,7 @@ lab:
 
 创建启用了 Fabric 试用版的三个工作区。
 
-1. 在 `https://app.fabric.microsoft.com/home?experience=fabric` 的[Microsoft Fabric 主页上](https://app.fabric.microsoft.com/home?experience=fabric)，选择“**Microsoft Fabric**”，然后选择左下角菜单栏上的“**数据工程**”。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 2. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 3. 创建名为“开发”的新工作区，选择包含 Fabric 容量的许可模式（*试用版*、*高级版*或 *Fabric*）。
 4. 重复步骤 1 和步骤 2，再创建两个名为“测试”和“生产”的工作区。 工作区是开发、测试和生产。

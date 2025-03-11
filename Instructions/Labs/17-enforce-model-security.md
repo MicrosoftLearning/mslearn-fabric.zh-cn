@@ -190,7 +190,7 @@ lab:
 
     ![](Images/enforce-model-security-image32.png)
 
-    “安全性”选项支持映射 Microsoft Azure Active Directory (Azure AD) 安全主体，其中包括安全组和用户。
+    *“**安全性**”选项支持映射 Microsoft Entra 安全主体，其中包括安全组和用户。*
 
 4. 在左侧，请注意角色列表，并且“Australia”处于选中状态。
 
