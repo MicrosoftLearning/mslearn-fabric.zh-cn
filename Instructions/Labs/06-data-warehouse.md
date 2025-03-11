@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，创建一个已启用的 Fabric 试用版的工作区。
 
-1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**数据仓库**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,9 +27,7 @@ lab:
 
 现已有了工作空间，可以创建数据仓库了。 “Synapse 数据仓库”主页包含创建新仓库的快捷方式：
 
-1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的“*数据仓库*”部分下，选择“**仓库**”。 为其指定唯一的名称。
-
-    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
+1. 在“数据仓库”主页中，使用所选的名称创建新的仓库 。
 
     大约一分钟后，一个新的仓库创建完成：
 

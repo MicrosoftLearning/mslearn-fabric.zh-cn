@@ -16,7 +16,7 @@ Microsoft Fabric 中的*监视中心*提供了一个可以监视活动的中心�
 
 在 Fabric 中处理数据之前，请在启用 Fabric 容量的租户中创建一个工作区。
 
-1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 中，选择“**数据工程**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并在“高级”部分选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,9 +27,7 @@ Microsoft Fabric 中的*监视中心*提供了一个可以监视活动的中心�
 
 现在已经有了工作区，可以为数据创建数据湖屋了。
 
-1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的 *“数据工程”* 部分下，选择“**湖屋**”。 为其指定唯一的名称。
-
-    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
+1. 在“**数据工程**”主页中，创建一个新的**湖屋**并自选名称。
 
     大约一分钟后，一个新的湖屋创建完成：
 
