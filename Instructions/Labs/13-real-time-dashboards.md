@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，需要创建一个已启用 Fabric 容量的工作区。
 
-1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
+1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**实时智能**”。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,10 +27,7 @@ lab:
 
 现在，你已拥有工作区，可以开始创建实时智能解决方案所需的 Fabric 项。 首先，我们将创建一个事件库。
 
-1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的“*实时智能*”部分下，选择“**Eventhouse**”。 为其指定唯一的名称。
-
-    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
-
+1. 在左侧菜单栏上，选择“**开始**”；然后在“实时智能”主页中，创建新的“**Eventhouse**”，为其指定所选的唯一名称。
 1. 关闭显示的所有建议或提示，直到看到新的空事件屋。
 
     ![新事件屋的屏幕截图](./Images/create-eventhouse.png)
@@ -161,13 +158,13 @@ lab:
     bikes
         | where ingestion_time() between (ago(30min) .. now())
         | summarize latest_observation = arg_max(ingestion_time(), *) by Neighbourhood
-    ```
-1. 运行查询并验证它是否返回仪表板中两个视觉对象所需的所有列（以及其他一些列）。
 
-   ![基础查询的屏幕截图。](./Images/dashboard-base-query.png)
+1. Run the query and verify that it returns all of the columns needed for both visuals in the dashboard (and some others).
 
-1. 选择“**完成**”，然后关闭“**基础查询**”窗格。
-1. 编辑“**自行车和停靠**”条形图视觉对象，并将查询更改为以下代码：
+   ![A screenshot of a base query.](./Images/dashboard-base-query.png)
+
+1. Select **Done** and then close the **Base queries** pane.
+1. Edit the **Bikes and Docks** bar chart visual, and change the query to the following code:
 
     ```kql
     base_bike_data

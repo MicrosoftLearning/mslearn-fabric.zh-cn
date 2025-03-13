@@ -18,7 +18,7 @@ lab:
 
 在 Fabric 中处理数据之前，需要创建工作区。
 
-1. 在 https://app.fabric.microsoft.com 的 [Microsoft Fabric](https://app.fabric.microsoft.com) 主页上，选择“**数据工程**”体验。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 从左侧菜单栏中选择“**工作区**”(🗇)，然后选择“**新建工作区**”。
 1. 为新工作区指定一个名称，并在“**高级**”部分中，选择适当的许可模式。 如果已启动 Microsoft Fabric 试用版，请选择“试用版”。
 1. 选择“**应用**”以创建空工作区。
