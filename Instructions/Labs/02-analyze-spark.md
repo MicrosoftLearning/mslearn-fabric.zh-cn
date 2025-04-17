@@ -413,7 +413,8 @@ Spark 元存储中的表是数据湖中文件的关系抽象。 表可以由元�
 
     ```python
     sqlQuery = "SELECT CAST(YEAR(OrderDate) AS CHAR(4)) AS OrderYear, \
-                    SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue \
+                    SUM((UnitPrice * Quantity) + Tax) AS GrossRevenue, \
+                    COUNT(DISTINCT SalesOrderNumber) AS YearlyCounts \
                 FROM salesorders \
                 GROUP BY CAST(YEAR(OrderDate) AS CHAR(4)) \
                 ORDER BY OrderYear"
@@ -421,7 +422,7 @@ Spark 元存储中的表是数据湖中文件的关系抽象。 表可以由元�
     df_spark.show()
     ```
 
-2. 运行代码。 它返回包含年收入的 Spark 数据帧。 若要将数据可视化为图表，需首先使用 matplotlib Python 库。 此库是其他许多库所基于的核心绘图库，在创建图表方面提供了极大的灵活性。
+2. 运行代码。 它返回一个 Spark DataFrame，包含每年的收入和订单数量。 若要将数据可视化为图表，需首先使用 matplotlib Python 库。 此库是其他许多库所基于的核心绘图库，在创建图表方面提供了极大的灵活性。
 
 3. 添加新代码单元格并添加以下代码：
 
@@ -509,10 +510,9 @@ Spark 元存储中的表是数据湖中文件的关系抽象。 表可以由元�
     ax[0].set_title('Revenue by Year')
 
     # Create a pie chart of yearly order counts on the second axis
-    yearly_counts = df_sales['OrderYear'].value_counts()
-    ax[1].pie(yearly_counts)
+    ax[1].pie(df_sales['YearlyCounts'])
     ax[1].set_title('Orders per Year')
-    ax[1].legend(yearly_counts.keys().tolist())
+    ax[1].legend(df_sales['OrderYear'])
 
     # Add a title to the Figure
     fig.suptitle('Sales Data')
