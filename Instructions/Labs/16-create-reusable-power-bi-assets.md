@@ -58,7 +58,7 @@ lab:
     ![预览功能类别中可用选项的屏幕截图。](./Images/power-bi-enable-tmdl.png)
 
 1. 选择“**另存为**”命名文件时，通过选择下拉菜单中的箭头选择文件类型。
-1. 选择 **.*.pbip** 文件扩展名，然后为报表选择名称，并保存在便于记住的文件夹中。
+1. 选择扩展名为 **.*.pbip** 的文件，输入报表名称，并保存到易于记忆的文件夹中。
 
     ![下拉菜单展开后的“另存为”选择的屏幕截图。](./Images/power-bi-save-file-types.png)
 
@@ -74,10 +74,10 @@ lab:
 
 让我们看看 Power BI Desktop 中的更改如何反映在 .tmdl 文件中。
 
-1. 在桌面上，使用文件资源管理器导航到保存 *.* pbip** 文件的文件夹。
+1. 在桌面上，使用文件资源管理器导航到保存 **pbip**.** 文件的文件夹。
 1. 应会看到以下项：
 
-    - YourReport.*.pbip* 文件
+    - YourReport.pbip 文件
     - YourReport.Report 文件夹
     - YourReport.SemanticModel 文件夹
     - .gitignore Git 忽略源文件
@@ -94,7 +94,7 @@ lab:
 
 1. 连接后，“来自 Web”对话框将弹出。 保持选中“基本”单选按钮。 输入以下文件路径作为 URL 路径。
 
-    `"C:\Users\Student\Downloads\16-reusable-assets\us-resident-population-estimates-2020.html"`
+    `C:\Users\Student\Downloads\16-reusable-assets\us-resident-population-estimates-2020.html`
 
 1. 选择“**HTML 表 > 表 2**”的框，然后选择“**转换数据**”以继续。
 
