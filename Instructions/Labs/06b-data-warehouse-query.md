@@ -75,15 +75,6 @@ SQL 查询编辑器支持 IntelliSense、代码完成、语法突出显示、客
 
     ```sql
     SELECT TOP 10 
-    G.City, 
-    COUNT(*) AS TotalTrips 
-    FROM dbo.Trip AS T
-    JOIN dbo.Geography AS G
-        ON T.PickupGeographyID=G.GeographyID
-    GROUP BY G.City
-    ORDER BY TotalTrips DESC;
-    
-    SELECT TOP 10 
         G.City, 
         COUNT(*) AS TotalTrips 
     FROM dbo.Trip AS T
