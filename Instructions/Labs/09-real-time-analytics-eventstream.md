@@ -1,9 +1,9 @@
 ---
 lab:
-  title: 在 Microsoft Fabric 中使用事件流引入实时数据
+  title: 在 Microsoft Fabric 中使用 Eventstream 引入实时数据
   module: Ingest real-time data with Eventstream in Microsoft Fabric
 ---
-# 在 Microsoft Fabric 中使用事件流引入实时数据
+# 在 Microsoft Fabric 中使用 Eventstream 引入实时数据
 
 事件流是 Microsoft Fabric 中的一项功能，可捕获、转换实时事件并将其路由到各种目标。 可以将事件数据源、目标和转换添加到事件流。
 
@@ -17,7 +17,7 @@ lab:
 
 在 Fabric 中处理数据之前，需要创建一个已启用 Fabric 容量的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**实时智能**”。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -28,7 +28,7 @@ lab:
 
 现在，你已拥有工作区，可以开始创建实时智能解决方案所需的 Fabric 项。 首先，我们将创建一个事件库。
 
-1. 在左侧菜单栏上，选择“**开始**”；然后在“实时智能”主页中，创建新的“**Eventhouse**”，为其指定所选的唯一名称。
+1. 在刚刚创建的工作区中，选择“**+ 新建项**”。 在“*新建项*”窗格中，选择 **Eventhouse**，为其指定唯一的名称。
 1. 关闭显示的所有建议或提示，直到看到新的空事件屋。
 
     ![新事件屋的屏幕截图](./Images/create-eventhouse.png)
@@ -58,8 +58,7 @@ lab:
 
 ## 添加目标
 
-1. 使用 **Bicycle-data** 节点右侧的 **+** 图标，添加一个新的 **Eventhouse** 节点。
-1. 使用新事件库节点中的*铅笔*图标对其进行编辑。
+1. 选择“**转换事件或添加目标**”磁贴并搜索“**Eventhouse**”。
 1. 在“**Eventhouse**”窗格中，配置以下设置选项。
    - **数据引入模式：** 引入前的事件处理
    - **目标名称：**`bikes-table`
@@ -98,7 +97,7 @@ lab:
     | where ingestion_time() between (now(-1d) .. now())
     ```
 
-1. 选择查询代码并运行，以查看表中的 100 行数据。
+1. 选择查询代码并运行，以查看表中 24 小时的数据。
 
     ![KQL 查询的屏幕截图。](./Images/kql-query.png)
 
