@@ -8,7 +8,7 @@ lab:
 
 Microsoft Fabric 权限和精细 SQL 权限协同工作，以控制仓库访问和用户权限。 在此练习中，你将使用精细权限、列级安全性、行级安全性和动态数据掩码来保护数据。
 
-> **注意**：若要完成本实验室中的练习，你需要两个用户：一个用户应分配有工作区管理员角色，另一个用户应具有工作区查看者角色。 若要为工作区分配角色，请参阅[授予对工作区的访问权限](https://learn.microsoft.com/fabric/get-started/give-access-workspaces)。
+> **注意**：如果要完整完成本实验室中的练习，你需要两个用户：一个用户应分配有工作区管理员角色，另一个用户应具有工作区查看者角色。 若要为工作区分配角色，请参阅[授予对工作区的访问权限](https://learn.microsoft.com/fabric/get-started/give-access-workspaces)。 如果无法访问同一组织中的第二个帐户，仍可以工作区管理员身份完成该练习，同时跳过需要使用工作区查看者帐户执行的步骤，并参考练习中的截图了解工作区查看者帐户拥有哪些访问权限。
 
 完成本实验室大约需要 **45** 分钟。
 
@@ -67,27 +67,11 @@ Microsoft Fabric 权限和精细 SQL 权限协同工作，以控制仓库访问�
 
 3. 然后，在“资源管理器”窗格中，展开“架构” > “dbo” > “Tables”，并验证是否已创建 Customers 表********************。 `SELECT` 语句为你返回未屏蔽的数据，因为作为工作区创建者，你是可以看到未屏蔽数据的工作区管理员角色的成员。
 
-4. 作为查看者工作区角色成员的测试用户进行连接，**** 并运行以下 T-SQL 语句。
-
-    ```T-SQL
-    SELECT * FROM dbo.Customers;
-    ```
-    
+    >**注意**：如果作为拥有“查看者”**** 工作区角色成员身份的测试用户登录，并在“客户”**** 表上运行 `SELECT` 语句，将看到屏蔽数据的以下结果。
+   
+    ![包含屏蔽数据的“客户”表的屏幕截图。](./Images/masked-table.png)
+ 
     此测试用户尚未获得 UNMASK 权限，因此返回的 FirstName、Phone 和 Email 列的数据会被屏蔽，因为这些列是在 `CREATE TABLE` 语句中使用掩码定义的。
-
-5. 作为工作区管理员重新进行连接，并运行以下 T-SQL 以取消屏蔽测试用户的数据。 将 `<username>@<your_domain>.com` 替换为正在测试的属于查看者**** 工作区角色的用户的名称。 
-
-    ```T-SQL
-    GRANT UNMASK ON dbo.Customers TO [<username>@<your_domain>.com];
-    ```
-
-6. 再次作为测试用户进行连接，并运行以下 T-SQL 语句。
-
-    ```T-SQL
-    SELECT * FROM dbo.Customers;
-    ```
-
-    由于测试用户已被授予 `UNMASK` 权限，因此将返回未屏蔽的数据。
 
 ## 应用行级安全性
 
@@ -151,18 +135,20 @@ Microsoft Fabric 权限和精细 SQL 权限协同工作，以控制仓库访问�
     ```
 
 6. 使用“&#9655; 运行”按钮运行 SQL 脚本****
-7. 然后，在“资源管理器”窗格中展开“架构” > “rls” > “函数”，验证是否已创建该函数****************。
+7. 然后，在“资源管理器”窗格中展开“架构” > “rls” > “函数” > “表值函数”，验证是否已创建该函数********************。
 8. 以你在 Sales 表 `INSERT` 语句中替换了 `<username1>@<your_domain>.com` 的用户的身份登录 Fabric。 通过运行以下 T-SQL 确认你已经以该用户的身份登录。
 
     ```T-SQL
    SELECT USER_NAME();
     ```
 
-9. 查询 Sales **** 表以确认行级安全性是否按预期发挥作用。 你应该只会看到符合安全谓词中为用户（你以此用户的身份登录）定义的条件的数据。
+9. 查询 Sales **** 表以确认行级安全性是否按预期发挥作用。 你应该只会看到符合安全谓词中为用户（你以此用户的身份登录）定义的条件的数据：
 
     ```T-SQL
    SELECT * FROM dbo.Sales;
     ```
+
+    ![具有 RLS 的“销售额”表的屏幕截图。](./Images/rls-table.png)
 
 ## 实现列级安全性
 
@@ -184,23 +170,25 @@ Microsoft Fabric 权限和精细 SQL 权限协同工作，以控制仓库访问�
    (2341, 6785, '222222222222222'),
    (3412, 7856, '333333333333333');   
    SELECT * FROM dbo.Orders;
-     ```
+    ```
 
-3. 拒绝查看表中列的权限。 T-SQL 语句会阻止 `<username>@<your_domain>.com` 查看 Orders 表中的 CreditCard 列。 在 `DENY` 语句中，将 `<username>@<your_domain>.com` 替换为系统中对工作区具有查看者**** 权限的用户名。
+3. 拒绝查看表中列的权限。 T-SQL 语句会阻止 `<username1>@<your_domain>.com` 查看 Orders 表中的 CreditCard 列。 在 `DENY` 语句中，将 `<username1>@<your_domain>.com` 替换为系统中对工作区具有查看者**** 权限的用户名。
 
-     ```T-SQL
-   DENY SELECT ON dbo.Orders (CreditCard) TO [<username>@<your_domain>.com];
-     ```
+    ```T-SQL
+   DENY SELECT ON dbo.Orders (CreditCard) TO [<username1>@<your_domain>.com];
+    ```
 
 4. 以特定用户（你拒绝了对该用户的选定权限）的身份登录 Fabric 来测试列级安全性。
 
-5. 查询 Orders 表以确认列级安全性是否按预期发挥作用。 以下查询将仅返回 OrderID 和 CustomerID 列，不返回 CreditCard 列。  
+5. 查询“订单”表以确认列级安全性是否按预期发挥作用：
 
     ```T-SQL
    SELECT * FROM dbo.Orders;
     ```
 
-    你会收到错误，因为对 CreditCard 列的访问受到了限制。  请尝试仅选择 OrderID 和 CustomerID 字段，查询会成功。
+    ![出错的“订单”表查询的屏幕截图。](./Images/cls-table.png)
+
+    你会收到错误，因为对 CreditCard 列的访问受到了限制。 请尝试仅选择 OrderID 和 CustomerID 字段，查询会成功。
 
     ```T-SQL
    SELECT OrderID, CustomerID from dbo.Orders
@@ -210,11 +198,11 @@ Microsoft Fabric 权限和精细 SQL 权限协同工作，以控制仓库访问�
 
 Fabric 有一个权限模型，允许你在工作区级别和项级别控制对数据的访问。 需要更精细地控制用户对 Fabric 仓库中的安全对象执行的操作时，可以使用标准 SQL 数据控制语言 (DCL) 命令 `GRANT`、`DENY` 和 `REVOKE`。 在此练习中，你将创建对象，使用 `GRANT` 和 `DENY` 保护它们，然后运行查询以查看应用精细权限的效果。
 
-1. 在之前的练习所创建的仓库中，选择“新建 SQL 查询”**** 下拉列表。 在标题“空白”**** 下，选择“新建 SQL 查询”****。  
+1. 在之前的练习所创建的仓库中，选择“新建 SQL 查询”**** 下拉列表。 选择“新建 SQL 查询”。  
 
 2. 创建存储过程和表。 然后执行该过程并查询表。
 
-     ```T-SQL
+    ```T-SQL
    CREATE PROCEDURE dbo.sp_PrintMessage
    AS
    PRINT 'Hello World.';
@@ -236,24 +224,26 @@ Fabric 有一个权限模型，允许你在工作区级别和项级别控制对�
    EXEC dbo.sp_PrintMessage;
    GO   
    SELECT * FROM dbo.Parts
-     ```
+    ```
 
-3. 接下来，将对表的 `DENY SELECT` 权限授予属于“工作区查看者”**** 角色成员的用户，并将对过程的 `GRANT EXECUTE` 权限授予同一用户。 将 `<username>@<your_domain>.com` 替换为你环境中属于“工作区查看者”**** 角色成员的用户名。
+3. 接下来，将对表的 `DENY SELECT` 权限授予属于“工作区查看者”**** 角色成员的用户，并将对过程的 `GRANT EXECUTE` 权限授予同一用户。 将 `<username1>@<your_domain>.com` 替换为你环境中属于“工作区查看者”**** 角色成员的用户名。
 
-     ```T-SQL
-   DENY SELECT on dbo.Parts to [<username>@<your_domain>.com];
+    ```T-SQL
+   DENY SELECT on dbo.Parts to [<username1>@<your_domain>.com];
 
-   GRANT EXECUTE on dbo.sp_PrintMessage to [<username>@<your_domain>.com];
-     ```
+   GRANT EXECUTE on dbo.sp_PrintMessage to [<username1>@<your_domain>.com];
+    ```
 
-4. 以你在 `DENY` 和 `GRANT` 语句中指定的用户（代替 `<username>@<your_domain>.com`）的身份登录 Fabric。 然后通过执行存储过程和查询表来测试所应用的精细权限。  
+4. 以你在 `DENY` 和 `GRANT` 语句中指定的用户（代替 `<username1>@<your_domain>.com`）的身份登录 Fabric。 然后通过执行存储过程和查询表来测试所应用的精细权限：
 
-     ```T-SQL
+    ```T-SQL
    EXEC dbo.sp_PrintMessage;
    GO
    
    SELECT * FROM dbo.Parts;
-     ```
+    ```
+
+    ![出错的“部件”表查询的屏幕截图。](./Images/grant-deny-table.png)
 
 ## 清理资源
 
