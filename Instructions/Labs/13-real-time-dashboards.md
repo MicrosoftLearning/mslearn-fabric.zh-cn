@@ -16,7 +16,7 @@ lab:
 
 在 Fabric 中处理数据之前，需要创建一个已启用 Fabric 容量的工作区。
 
-1. 在 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`) 上，选择“**实时智能**”。
+1. 在浏览器中，导航到 [Microsoft Fabric 主页](https://app.fabric.microsoft.com/home?experience=fabric) (`https://app.fabric.microsoft.com/home?experience=fabric`)，使用 Fabric 凭据登录。
 1. 在左侧菜单栏中，选择“工作区”（图标类似于 &#128455;）。
 1. 新建一个工作区并为其指定名称，并选择包含 Fabric 容量（试用版、高级版或 Fabric）的许可模式  。
 1. 打开新工作区时，它应为空。
@@ -27,7 +27,10 @@ lab:
 
 现在，你已拥有工作区，可以开始创建实时智能解决方案所需的 Fabric 项。 首先，我们将创建一个事件库。
 
-1. 在左侧菜单栏上，选择“**开始**”；然后在“实时智能”主页中，创建新的“**Eventhouse**”，为其指定所选的唯一名称。
+1. 在左侧菜单上，选择“**创建**”。 在“*新建*”页的“*实时智能*”部分下，选择“**Eventhouse**”。 为其指定唯一的名称。
+
+    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。
+
 1. 关闭显示的所有建议或提示，直到看到新的空事件屋。
 
     ![新事件屋的屏幕截图](./Images/create-eventhouse.png)
@@ -77,19 +80,22 @@ lab:
 
 现在，已将实时数据流加载到事件库中的表中，可以使用实时仪表板将其可视化。
 
-1. 在左侧菜单栏中，选择“**主页**”中心。 然后在主页上，创建名为 `bikes-dashboard` 的新**实时仪表板**。
+1. 在左侧菜单上，选择“**创建**”。 在“新建”页的“实时智能”部分下，选择“实时仪表板”并将其命名为 `bikes-dashboard`。********
+
+    >**备注**：如果未将“**创建**”选项固定到边栏，则需要首先选择省略号 (**...**) 选项。 
 
     创建新的空仪表板。
 
 
     ![新仪表板的屏幕截图。](./Images/new-dashboard.png)
 
-1. 在工具栏中，选择“**新数据源**”并添加新的 **One Lake 数据中心**数据源。 然后选择事件库并使用以下设置创建新的数据源：
+1. 在工具栏中，选择“新建数据源”，然后选择“Eventhouse/KQL 数据库”。******** 然后选择事件库并使用以下设置创建新的数据源：
     - **显示名称**：`Bike Rental Data`
     - **数据库**：*事件库中的默认数据库*。
     - **直通标识**：*已选中*
 
-1. 关闭“**数据源**”窗格，然后在仪表板设计画布上，选择“**添加磁贴**”。
+1. 选择 **添加** 。
+1. 在仪表板设计画布中，选择“添加磁贴”。****
 1. 在查询编辑器中，确保已选择“**自行车租赁数据源**”，并输入以下 KQL 代码：
 
     ```kql
@@ -151,20 +157,20 @@ lab:
 
 仪表板包含两个基于类似查询的视觉对象。 为了避免重复并使仪表板更易于维护，可以将通用数据合并到单个*基本查询*中。
 
-1. 在仪表板工具栏中，选择“**基本查询**”。 然后选择“+添加”。
+1. 在仪表板工具栏中，选择“**基本查询**”。 然后选择“+添加”。****
 1. 在基本查询编辑器中，将**变量名称**设置为 `base_bike_data`，并确保选择了**自行车租赁数据**源。 然后输入以下查询：
 
     ```kql
     bikes
         | where ingestion_time() between (ago(30min) .. now())
         | summarize latest_observation = arg_max(ingestion_time(), *) by Neighbourhood
+    ```
+1. 运行查询并验证它是否返回仪表板中两个视觉对象所需的所有列（以及其他一些列）。
 
-1. Run the query and verify that it returns all of the columns needed for both visuals in the dashboard (and some others).
+   ![基础查询的屏幕截图。](./Images/dashboard-base-query.png)
 
-   ![A screenshot of a base query.](./Images/dashboard-base-query.png)
-
-1. Select **Done** and then close the **Base queries** pane.
-1. Edit the **Bikes and Docks** bar chart visual, and change the query to the following code:
+1. 选择“**完成**”，然后关闭“**基础查询**”窗格。
+1. 编辑“**自行车和停靠**”条形图视觉对象，并将查询更改为以下代码：
 
     ```kql
     base_bike_data
@@ -186,7 +192,7 @@ lab:
 
 ## 添加参数
 
-仪表板当前显示所有社区的最新自行车、停靠和位置数据。 现在，让我们添加参数，以便你可以选择特定的邻里。
+仪表板当前显示所有邻里的最新自行车、站点和位置数据。 现在添加参数，以便你可以选择特定的邻里。
 
 1. 在仪表板工具栏上的“**管理**”选项卡上，选择“**参数**”。
 1. 请注意已自动创建的任何现有参数（例如*时间范围*参数）。 然后**删除**它们。
@@ -230,7 +236,7 @@ lab:
 
 1. 选择“**完成**”，保存基本查询。
 
-1. 在仪表板中，使用“**邻里**”参数根据所选邻里筛选数据。
+1. 在仪表板中，使用“Neighbourhood”参数根据所选邻里筛选数据。****
 
    ![选中参数的仪表板的屏幕截图。](./Images/dashboard-parameters.png)
 
@@ -259,7 +265,7 @@ lab:
 
 用户可以手动刷新仪表板，但在设定的时间间隔内自动刷新数据可能会很有用。
 
-1. 在仪表板工具栏上的“**管理**”选项卡上，选择“**自动刷新**”。
+1. 在仪表板工具栏上的“管理”选项卡上，选择“自动刷新”。********
 1. 在“**自动刷新**”窗格中，配置以下设置：
     - **已启用**：*已选中*
     - **最小时间间隔**：允许所有刷新间隔
